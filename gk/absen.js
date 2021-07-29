@@ -1,5 +1,3 @@
-
-
 async function absensisiswa() {
 
     tampilinsublamangurukelas("absen");
@@ -87,8 +85,8 @@ async function createtableabsenhariini() {
         var pisahin = document.createElement("br");
         //selaksi.appendChild(pisahin);
         var tombolbantusiswa = document.createElement("button");
-        // tombolbantusiswa.setAttribute("id","bantuabsen"+"_"+);
-        tombolbantusiswa.setAttribute("onclick", "bantuabsen('" + encodeURIComponent(jsondatasiswa[i].pd_nama) + "_" + idok + "')");
+
+        tombolbantusiswa.setAttribute("onclick", "bantuabsen('" + jsondatasiswa[i].id + "_" + idok + "')");
         tombolbantusiswa.setAttribute("class", "w3-button w3-yellow w3-round-large w3-margin-left w3-margin-top w3-card-4");
         tombolbantusiswa.innerHTML = "<i class='fa fa-child'></i> Bantu"
         selaksi.appendChild(tombolbantusiswa);
@@ -118,7 +116,7 @@ async function createtableabsenhariini() {
 
         setTimeout(function () {
             localStorage.removeItem('absenHariIni');
-        }, 60000);//1 menit dihapus
+        }, 60000); //1 menit dihapus
     }
 
 
@@ -169,7 +167,7 @@ const refreshAbsenHariIni = async () => {
     createtableabsenhariini();
     setTimeout(function () {
         localStorage.removeItem('absenHariIni')
-    }, 60000);//1 menit dihapus
+    }, 60000); //1 menit dihapus
 
 }
 
@@ -263,13 +261,15 @@ function pilihopsibulanrekap() {
     }
 
     let datanama = Object.keys(jsondatasiswa).map(k => jsondatasiswa[k].pd_nama);
+    let datatoken = Object.keys(jsondatasiswa).map(k => jsondatasiswa[k].id);
     let encodenama;
 
 
     let tbody = tabel.createTBody()
     for (let j = 0; j < datanama.length; j++) {
 
-        encodenama = encodeURIComponent(unescape(datanama[j]));
+        //encodenama = encodeURIComponent(unescape(datanama[j]));//
+        encodenama = datatoken[j]
 
         tr = tbody.insertRow(-1);
         let cell = tr.insertCell(-1);
@@ -510,7 +510,10 @@ const lihatrekapkelas = async (datee) => {
                             jsonabsenkelasperbulan = k[bulanapi];
 
                             localStorage.setItem(bulanapi, JSON.stringify(k[bulanapi]))
-                        }).catch(err => { console.log(err + " paksa reload"); location.reload() })
+                        }).catch(err => {
+                            console.log(err + " paksa reload");
+                            location.reload()
+                        })
                 })
         }
 
@@ -529,7 +532,10 @@ const lihatrekapkelas = async (datee) => {
                         jsonabsenkelasperbulan = k[bulanapi];
                         console.log("ga punya local, dan sedang buat local dari " + er)
                         localStorage.setItem(bulanapi, JSON.stringify(k[bulanapi]))
-                    }).catch(er => { console.log(er + " paksa reload"); location.reload() })
+                    }).catch(er => {
+                        console.log(er + " paksa reload");
+                        location.reload()
+                    })
 
             })
 
@@ -572,7 +578,7 @@ const lihatrekapkelas = async (datee) => {
     document.getElementById("tabel_rekap_absen_nama_tgl").innerHTML += "</ol>"
 
     if (BolehEksekusiJikaDiSemesterIni(datee)) {
-        let namatabel = document.getElementById("tabelxx");//.rows.length; ;
+        let namatabel = document.getElementById("tabelxx"); //.rows.length; ;
         let datanama = Object.keys(jsondatasiswa).map(k => jsondatasiswa[k].pd_nama);
 
         let arrayy = [];
@@ -585,7 +591,9 @@ const lihatrekapkelas = async (datee) => {
             objdata.namasiswa = datanama[k];
 
 
-            let countHadir = 0, countIjin = 0, countSakit = 0;
+            let countHadir = 0,
+                countIjin = 0,
+                countSakit = 0;
 
             let countHE = namatabel.rows[2].cells.length - 1;
 
@@ -681,6 +689,7 @@ const updateLocaleRekapkelas = async (datee) => {
 
 
 var datasiswaklik = [];
+
 function kirimwauntukabsen(id) {
     var noid = id.split("_")[1];
     datasiswaklik = jsondatasiswa.filter(x => x.id == noid)
@@ -702,8 +711,7 @@ function kirimwauntukabsen(id) {
         document.kirimwasiswa.nowasiswa.disabled = true;
         document.kirimwasiswa.nowasiswa.value = nowanya;
         pesanawalwa.innerHTML = "No WA sudah terisi dan siap menghubungi Ananda  ";
-    }
-    else {
+    } else {
         document.kirimwasiswa.nowasiswa.disabled = false;
         pesanawalwa.innerHTML = "No WA belum terisi untuk mengirim pesan WA ke Ananda  ";
     }
@@ -715,6 +723,7 @@ function kirimwauntukabsen(id) {
     document.getElementById("tombolotomatis").innerHTML = "";
     document.getElementById("tombolotomatis").appendChild(tombolwamodal);
 }
+
 function btnkirimwasiswa() {
     pesanawalwa.innerHTML = "";
     var teksnya = "Assalamualaikum, Salam sejahtera. \n \n Kami melacak  bahwa Ananda " + namaanakdiwa.innerHTML + " belum mengisi kehadiran, silakan kunjungi alamat  atau balas WA ini dengan mengirimkan Poto untuk Kami bantu kehadirannya. \n \n Berikut pesan khususnya: ";
@@ -722,8 +731,7 @@ function btnkirimwasiswa() {
     var nowa;
     if (nowaa.slice(0, 1) == "0") {
         nowa = "+62" + nowaa.slice(1, 12);
-    }
-    else if (nowaa.slice(0, 1) == "6") {
+    } else if (nowaa.slice(0, 1) == "6") {
         nowa = "+" + nowaa;
     } else {
         nowa = nowaa
@@ -740,7 +748,7 @@ function bantuabsen(encodenama) {
     document.bantukirim.reset();
     var teks = encodenama;
     var split = teks.split("_");
-    var kodenama = split[0];
+    var kodenama = parseInt(split[0]);
     var tgl = split[1];
 
     document.getElementById("divbantuabsen").style.display = "block";
@@ -751,9 +759,10 @@ function bantuabsen(encodenama) {
     loginclosebantu.innerHTML = "Batal";
     kodefilepotosiswaabsen.innerHTML = "";
 
-    document.getElementById("bantusiapa").innerHTML = decodeURIComponent(kodenama);
-    document.bantukirim.name.value = decodeURIComponent(kodenama);
+    document.getElementById("bantusiapa").innerHTML = jsondatasiswa[kodenama].pd_nama; //decodeURIComponent(kodenama);
+    document.bantukirim.name.value = jsondatasiswa[kodenama].pd_nama; //decodeURIComponent(kodenama);
     document.bantukirim.kelas.value = ruangankelas;
+    document.bantukirim.tokensiswa.value = jsondatasiswa[kodenama].id;
     document.getElementById("potosiswa").src = "/img/eabsensi.webp";
     var ltgl = tgl.length;
     var dtg, dbln, dthn
@@ -779,10 +788,10 @@ function bantuabsen(encodenama) {
 }
 
 function getLinkWhastapp(number, message) {
-    var url = 'https://api.whatsapp.com/send?phone='
-        + number
-        + '&text='
-        + encodeURIComponent(message)
+    var url = 'https://api.whatsapp.com/send?phone=' +
+        number +
+        '&text=' +
+        encodeURIComponent(message)
 
     return url
 }
@@ -792,9 +801,9 @@ function tombolbantukirim() {
     document.bantuisi.style.display = "none";
     document.getElementById("loginbantu").style.display = "none";
     var tgl = document.bantuisi.time_stampbantu.value;
-    var id1 = tgl.split("-")[0];//tahun
-    var id2 = tgl.split("-")[1];//bulan
-    var id3 = tgl.split("-")[2];//tgl
+    var id1 = tgl.split("-")[0]; //tahun
+    var id2 = tgl.split("-")[1]; //bulan
+    var id3 = tgl.split("-")[2]; //tgl
     var stringdate = id1 + "-" + deleteZero(id2) + "-" + deleteZero(id3);
     var en = $("#bantukirim").serialize();
     var url = url_absensiswa + "?action=siswaabsen";
@@ -805,7 +814,7 @@ function tombolbantukirim() {
     xhr.onreadystatechange = function () {
 
         if (xhr.readyState === 4 && xhr.status === 200) {
-            document.getElementById("bantusiapa").innerHTML = "";//+ "  Data telah berhasil dibantu, Terima kasih";
+            document.getElementById("bantusiapa").innerHTML = ""; //+ "  Data telah berhasil dibantu, Terima kasih";
             document.getElementById("thankyou_messagekirim").style.display = "block";
             document.getElementById("thankyou_messagekirim").innerHTML = JSON.parse(xhr.responseText);
             document.getElementById("tombolbantusimpan").style.display = "block"; //????
@@ -822,7 +831,7 @@ function uploadfilebantu() {
 
 
     //define the width to resize e.g 600px
-    var resize_width = 150;//without px
+    var resize_width = 150; //without px
 
     //get the image selected
     var item = document.querySelector('#lampirkanpotoabsen').files[0];
@@ -832,15 +841,15 @@ function uploadfilebantu() {
 
     //image turned to base64-encoded Data URI.
     reader.readAsDataURL(item);
-    reader.name = item.name;//get the image's name
+    reader.name = item.name; //get the image's name
     reader.size = item.size; //get the image's size
     reader.onload = function (event) {
-        var img = new Image();//create a image
-        img.src = event.target.result;//result is base64-encoded Data URI
-        img.name = event.target.name;//set name (optional)
-        img.size = event.target.size;//set size (optional)
+        var img = new Image(); //create a image
+        img.src = event.target.result; //result is base64-encoded Data URI
+        img.name = event.target.name; //set name (optional)
+        img.size = event.target.size; //set size (optional)
         img.onload = function (el) {
-            var elem = document.createElement('canvas');//create a canvas
+            var elem = document.createElement('canvas'); //create a canvas
 
             //scale the image to 600 (width) and keep aspect ratio
             var scaleFactor = resize_width / el.target.width;
@@ -891,9 +900,9 @@ function gantikehadiranbantu() {
 
 function bantuisitanggal() {
     var tgl = document.bantuisi.time_stampbantu.value;
-    var id1 = tgl.split("-")[0];//tahun
-    var id2 = tgl.split("-")[1];//bulan
-    var id3 = tgl.split("-")[2];//tgl
+    var id1 = tgl.split("-")[0]; //tahun
+    var id2 = tgl.split("-")[1]; //bulan
+    var id3 = tgl.split("-")[2]; //tgl
     var idok = deleteZero(id3) + "" + id2 + "" + id1;
     document.bantukirim.Time_Stamp.value = tgl;
     document.bantukirim.id.value = idok;
@@ -942,7 +951,7 @@ const buattabelrekapsemester = () => {
         var th3 = document.createElement("th");
         th3.setAttribute("class", warnabulan[a]);
         th3.setAttribute("colspan", "5");
-        th3.innerHTML = namaBulanDiSemesterBerarpa(indekssemester, a);//NamaBulandariIndex(indek);
+        th3.innerHTML = namaBulanDiSemesterBerarpa(indekssemester, a); //NamaBulandariIndex(indek);
         brstrhead.appendChild(th3);
 
         var thhe = document.createElement("th");
@@ -973,7 +982,8 @@ const buattabelrekapsemester = () => {
 
     }
 
-    let i = 1, x, y, z, o;// = 0;
+    let i = 1,
+        x, y, z, o; // = 0;
 
     let tbody = tabel.createTBody();
     jsondatasiswa.forEach(element => {
@@ -1054,7 +1064,7 @@ function excelRekapSemester() {
     tabelhasil.setAttribute("class", "versi-table");
     tabelhasil.setAttribute("id", "myTableCopy");
 
-    var tabeleditt = document.getElementById("idtabelrekapsemester");//.getElementsByTagName("tbody")[0];
+    var tabeleditt = document.getElementById("idtabelrekapsemester"); //.getElementsByTagName("tbody")[0];
     var cln = tabeleditt.cloneNode(true);
     tabelhasil.appendChild(cln);
     datasiswadiv.appendChild(tabelhasil);
@@ -1236,7 +1246,7 @@ const printRekapSemester = () => {
     var tabelhasil = document.createElement("table");
     tabelhasil.setAttribute("id", "myTableCopy");
 
-    var tabeleditt = document.getElementById("idtabelrekapsemester");//.getElementsByTagName("tbody")[0];
+    var tabeleditt = document.getElementById("idtabelrekapsemester"); //.getElementsByTagName("tbody")[0];
     tabeleditt.outerHTML.replace("position:sticky;position:-webkit-sticky;", "")
     tabeleditt.outerHTML.replace("box-shadow: inset 0 0 1px #000000", "")
     tabeleditt.getElementsByTagName("tbody")[0].removeAttribute("class");
@@ -1387,7 +1397,7 @@ document.addEventListener("click", function (e) {
                 document.formuploadmateri.reset();
                 document.formuploadmateri.idmateri.value = "";
                 tombolpublikasikan.setAttribute("onclick", "publikasikanmateribaru()")
-                tombolpublikasikan.removeAttribute("class");//.wa w3-deep-purple w3-hover-aqua);
+                tombolpublikasikan.removeAttribute("class"); //.wa w3-deep-purple w3-hover-aqua);
                 tombolpublikasikan.setAttribute("class", "wa w3-deep-purple w3-hover-aqua");
                 tombolpublikasikan.innerHTML = "PUBLIKASIKAN";
 
@@ -1422,7 +1432,7 @@ const ubahtanggalini = (w) => {
     let jadi = thn + "-" + addZero(bln) + "-" + addZero(tgl);
     //let jadi = thn +"-"+bln + "-"+ tgl;
 
-    start_tgl.value = jadi;// + "T08:00:00";
+    start_tgl.value = jadi; // + "T08:00:00";
 
     let dend = new Date(sumber.end_tgl);
     let tgle = dend.getDate();
@@ -1430,7 +1440,7 @@ const ubahtanggalini = (w) => {
     let thne = dend.getFullYear();
     let jadie = thne + "-" + addZero(blne) + "-" + addZero(tgle);
 
-    end_tgl.value = jadie;//+ "T08:00:00";
+    end_tgl.value = jadie; //+ "T08:00:00";
 }
 
 const kirimeditkalender = async () => {
@@ -1451,7 +1461,10 @@ const kirimeditkalender = async () => {
     let data = new FormData(dot);
 
     data.append('oleh', ol)
-    await fetch(link, { method: 'post', body: data })
+    await fetch(link, {
+            method: 'post',
+            body: data
+        })
         .then(m => m.json())
         .then(k => {
             juduleditkaldik.innerHTML = k
@@ -1542,7 +1555,10 @@ const kirimtambahkalender = async () => {
 
 
     data.append('oleh', ol)
-    await fetch(link, { method: 'post', body: data })
+    await fetch(link, {
+            method: 'post',
+            body: data
+        })
         .then(m => m.json())
         .then(k => {
             juduleditkaldik.innerHTML = k
@@ -1671,8 +1687,8 @@ const hapustanggalini = async (ind) => {
     //alert("Anda menghapus tanggal pada baris di idss = " + (ind + 2))
     let brs = ind;
     await fetch(url_kaldikaja + "?action=hapuskaldik&idbaris=" + brs, {
-        method: "post"
-    }).then(m => m.json())
+            method: "post"
+        }).then(m => m.json())
         .then(k => {
             alert(k);
 
@@ -1754,8 +1770,8 @@ const kembalikantanggalini = async (ind) => {
     //alert("Anda menghapus tanggal pada baris di idss = " + (ind + 2))
     let brs = ind;
     await fetch(url_kaldikaja + "?action=hapuskaldik&idbaris=" + brs, {
-        method: "post"
-    }).then(m => m.json())
+            method: "post"
+        }).then(m => m.json())
         .then(k => {
             alert(k);
 
@@ -1840,4 +1856,3 @@ const hapusabsensiswaini = (lr) => {
         })
         .catch(er => alert(er))
 }
-

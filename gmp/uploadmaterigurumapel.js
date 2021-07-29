@@ -2555,6 +2555,12 @@ const bantusiswaisiljk = (param) => {
     document.getElementById("ljkbantu").appendChild(identitasljkbantu);
 
     identitasljkbantu = document.createElement("input")
+    identitasljkbantu.setAttribute("tokensiswa", "tokensiswa")
+    identitasljkbantu.setAttribute("name", "tokensiswa")
+    identitasljkbantu.setAttribute("value", siswabantu.id);
+    document.getElementById("ljkbantu").appendChild(identitasljkbantu);
+
+    identitasljkbantu = document.createElement("input")
     identitasljkbantu.setAttribute("id", "idmapel")
     identitasljkbantu.setAttribute("name", "idmapel")
     identitasljkbantu.setAttribute("value", datamateri[par].idmapel);
