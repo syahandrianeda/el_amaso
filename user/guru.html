@@ -1,0 +1,2976 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <title>e-LAMASO GURU</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/img/lamaso.webp" rel="shortcut icon" type="image/x-icon" />
+    <meta name="description"
+        content="Aplikasi Pembelajaran Jarak Jauh (PJJ) selama Belajar di Rumah (BDR) untuk Guru Kelas">
+
+    <!-- meta tag sosial media     -->
+    <meta property="og:url" content="https://sdnratujaya1-elamaso.net/user/guru.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="e-LAMASO Guru" />
+    <meta property="og:description" content="Sebuah Web Aplikasi Pembelajaran Jarak Jauh dari Lamaso Mediatama" />
+    <meta property="og:image" content="/img/lamaso.webp" />
+
+    <meta name='twitter:card' content='summary' />
+    <meta property='twitter:title' content='e-LAMASO Guru' />
+    <meta property='twitter:url' content='https://sdnratujaya1-elamaso.net/user/guru.html' />
+    <meta property='twitter:description' content="Sebuah Web Aplikasi Pembelajaran Jarak Jauh dari Lamaso Mediatama" />
+    <meta property="twitter:image" content="/img/lamaso.webp" />
+    <!-- end meta tag sosial media     -->
+    <link rel="preload" href="/css/w3.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="/css/w3-theme-blue-grey.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="/css/css_timeline.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="/css/stylegurukelas.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="/css/firststyle.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Raleway" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+        as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="/css/w3.css">
+        <link rel="stylesheet" href="/css/w3-theme-blue-grey.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/css/css_timeline.css">
+        <link rel="stylesheet" href="/css/stylegurukelas.css">
+        <link rel="stylesheet" href="/css/firststyle.css">
+
+
+    </noscript>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+    <script src="/idsekolah.js"></script>
+    <script>
+        // const idlogo = "1BZwicOBix4eILY0IQrJs4H825w2k4g-3";
+        const jlo = JSON.parse(localStorage.getItem("inst_id"))
+        let urlmateri = jlo.url_materi;
+        let ssmateri = jlo.ss_materi;
+        const linkmateri = urlmateri + "?idss=" + ssmateri;
+        let url_absensiswa = "";
+        let constlinknilai;
+        let constpreviewljk;
+        let constidguruabsen = "";
+        if (localStorage.hasOwnProperty("typeuser")) {
+            let m = JSON.parse(localStorage.getItem("typeuser"));
+            //window.localStorage.setItem("idabsen",m.idabsen);
+            constidguruabsen = m.idabsenguru;
+
+            if (m.akses == "Guru Kelas") {
+                let ddurl = "url_nilaikelas" + m.jenjang;
+                constlinknilai = jlo[ddurl];
+                constpreviewljk = jlo[ddurl];
+                absenheader = "absen" + m.jenjang;
+                url_kaldikaja = jlo.url_dataabsen; //
+                url_absensiswa = jlo[absenheader]; //+ "?action=absensis
+            } else if (m.akses == "Guru Mapel") {
+                window.location.replace("/user/gmp.html");
+
+            } else if (m.akses == "Kepala Sekolah") {
+
+                window.location.replace("/user/kepsek.html");
+            } else if (m.akses == "Staff") {
+
+                window.location.replace("/user/staff.html");
+            } else if (m.akses == "siswa") {
+                window.location.replace("/user/siswa.html");
+            } else {
+
+            }
+        } else {
+            window.location.replace("/index.html")
+        }
+    </script>
+    <link rel="manifest" href="/manifest.json">
+    <!-- ios support-->
+    <link rel="apple-touch-icon" href="/img/icons/pic96.png">
+    <meta name="apple-mobile-web-app-status-bar" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.5/jszip.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.4.1/chart.min.js"
+        integrity="sha512-5vwN8yor2fFT9pgPS9p9R7AszYaNn0LkQElTXIsZFCL7ucT8zDCAqlQXDdaqgA1mZP47hdvztBMsIoFxq/FyyQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<body class="tesbody">
+
+    <!-- Top container -->
+    <div class=" w3-bar w3-top w3-large w3-card-4" style="z-index:4;background-color: rgb(250, 234, 8)">
+        <button class="w3-bar-item w3-button  w3-hover-black w3-hover-text-light-grey" onclick="w3_open();"><i
+                class="fa fa-bars"></i>  Menu</button>
+        <span class="w3-bar-item w3-right">e-Lamaso Guru</span>
+    </div>
+
+    <div class="w3-bar w3-top w3-tiny">
+        <div class="w3-teal loadingtopbar w3-hide" style="width:1px;margin-top:45px;height: 5px;transition: width 2s">
+            &nbsp;
+        </div>
+    </div>
+
+
+    <!-- Sidebar/menu -->
+    <nav class="w3-sidebar  w3-animate-left tesbody " style="z-index:3;width:300px;display:none" id="mySidebar">
+        <br>
+        <!-- A. SIDEBAR-->
+        <div class="w3-container w3-row">
+            <!-- 1. Logo Sekolah -->
+            <div class="w3-col s4">
+                <img src="/img/lamaso.webp" id="logosekolahmenu" class="w3-circle w3-margin-right" style="
+                    width:90px;height:90px;border:1px solid blue" />
+            </div>
+            <!-- 2. Keterangan di bawah logo sekolah -->
+            <div class="w3-col s8 w3-bar">
+                <!-- Bar nama sekolah -->
+                <strong id="namasekolah">
+                    SEKOLAH e-LAMASO
+                </strong>
+                <br />
+                <!-- Bar 'namakota', diisi untuk mengisi identitas NAMA, JABATAN, dan Kelas yang diampu user (guru) yang login -->
+                <strong id="namakota">
+                    KOTA SEKOLAH
+                </strong>
+                <br />
+                <!-- Bar 'tapel' otomatis mengisi Kode TAhun Pelajaran -->
+                <strong id="tapel">
+                    (2020/2021)
+                </strong>
+            </div>
+        </div>
+        <!-- >>>>>> SELESAI A. SIDEBAR -->
+
+
+        <!-- B. MENU BAR -->
+
+        <hr>
+        <div class="w3-container">
+            <h5>Menu e-Lamaso
+                <sup>(versi=PWA_1)</sup>
+            </h5>
+        </div>
+        <!-- B.2 Bar Guru Kelas, Ketika User sebagai guru kelas -->
+        <div class="w3-bar-block" id="bargurukelas">
+            <a href="javascript:void(0);" class="w3-bar-item w3-button w3-padding" onclick="berandaguru()"><i
+                    class="fa fa-home"></i>
+                Beranda</a>
+            <a href="javascript:void(0);" class="w3-bar-item w3-button w3-padding" onclick="profilguru()"><i
+                    class="fa fa-user-o"></i>
+                Profil Saya</a>
+            <a href="javascript:void(0);" class="w3-bar-item w3-button w3-padding" onclick="tabeldatakelassaya()"><i
+                    class="fa fa-id-card-o"></i>
+                Data Siswa</a>
+            <a href="javascript:void(0);" class="w3-bar-item w3-button w3-padding elabsen" onclick="absensisiswa()"><i
+                    class="fa fa-calendar-check-o"></i> Absen Siswa</a>
+            <a href="javascript:void(0);" class="w3-bar-item w3-button w3-padding" onclick="pembelajaran()"><i
+                    class="fa fa-book"></i>
+                Pembelajaran</a>
+            <a href="javascript:void(0);" class="w3-bar-item w3-button w3-padding" onclick="kurikulum()"><i
+                    class="fa fa-child"></i>
+                Kurikulum</a>
+            <a href="javascript:void(0);" class="w3-bar-item w3-button w3-padding" onclick="nilaimapel()"><i
+                    class="fa fa-star-half-o"></i>
+                Nilai Mapel</a>
+            <a href="javascript:void(0);" class="w3-bar-item w3-button w3-padding" onclick="raportkelas()"><i
+                    class="fa fa-star-half-o"></i>
+                Raport</a>
+            <a href="javascript:void(0);" class="w3-bar-item w3-button w3-padding" onclick="anjangsanaguru()"><i
+                    class="fa fa-group"></i>
+                Anjangsana</a>
+
+
+            <a href="#" class="w3-bar-item w3-button w3-padding" onclick="logout()"><i class="fa fa-times"></i> 
+                Logout</a>
+            <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black"
+                onclick="w3_close()" title="close menu">
+                <i class="fa fa-remove fa-fw"></i>  Tutup Menu
+            </a>
+        </div>
+
+
+
+
+
+
+
+    </nav>
+    <!-- Overlay effect when opening sidebar on small screens -->
+    <div class="w3-overlay   w3-animate-opacity w3-center" onclick="w3_close()"
+        style="cursor:pointer;background-color:rgb(235, 235, 233)" title="close side menu" id="myOverlay">
+        <img src="/img/bgwa3.png" style="margin:15% 5% 5% 25%">
+    </div>
+
+
+    <!-- Laman GURU KELAS diambil dari kode html div id 'mainmenulamaso' -->
+    <div class="w3-main" style="margin-top:43px;" id="lamangurukelas">
+        <header id="idheaderguru" class="w3-container">
+            <h5>
+                <i class="fa fa-dashboard"></i>
+                <b id="dashboardgurukelas">
+                    Guru Kelas <i class="fa fa-spin fa-spinner"></i>
+                </b><br>
+                <i class="fa fa-calendar-times-o"></i>
+                <b class="n_tapelsemester">
+                    Tahun Pelajaran
+                </b><select class="w3-yellow w3-hover-khaki" style="width: 50%;height:30px;" id="selectpindahsemester"
+                    onchange="pindahsemester()">
+                    <option selected value="now">Tapel 2021/2022 Semester 1</option>
+                    <option value="1">Tapel 2020/2021 Semester 2</option>
+                </select>
+            </h5>
+        </header>
+        <div class="w3-main w3-margin w3-animate-zoom w3-card-4 w3-padding" style="background-color:rgb(250, 234, 8)">
+            <div class="pesankhususkepsek w3-card w3-white w3-margin-top w3-container w3-round-large w3-hide">
+            </div>
+            <div class="pesankhusussiswa w3-card w3-white w3-margin-top w3-container w3-round-large w3-hide">
+                Mohon maaf, beberapa fitur Sedang Proses Upgrade Data.
+            </div>
+        </div>
+
+        <div class="w3-row-padding" id="menusayaabsenguru">
+            <div class="w3-quarter" style="margin:50px 0;cursor: pointer;" id="tomboltabeldatakelassaya"
+                onclick="tabeldatakelassaya()">
+                <div class="w3-container n_zoom w3-center ">
+                    <div><img src="/img/lg_datakelas.png"></div>
+
+
+                    <h3>Data Kelas</h3>
+                </div>
+            </div>
+            <div class="w3-quarter" style="cursor: pointer; margin:50px 0" onclick="absensisiswa()">
+                <div class="w3-container n_zoom w3-center ">
+                    <div><img src="/img/lg_absensi.png"></div>
+
+
+                    <h3>Absen Siswa</h3>
+                </div>
+            </div>
+            <div class="w3-quarter elabsen" style="cursor: pointer; margin:50px 0" onclick="pembelajaran()">
+                <div class="w3-container n_zoom w3-center ">
+                    <div><img src="/img/lg_pembelajaran.png"></div>
+
+                    <h3>Pembelajaran</h3>
+                </div>
+            </div>
+            <div class="w3-quarter" style="cursor: pointer; margin:50px 0" onclick="kurikulum()">
+                <div class="w3-container n_zoom w3-center ">
+                    <div><img src="/img/lg_kurikulum.png"></div>
+
+                    <h3>Kurikulum</h3>
+                </div>
+            </div>
+
+            <div class="w3-quarter" style="margin:50px 0;cursor: pointer;" onclick="nilaimapel()">
+                <div class="w3-container n_zoom w3-center ">
+                    <div><img src="/img/lg_nilaii.webp"></div>
+
+                    <h3>Nilai Mapel</h3>
+                </div>
+            </div>
+            <div class="w3-quarter" style="cursor: pointer; margin:50px 0" onclick="raportkelas()">
+                <div class="w3-container n_zoom w3-center ">
+                    <div><img src="/img/lg_rapor.webp"></div>
+
+                    <h3>Raport</h3>
+                </div>
+            </div>
+            <div class="w3-quarter" style="cursor: pointer; margin:50px 0" onclick="kehadiranguru()">
+                <div class="w3-container n_zoom w3-center ">
+                    <div><img src="/img/lg_kehadiran.webp"></div>
+
+                    <h3>Kehadiran Guru</h3>
+                </div>
+            </div>
+            <div class="w3-quarter w3-hide" style="cursor: pointer; margin:50px 0" onclick="alert('diable fitur')">
+                <div class="w3-container n_zoom w3-center ">
+                    <div><img src="/img/lg_frame.webp"></div>
+
+                    <h3>Frame</h3>
+                </div>
+            </div>
+
+
+        </div>
+        <div id="batasaksesguru"></div>
+
+        <div class="w3-container" id="datakelassaya">
+
+            <!-- <h2><b id="kelassayapilih"></b></h2> -->
+
+            <div id="loadkelassaya" style="text-align:center"></div>
+            <div class="w3-card-4 w3-container w3-round-xlarge w3-padding">
+                <button id="tambahsiswa" onclick="tambahsiswa()"
+                    class="w3-button warnaeka w3-round-large w3-card-4 w3-border-bottom w3-border-black"><i
+                        class="fa fa-pencil-square-o"></i> Tambah/Cari
+                    Siswa</button>
+                <button id="cetakdatasiswa" onclick="cetakini()"
+                    class="w3-button warnaeka w3-round-large w3-card-4 w3-border-bottom w3-border-black"><i
+                        class="fa fa-print"></i> Cetak</button>
+                <button id="exceldatasiswa" onclick="exceldatasiswa()"
+                    class="w3-button warnaeka w3-round-large w3-card-4 w3-border-bottom w3-border-black"><i
+                        class="fa fa-file-excel-o"></i> Export Xls</button>
+                <button id="exportdatasiswa" onclick="exportdatasiswa()"
+                    class="w3-button warnaeka w3-round-large w3-card-4 w3-border-bottom w3-border-black"><i
+                        class="fa fa-file-excel-o"></i> Export Detail</button>
+                <button id="exportdatasiswa" onclick="importdatasiswa()"
+                    class="w3-button warnaeka w3-round-large w3-card-4 w3-border-bottom w3-border-black"><i
+                        class="fa fa-file-excel-o"></i> Import Detail</button>
+                <button id="exportdatasiswa" onclick="barusimpanserverdatasiswa()"
+                    class="w3-button warnaeka w3-round-large w3-card-4 w3-border-bottom w3-border-black"><i
+                        class="fa fa-globe"></i> Simpan Detail Server</button>
+            </div>
+            <div id="tabeltempatdaftarkelassaya" style="width:100%;font-size:11px;overflow-x:auto">
+
+                TABEL MEMUUAT EDIT, HAPUS DI KOLOM TABEL<br /><br />
+                DI AKHIR TABEL, ADA TOMBOL TAMBAH MURID<br /><br />
+
+            </div>
+
+            <div id="tabelrekapkelas" style="border:1px dotted blue;padding:5px;border-radius:15px;overflow:auto">
+                <h3>Rekapitulasi Data Kelas</h3>
+                <div class="w3-container w3-border w3-white w3-margin w3-center w3-round">
+                    <table class="w3-table-all garis w3-small w3-centered">
+                        <caption>Tabel Rekapitulasi Jumlah Data Siswa</caption>
+                        <thead>
+                            <tr class="w3-light-gray">
+                                <th rowspan="2">Jenis Kelamin</th>
+                                <th rowspan="2">Total</th>
+                                <th colspan="3"> Data Umur Siswa</th>
+                                <th colspan="6"> Data Agama Siswa</th>
+                            </tr>
+                            <tr class="w3-light-gray">
+                                <th>&le; 6 Tahun</th>
+                                <th>7- 12 Tahun</th>
+                                <th>&ge; 13 Tahun</th>
+                                <th>Islam</th>
+                                <th>Kristen <br /> Protestan</th>
+                                <th>Katholik</th>
+                                <th>Hindu</th>
+                                <th>Budha</th>
+                                <th>Khonghucu</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Laki-Laki</td>
+                                <td id="tbljumlahlakilaki">0</td>
+                                <td id="usiaL6tahun"></td>
+                                <td id="usiaL7tahun"></td>
+                                <td id="usiaL13tahun"></td>
+                                <td id="tblberagamaislamL"></td>
+                                <td id="tblberagamakristenL"></td>
+                                <td id="tblberagamakatholikL"></td>
+                                <td id="tblberagamahinduL"></td>
+                                <td id="tblberagamabudhaL"></td>
+
+                                <td id="tblberagamakhonghucuL"></td>
+                            </tr>
+                            <tr>
+                                <td>Perempuan</td>
+                                <td id="tbljumlahperempuan">0</td>
+                                <td id="usiaP6tahun"></td>
+                                <td id="usiaP7tahun"></td>
+                                <td id="usiaP13tahun"></td>
+                                <td id="tblberagamaislamP"></td>
+                                <td id="tblberagamakristenP"></td>
+                                <td id="tblberagamakatholikP"></td>
+                                <td id="tblberagamahinduP"></td>
+                                <td id="tblberagamabudhaP"></td>
+                                <td id="tblberagamakhonghucuP"></td>
+                            </tr>
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td>Total</td>
+                                <td id="tbljumlahsiswa"></td>
+                                <td id="umur6total"></td>
+                                <td id="umur7total"></td>
+                                <td id="umur13total"></td>
+                                <td id="tblberagamaislam">0</td>
+                                <td id="tblberagamakristen">0</td>
+                                <td id="tblberagamakatholik">0</td>
+                                <td id="tblberagamahindu">0</td>
+                                <td id="tblberagamabudha">0</td>
+                                <td id="tblberagamakhonghucu">0</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="w3-container" id="dataabsensi">
+
+            <div id="spinspin"></div>
+            <div class="tab">
+                <button class="tablinks" onclick="openCity(event, 'absenhariini')">Hari Ini</button>
+                <button class="tablinks" onclick="openCity(event, 'absenbulanan')">Bulanan</button>
+                <button class="tablinks" onclick="openCity(event, 'absenrekap')">Rekap</button>
+            </div>
+
+            <div id="absenhariini" class="tabcontent tabawal">
+                <h3 id="htmlhariini">Kehadiran Hari Ini</h3>
+                <!-- <button onclick="createtableabsenhariini()">Refresh Absen</button><br> -->
+                <button onclick="refreshAbsenHariIni()">Refresh Absen</button><br><br>
+                <div id="tabelabsenhariini" style="overflow-x: auto;">tabeldatakelassaya</div>
+            </div>
+
+            <div id="absenbulanan" class="tabcontent">
+                <!-- // <h3>Bulanan</h3> -->
+                <h3><span id="bulanrekap">Silakan Pilih Bulannya....</span></h3>
+                PILIH BULAN :
+                <select id="pilihbulanrekap" class="w3-select warnaeka" style="width:80%"
+                    onchange="pilihopsibulanrekap()">
+                    <option id="pilih" selected>Pilih Bulan</option>
+                    <option id="Juli" value="2020-07-01">Juli 2020</option>
+                    <option id="Agustus" value="2020-08-01">Agustus 2020 </option>
+                    <option id="September" value="2020-09-01">September 2020</option>
+                    <option id="Oktober" value="2020-10-01">Oktober 2020</option>
+                    <option id="Nopember" value="2020-11-01">Nopember 2020</option>
+                    <option id="Desember" value="2020-12-01">Desember 2020</option>
+                    <option id="Januari" value="2021-01-01">Januari 2021</option>
+                    <option id="Februari" value="2021-02-01">Februari 2021 </option>
+                    <option id="Maret" value="2021-03-01">Maret 2021</option>
+                    <option id="April" value="2021-04-01">April 2021</option>
+                    <option id="Mei" value="2021-05-01">Mei 2021</option>
+                    <option id="Juni" value="2021-06-01">Juni 2021</option>
+                </select>
+                <button id="printke1" class="w3-button w3-blue w3-hover-red w3-round-xlarge"><i class="fa fa-print"></i>
+                    Cetak</button>
+                <button id="simpanabsenbulananexcel" class="w3-button w3-green w3-hover-black w3-round-xlarge"><i
+                        class="fa fa-file-excel-o"></i> Simpan Ms excel</button>
+                <hr>
+
+                <div id="tabel_rekap_absen_sia_tgl" style="overflow-x:auto">
+
+                </div>
+
+                <div id="tabel_rekap_absen_nama_tgl">
+
+                </div>
+
+
+            </div>
+
+            <div id="absenrekap" class="tabcontent">
+                <h3>Rekapitulasi Absensi</h3>
+                (Untuk melihat data rekap, silakan cek di Rekap Bulanan)
+                <div id="scrolltabelabsenrekap"
+                    style="border: none 0px red;overflow-x: scroll;position:sticky;position:-webkit-sticky;top:25px;">
+                    <div id="isiscrolltabelabsenrekap" style="width:100px;height:20px">.</div>
+                </div>
+                <div id="tabelabsenrekap" style="overflow-x: scroll; overflow-y: hidden;">tabeldatakelasrekap</div>
+
+            </div>
+        </div>
+        <div class="w3-container" id="datapembelajaran">
+            <div class="tab">
+                <button class="tablinks" onclick="openCity(event, 'timelinekbm')">Time Line</button>
+                <button class="tablinks kbmtoday" onclick="openCity(event, 'kbm_hari_ini')">Hari Ini</button>
+                <button class="tablinks klikuploadmateri" onclick="openCity(event, 'upload_materi')">Upload
+                    Pembelajaran</button>
+                <button class="tablinks" onclick="openCity(event, 'repository')">Repository</button>
+            </div>
+
+            <div id="timelinekbm" class="tabcontent">
+                <h3>Timeline</h3>
+                <div class="kronologi">
+                    <div class="isi kiri">
+                        <div class="konten">
+                            <h2> ~ ~ ~</h2>
+                            <p class="w3-center w3-xxxlarge" style="height:300px"><i class="fa fa-spin fa-spinner"></i>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="isi kanan">
+                        <div class="konten">
+                            <h2> ~ ~ ~</h2>
+                            <p class="w3-center w3-xxxlarge" style="height:300px"><i class="fa fa-spin fa-spinner"></i>
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div id="kbm_hari_ini" class="tabcontent">
+                <h3>Pembelajaran Hari ini</h3>
+                <table class="versi-table">
+                    <tbody>
+                        <tr>
+                            <td>Kelas</td>
+                            <td id="kbmhariini_kelas"></td>
+                        </tr>
+                        <tr>
+                            <td>Mata Pelajaran/Tema</td>
+                            <td id="kbmhariini_mapel"></td>
+                        </tr>
+                        <tr>
+                            <td>Mapel dan KD-nya</td>
+                            <td id="kbmhariini_Mapel_KD"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="upload_materi" class="tabcontent">
+                <h3>Upload Materi
+                    <sup id="tombolpetunjuk1" style="cursor:pointer" onclick="petunjukuploadmateri()" title="Petunjuk">
+                        [?]
+                    </sup>
+                </h3>
+
+                <!-- disiniiiii -->
+                <button onclick="idmateri.style.width='100%'">Normalkan Area Teks</button>
+                <button onclick="formuploadmateri.reset();idmateri.value=''">Hapus Semua Isian Upload Materi</button>
+                <form class="w3-card-4 w3-padding w3-round-xlarge w3-animate-zoom" id="formuploadmateri"
+                    name="formuploadmateri">
+                    <fieldset class="w3-teal w3-opacity-min w3-round-xlarge">
+                        <label for="idmapel">Identitas Pembelajaran:</label><br>
+                        <input class="w3-input " style="width:50%" id="idmapel" name="idmapel"
+                            placeholder="Tulis identitas pembelajaran" type="text" />
+                        <br>
+                        <label for="iddurasi">Durasi Pengerjaan (menit):</label><br>
+                        <input class="w3-input " style="width:10%" id="iddurasi" name="iddurasi" placeholder="Durasi"
+                            type="number" min="1" max="120" />
+                        <br>
+                        <label for="idaksessiswa">Jenis Pembelajaran:</label><br>
+                        <select id="idaksessiswa" name="idaksessiswa" class="w3-input " style="width:50%"
+                            onchange="janganadatagihanbuat()">
+                            <option id="selakses1" value="sekali">Menerima jawaban dari Siswa
+                            </option>
+                            <option id="selakses2" value="beberapa kali">Tidak menerima
+                                jawaban</option>
+                        </select>
+                        <br>
+                        <label for="jenistagihan">Jenis Tagihan:</label><br>
+                        <select id="jenistagihan" name="jenistagihan" class="w3-input " style="width:50%"
+                            onchange="gabolehaksessekalibuat()">
+                            <option id="seltagih2" value="PH">PENILAIAN HARIAN</option>
+                            <option id="seltagih3" value="PTS">(PTS) PENILAIAN TENGAH SEMESTER</option>
+                            <option id="seltagih4" value="PAS">(PAS) Semester 1</option>
+                            <option id="seltagih5" value="PAK">(PAK) Semester 2</option>
+                            <option id="seltagih6" value="kpraktik">Praktik (KI-4)</option>
+                            <option id="seltagih7" value="kproduk">Produk (KI-4)</option>
+                            <option id="seltagih8" value="kproyek">Proyek (KI-4)</option>
+                            <option id="seltagih9" value="ustertulis">US Tertulis (kelas 6)</option>
+                            <option id="seltagih10" value="uspraktek">US Praktek (kelas 6)</option>
+                            <option id="seltagih1" value=""></option>
+                        </select>
+                        <br>
+                        <br>
+                        <label for="idtgl">Waktu Mulai</label>
+                        <input type="datetime-local" class="w3-input " style="width:50%" id="idtgl" name="idtgl"
+                            onchange="awalbuatwaktu()" />
+                        <br>
+                        <input type="text" name="crtToken" id="crtToken"
+                            placeholder="kodeToken (Otomatis ketika memilih waktu mulai/Tidak usah diisi)" />
+                        <br>
+                        <br>
+                        <label for="idtglend">Waktu Akhir</label>
+                        <input type="datetime-local" class="w3-input " style="width:50%" id="idtglend"
+                            name="idtglend" />
+                        <br />
+                        <input type="text" name="kuncikd" id="kuncikd" placeholder="Kunci KD otomatis muncul" />
+                        <br>
+                        <br>
+                        <div class="w3-row-padding">
+
+                            <div class="tomboleditor w3-col l12  w3-light-gray w3-card-4 w3-padding w3-round-xlarge w3-tiny"
+                                style="position: sticky; position: -webkit-sticky;top:43px;transition: .2s;">
+                                TEKS EDITOR:<span class=" w3-button bukatekseditor" title="Buka"><i
+                                        class="fa fa-angle-double-down w3-medium"></i></span>
+                                MATEMATIKA:<span class="w3-button bukatekseditor2" title="Buka"><i
+                                        class="fa fa-angle-double-down w3-medium"></i></span>
+                                ELAMASO EDITOR:<span class="w3-button bukatekseditor3" title="Buka"><i
+                                        class="fa fa-angle-double-down w3-medium"></i></span>
+                                <span class="fn7undo fa fa-undo w3-blue w3-button" title="undo"></span>
+                                <span class="fn7redo fa fa-repeat w3-deep-purple w3-button" title="redo"></span>
+
+                                <div class="divtekseditor w3-hide">
+
+                                    <sup>Drag teksnya, lalu klik</sup><br>
+                                    <i class="fa fa-align-center w3-hover-blue w3-button w3-border w3-border-orange ed_ratatengah"
+                                        title="Rata Tengah"></i>
+                                    <i class="fa fa-align-justify w3-hover-blue w3-button w3-border w3-border-orange ed_ratapinggir"
+                                        title="Rata Pinggir"></i>
+                                    <i class="fa fa-align-left w3-hover-blue w3-button w3-border w3-border-orange ed_ratakiri"
+                                        title="Rata kiri"></i>
+                                    <i class="fa fa-align-right w3-hover-blue w3-button w3-border w3-border-orange ed_ratakanan"
+                                        title="Rata kanan"></i>
+
+                                    <i class="fa fa-bold w3-hover-pale-green w3-button w3-border w3-border-blue ed_tebalkan"
+                                        title="Tebalkan"></i>
+                                    <i class="fa fa-italic w3-hover-pale-green w3-button w3-border w3-border-blue ed_miringkan"
+                                        title="Miringkan"></i>
+                                    <i class="fa fa-underline w3-hover-pale-green w3-button w3-border w3-border-blue ed_garisbawah"
+                                        title="Garis Bawah"></i>
+
+                                    <i class="fa w3-hover-purple w3-button w3-border w3-border-red ed_semuakapital"
+                                        title="Semua Kapital">AA</i>
+                                    <i class="fa w3-hover-purple w3-button w3-border w3-border-red ed_semuahurufkecil"
+                                        title="Semua Huruf Kecil">aa</i>
+                                    <i class="fa w3-hover-purple w3-button w3-border w3-border-red ed_tiapawalkatakapital"
+                                        title="Tiap awal kata kapital">Aa</i>
+                                    <i class="fa fa-superscript w3-hover-blue w3-button w3-border w3-border-orange ed_pangkat"
+                                        title="Pangkat"></i>
+                                    <i class="fa fa-subscript w3-hover-blue w3-button w3-border w3-border-orange ed_subtitle"
+                                        title="Subtitle"></i>
+
+                                    <i class="fa fa-list-ol w3-hover-yellow  w3-button w3-border w3-border-black ed_listnomor"
+                                        title="List Nomor">1</i>
+                                    <i class="fa fa-list-ol w3-hover-yellow w3-button w3-border w3-border-black ed_listabjadkapital"
+                                        title="List Abjad Kapital">A</i>
+                                    <i class="fa fa-list-ol w3-hover-yellow w3-button w3-border w3-border-black ed_listabjadnonkapital"
+                                        title="List Abjad Nonkapital">a</i>
+                                    <i class="fa fa-list-ol w3-hover-yellow w3-button w3-border w3-border-black ed_listbulet"
+                                        title="List bulet">o</i>
+                                    <i class="fa fa-list-ol w3-hover-yellow w3-button w3-border w3-border-black ed_listcustom"
+                                        title="List bulet">Custom</i>
+
+                                </div>
+                                <div class="divtekseditor2 w3-hide">
+                                    <sup>Drag teksnya, lalu klik </sup><br>
+                                    <span class="fa w3-hover-blue w3-button w3-border w3-border-orange ed_pecahanbiasa"
+                                        title="Pecahan Biasa"><img src="/img/pecahanbiasa.PNG" alt="simbol" /></span>
+                                    <span
+                                        class="fa w3-hover-blue w3-button w3-border w3-border-orange ed_pecahancampuran"
+                                        title="Pecahan campuran"><img src="/img/pecahancampuran.PNG"
+                                            alt="simbol" /></span>
+                                    <span class="fa w3-hover-blue w3-button w3-border w3-border-orange ed_pangkatn"
+                                        title="Pangkat"><img src="/img/pangkat.PNG" alt="simbol" /></span>
+                                    <span class="fa w3-hover-blue w3-button w3-border w3-border-orange ed_akarkuadrat"
+                                        title="Akar Kuadrat"><img src="/img/akarkuadrat.PNG" alt="simbol" /></span>
+                                    <i class="fa w3-hover-blue w3-button w3-border w3-border-orange ed_akarpangkattiga"
+                                        title="Akar pangkat tiga"><img src="/img/akarkubik.PNG" alt="simbol" /></i><br>
+                                    <sup>Taruh kursornya, lalu klik </sup><br>
+                                    <i class="fa w3-hover-blue w3-button w3-border w3-border-orange ed_kali"
+                                        title="Kali">&times;</i>
+                                    <i class="fa w3-hover-blue w3-button w3-border w3-border-orange ed_bagi"
+                                        title="bagi">&div;</i>
+                                    <i class="fa w3-hover-blue w3-button w3-border w3-border-orange ed_sudut"
+                                        title="Sudut">&ang;</i>
+                                    <i class="fa w3-hover-blue w3-button w3-border w3-border-orange ed_lebihbesarsamadengan"
+                                        title="Lebih Besar sama dengan">&ge;</i>
+                                    <i class="fa w3-hover-blue w3-button w3-border w3-border-orange ed_lebihkecilsamadengan"
+                                        title="Lebih kecil sama dengan">&le;</i>
+                                    <i class="fa w3-hover-blue w3-button w3-border w3-border-orange ed_plusminus"
+                                        title="Kurang Lebih">&PlusMinus;</i>
+                                    <i class="fa w3-hover-blue w3-button w3-border w3-border-orange ed_derajatsuhu"
+                                        title="Derajat/Suhu">&#176;</i>
+                                    <i class="fa w3-hover-blue w3-button w3-border w3-border-orange ed_ceklis"
+                                        title="Ceklis">&checkmark;</i>
+                                    <i class="fa w3-hover-blue w3-button w3-border w3-border-orange ed_pi"
+                                        title="Pi ">&#8508;</i>
+                                    <i class="fa w3-hover-blue w3-button w3-border w3-border-orange ed_panahkiri"
+                                        title="Panah kiri">&larr;</i>
+                                    <i class="fa w3-hover-blue w3-button w3-border w3-border-orange ed_panahkanan"
+                                        title="Panah kanan">&rarr;</i>
+                                    <i class="fa w3-hover-blue w3-button w3-border w3-border-orange ed_panahkanandobel"
+                                        title="Panah kanan dobel">&DoubleLongRightArrow;</i>
+                                    <i class="fa w3-hover-blue w3-button w3-border w3-border-orange ed_panahkiridobel"
+                                        title="Panah Kiri dobel">&DoubleLongLeftArrow;</i>
+                                </div>
+                                <div class="divtekseditor3 w3-hide w3-small">
+                                    <div
+                                        style="display:inline-block;padding:1px;border:1px solid blue;background-color:magenta">
+                                        PG (4 opsi s/d D):<br> No Soal <input type="number" min="1" max="50" value="1"
+                                            class="in_pgd" style="width:50px" />
+                                        <i class="fa  w3-hover-blue w3-button w3-dark-grey w3-border w3-border-orange ed_pgd"
+                                            title="PG Opsi s/d D">PG ABCD</i>
+                                    </div>
+                                    <div
+                                        style="display:inline-block;padding:1px;border:1px solid blue;background-color:lightgreen">
+                                        PG (3 opsi s/d C): <br>No Soal <input type="number" min="1" max="50" value="1"
+                                            class="in_pgc" style="width:50px" />
+                                        <i class="fa  w3-hover-blue w3-button w3-border  w3-dark-grey w3-border-orange ed_pgc"
+                                            title="PG Opsi s/d D">PG ABC</i>
+                                    </div>
+                                    <div
+                                        style="display:inline-block;padding:1px;border:1px solid blue;background-color:lightblue">
+                                        ESSAY: <br>No Soal <input type="number" min="1" max="50" value="1"
+                                            class="in_essay" style="width:50px" />
+                                        <i class="fa  w3-hover-blue w3-button w3-border w3-border-orange ed_essay"
+                                            title="PG Opsi s/d D">Essay</i>
+                                    </div>
+                                    <div
+                                        style="display:inline-block;padding:1px;border:1px solid blue;background-color:lavenderblush">
+                                        PG (OPSI TABEL): <br>No
+                                        Soal <input type="number" class="in_pgtabel" min="1" max="50" value="1"
+                                            style="width:50px" />
+                                        <i class="fa  w3-hover-blue w3-button w3-border w3-border-orange ed_pgtabel"
+                                            title="PG Opsi s/d D">OPSI TABEL</i>
+                                    </div>
+                                    <div
+                                        style="display:inline-block;padding:1px;border:1px solid blue;background-color: aqua;">
+                                        Tabel: <input type="checkbox" checked id="ed_headertabel" /><label
+                                            for="ed_headertabel">
+                                            Header:</label><br>
+                                        <i class="fa fa-table fa-list-ol w3-hover-pale-green w3-button w3-border w3-border-red ed_tabel"
+                                            title="Tabel"></i>
+                                    </div>
+                                    <div
+                                        style="display:inline-block;padding:1px;border:1px solid blue;background-color: aqua;">
+                                        Lainnya:<br>
+                                        <i class="fa fa-text-width w3-hover-pale-green w3-button w3-border w3-border-red ed_satubariskan"
+                                            title="Jadikan satubaris"></i>
+                                        <i class="fa fa-youtube  w3-hover-pale-green w3-button w3-border w3-border-red ed_youtube"
+                                            title="Youtube"></i>
+                                        <i class="fa w3-hover-pale-green w3-button w3-border w3-border-red ed_pemisahkunci"
+                                            title="Pemisah Kunci KD/jawaban">&lt;||&gt;</i>
+                                    </div>
+                                    <div
+                                        style="display:inline-block;text-align:center;padding:1px;border:1px solid rgb(9, 255, 0);background-color: aqua;">
+                                        Sebaran KD dari Tabel(sumber Ms. Word):<br>
+                                        <i class="fa fa-check-circle w3-red w3-hover-pale-blue w3-button w3-border w3-border-red ed_sebarankddaritabel"
+                                            title="Sebaran KD dari Tabel"></i>
+
+                                    </div>
+
+                                </div>
+                                <br />
+                                <div class="w3-tiny">
+                                    <span class="fn7cekpreview w3-green w3-button">CEK PREVIEW</span>
+                                    <span class="fn7petunjukuploadmateri w3-blue w3-button">PETUNJUK UPLOAD
+                                        MATERI</span>
+                                    <span class="fn7gambar w3-khaki w3-button">UPLOAD GAMBAR</span>
+                                    <span class="fn7video w3-brown w3-button">UPLOAD VIDEO/FILE LAINNYA</span>
+                                    <span class="fn7simpandraft w3-red w3-button">SIMPAN DRAFT</span>
+                                    <span class="fn7taruhdraft w3-dark-grey w3-button">TARUH DRAFT</span>
+
+
+                                </div>
+                            </div>
+                            <!-- sampai disini -->
+                            <div class="w3-col coltextarea l9">
+                                <textarea type="text" id="idmateri" name="idmateri"
+                                    placeholder="Silakan buat materi di sini" style="height:700px"
+                                    class=" w3-border-purple  w3-round-xlarge"></textarea>
+
+                            </div>
+
+                            <div class="w3-col l3 w3-right w3-card-4 w3-container w3-round-large tekeditorpg w3-margin-top w3-light-grey"
+                                style="position: sticky;position:-webkit-sticky;top:47px;z-index: 3;">
+                                PENGATURAN KUNCI JAWABAN
+                                <br /><br />
+                                Saat ini belum terdeteksi adanya nomor soal Pilihan Ganda diketikan Anda. Nomor soal dan
+                                pilihan opsi jawabannya akan muncul otomatis. Anda tinggal memilih Opsi Jawaban di
+                                tiap-tiap opsi yang terdeteksi sebagai KUNCI JAWABAN soal PG Anda.
+                                <br /><br />
+                                Saran: Pastikan Anda menyelesaikan seluruh pengeditan konten materi sebelum memilih
+                                kunci jawaban.
+                                <table class="w3-table-all tabelpilihkuncipg">
+
+                                </table>
+                            </div>
+
+                            <div
+                                class="w3-col l9 tekesebarankd w3-left w3-card-4 w3-container w3-round-large  w3-margin-top w3-light-grey">
+
+                                SEBARAN KD TIDAK TERDETEKSI (JIKA TERDETEKSI AKAN MUNCUL TABEL SEPERTI INI)
+
+
+                                <table class="w3-table-all tabelsebarankd">
+                                    <tr>
+                                        <td>MAPEL</td>
+                                        <td>KD</td>
+                                        <td>NOMOR SOAL</td>
+                                    </tr>
+                                    <tr>
+                                        <td>PKN</td>
+                                        <td>3.1</td>
+                                        <td>1, 2, 3, 4, 5, 6</td>
+                                    </tr>
+
+                                </table>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                    <fieldset class="w3-hide">
+                        <input type="number" name="idtoken" id="idtoken" placeholder="jenjang (will hide)" />
+                        <br>
+                        <input type="text" name="idkelas" id="idkelas" placeholder="kelas (will hide)" />
+                        <br>
+                        <input type="text" name="dibuatoleh" id="dibuatoleh" placeholder="dibuatoleh" />
+                        <br>
+                        <input type="text" name="idSekolah" id="idSekolah" placeholder="Nama Sekolah" />
+                        <br>
+                        <input type="number" name="jumlahpg" id="jumlahpg" placeholder="jumlahpg (will hide)" />
+                        <br>
+                        <input type="number" name="jumlahessay" id="jumlahessay"
+                            placeholder="jumlahessay (will hide)" />
+
+                        <br>
+
+                    </fieldset>
+
+
+
+
+                </form>
+                <div id="loadketkunci" style="overflow-x: auto;"></div>
+                <div id="loadketKD"></div>
+
+
+
+                <div class="w3-margin-top">
+                    <h3 class="w3-center">Sebelum Anda mempublikasikan, pastikan Anda telah melihat Preview tampilan
+                        konten tersebut.</h3>
+                    <button class="wa w3-deep-purple w3-hover-aqua" id="tombolpublikasikan"
+                        onclick="publikasikanmateribaru()">PUBLIKASIKAN</button>
+                </div>
+
+                <div id="divbantu_kuncijawaban" class="w3-hide">TEEES DIVBANTU KUNCI JAWABAN</div>
+                <div id="divbantu_sebarankd" class="w3-hide">TES DIVBANTU SEBARAN KD</div>
+
+
+                <button id="modal_generate_sebarankd" onclick="generaterasebarankd()"
+                    class="warnaeka w3-btn w3-round-large w3-hide">Generate Sebaran KD</button>
+
+                <!-- sampe disini -->
+                <div class="w3-display-bottommiddle w3-center w3-margin-bottom" style="position: fixed;">
+
+                </div>
+
+            </div>
+            <div id="repository" class="tabcontent">
+                <h3>Repository</h3>
+                <label for="sumber_repository">Pilih Sumber Repository :</label>
+                <select id="sumber_repository" class="w3-select  w3-yellow w3-hover-khaki" onchange="pilihrepository()">
+
+
+                </select>
+                <div id="tabel_repository_sendiri" style="overflow-x:auto">
+
+                </div>
+
+            </div>
+        </div>
+        <div class="w3-container" id="datakurikulum">
+            <div class="tab">
+                <button class="tablinks classtabkd" onclick="openCity(event, 'kurikulum_kd')">Kompetensi Dasar</button>
+                <button class="tablinks classtabkkm" onclick="openCity(event, 'kurikulum_kkm')">KKM</button>
+                <button class="tablinks tabkaldik" onclick="openCity(event, 'kurikulum_he')">Kaldik</button>
+                <button class="tablinks classtabuploadkurikulum"
+                    onclick="openCity(event, 'kurikulum_upload_kurikulum')">Upload
+                    kurikulum</button>
+            </div>
+            <div id="kurikulum_kd" class="tabcontent">
+
+
+            </div>
+            <div id="kurikulum_kkm" class="tabcontent">
+
+
+            </div>
+            <div id="kurikulum_he" class="tabcontent">
+                <h3>Kalender Pendidikan</h3>
+                <div id="tabelkaldikss" style="overflow-x: auto;">
+
+                </div>
+            </div>
+            <div id="kurikulum_upload_kurikulum" class="tabcontent">
+                <h3>Upload Data</h3>
+
+                <div style="border:2px solid royalblue;padding:5px; border-radius: 5px;">
+                    <h3>Kompetensi Dasar dan KKM</h3>
+
+
+                    <div id="pisahpisah"></div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="w3-container" id="datanilaimapel">
+            <h3>Data Nilai Mapel</h3>
+            <div class="tab">
+                <button class="tablinks" onclick="openCity(event, 'ulhar')">UH</button>
+                <button class="tablinks" onclick="openCity(event, 'pts')">PTS</button>
+                <button class="tablinks" onclick="openCity(event, 'paspak')">PAK</button>
+
+            </div>
+
+            <div id="ulhar" class="tabcontent">
+                <h3>ULANGAN HARIAN</h3>
+                <div id="opsimapelulhar">Opsi Mata Pelajaran belum muncul, silakan cek Data Kurikulum </div>
+                <div id="datatabelnilaiulhar" style="overflow-x: auto"></div>
+
+            </div>
+            <div id="pts" class="tabcontent">
+                <h3>PENILAIAN TENGAH SEMESTER</h3>
+                <div id="opsimapelpts">Opsi Mata Pelajaran belum muncul, silakan cek Data Kurikulum </div>
+                <div id="datatabelnilaipts" style="overflow-x: auto"></div>
+
+            </div>
+            <div id="paspak" class="tabcontent">
+                <h3 id="tekspaspak">PENILAIAN AKHIR KELAS</h3>
+                <div id="opsimapelpaspak">Opsi Mata Pelajaran belum muncul, silakan cek Data Kurikulum </div>
+                <div id="datatabelnilaipaspak" style="overflow-x: auto"></div>
+
+            </div>
+
+
+        </div>
+        <div clas="w3-container w3-padding" id="datakehadiranguru">
+            <h3>Data Kehadiran Piket</h3>
+            <div class="w3-container ">
+
+                <div class="w3-purple w3-panel">
+
+                    <div class="w3-container w3-center">
+                        <h3>Kehadiran/Piket<br><span id="namagurupiket">Saya</span></h3>
+                        <img class="w3-card-4 imgguruabsen w3-aqua" src="/img/lamaso.webp" alt="Avatar"
+                            style="width:40%">
+                        <div class="ketabsenkehadiranguru"><i class="fa fa-spin fa-spinner"></i> kehadiran saya ...
+                        </div>
+
+                        <div class="w3-section" id="belumabsenkehadiranguru">
+                            <input type="file" onchange="bantuabsenkehadiranguru()" id="kamerapiket" accept="image/*"
+                                capture="user" style="display:none" />
+                            <button id="kirimpotoabsenguru" onclick="gurukirimabsen()"
+                                style="display:none">KIRIM</button>
+
+                            <label for="pilih_kehadirangurupiket">Pilih Jenis Kehadiran:</label>
+                            <br>
+                            <select id="pilih_kehadirangurupiket" name="pilih_kehadirangurupiket"
+                                class="w3-round-xxlarge w3-select">
+                                <option value="Hadir" selected>Hadir</option>
+                                <option value="Ijin">Ijin
+                                </option>
+                                <option value="Sakit">Sakit
+                                </option>
+                            </select>
+                            <hr />
+                            <label class="w3-button w3-green w3-round-xlarge" id="tombolabsenguru"
+                                for="kamerapiket">Absen</label><br />
+                            <!-- <button class="w3-button w3-red">Decline</button> -->
+                        </div>
+                        <div id="datakirimgurupiket" style="display:none">
+                            DISINI TEMPAT UNTUK:<BR />
+                            Jika guru sudah piket, maka DIV ini ditampilkan POTO GURU PIKETNYA<br />
+                            jika guru belum piket, maka Div ini sementara ditampilkan untuk memberikan keterangan belum
+                            Piket
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+            <hr />
+            <h3>Rekap Kehadiran/Piket:</h3>
+            <div id="isikehadiranguru"></div>
+            <label for="daftarpilihbulankehadiranguru">Silakan Pilih Bulannya:</label>
+
+            <select id="daftarpilihbulankehadiranguru" class="w3-select w3-amber"
+                onchange="modalfnkalenderkehadiranguru()">
+                <option id="indekpilihasal" value="">Silakan Pilih Bulan</option>
+                <option id="indekpiket0" value="2021-01-01">Januari</option>
+                <option id="indekpiket1" value="2021-02-01">Februari</option>
+                <option id="indekpiket2" value="2021-03-01">Maret</option>
+                <option id="indekpiket3" value="2021-04-01">April</option>
+                <option id="indekpiket4" value="2021-05-01">Mei</option>
+                <option id="indekpiket5" value="2021-06-01">Juni</option>
+
+            </select>
+            <hr>
+            <div class="w3-container" id="divmodalabsenkehadiranguru">
+                <table class="w3-table-all garis w3-tiny w3-centered">
+                    <tr>
+                        <th colspan="7">
+                            Bulan : <span id="modalnamabulan">Silakan Pilih Bulannya terlebih dulu</span>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="w3-red">Minggu</th>
+                        <th>Senin</th>
+                        <th>Selasa</th>
+                        <th>Rabu</th>
+                        <th>Kamis</th>
+                        <th>Jumat</th>
+                        <th class="w3-red">Sabtu</th>
+                    </tr>
+                    <tr>
+                        <td id="kolomtabel1_1" class="kosongindulu w3-red"></td>
+                        <td id="kolomtabel1_2" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i>
+                        </td>
+                        <td id="kolomtabel1_3" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                        <td id="kolomtabel1_4" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                        <td id="kolomtabel1_5" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                        <td id="kolomtabel1_6" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                        <td id="kolomtabel1_7" class="kosongindulu w3-red"><i class="fa fa-spin fa-refresh"></i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="kolomtabel2_1" class="kosongindulu w3-red"><i class="fa fa-spin fa-refresh"></i>
+                        </td>
+                        <td id="kolomtabel2_2" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                        <td id="kolomtabel2_3" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                        <td id="kolomtabel2_4" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                        <td id="kolomtabel2_5" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                        <td id="kolomtabel2_6" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                        <td id="kolomtabel2_7" class="kosongindulu w3-red"><i class="fa fa-spin fa-refresh"></i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="kolomtabel3_1" class="kosongindulu w3-red"><i class="fa fa-spin fa-refresh"></i>
+                        </td>
+                        <td id="kolomtabel3_2" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                        <td id="kolomtabel3_3" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                        <td id="kolomtabel3_4" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                        <td id="kolomtabel3_5" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                        <td id="kolomtabel3_6" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                        <td id="kolomtabel3_7" class="kosongindulu w3-red"><i class="fa fa-spin fa-refresh"></i>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td id="kolomtabel4_1" class="kosongindulu w3-red"><i class="fa fa-spin fa-refresh"></i>
+                        </td>
+                        <td id="kolomtabel4_2" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                        <td id="kolomtabel4_3" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                        <td id="kolomtabel4_4" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                        <td id="kolomtabel4_5" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                        <td id="kolomtabel4_6" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                        <td id="kolomtabel4_7" class="kosongindulu w3-red"><i class="fa fa-spin fa-refresh"></i>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td id="kolomtabel5_1" class="kosongindulu w3-red"><i class="fa fa-spin fa-refresh"></i>
+                        </td>
+                        <td id="kolomtabel5_2" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                        <td id="kolomtabel5_3" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                        <td id="kolomtabel5_4" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                        <td id="kolomtabel5_5" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                        <td id="kolomtabel5_6" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                        <td id="kolomtabel5_7" class="kosongindulu w3-red"><i class="fa fa-spin fa-refresh"></i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="kolomtabel6_1" class="kosongindulu w3-red"><i class="fa fa-spin fa-refresh"></i>
+                        </td>
+                        <td id="kolomtabel6_2" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                        <td id="kolomtabel6_3" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                        <td id="kolomtabel6_4" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                        <td id="kolomtabel6_5" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                        <td id="kolomtabel6_6" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                        <td id="kolomtabel6_7" class="kosongindulu w3-red"><i class="fa fa-spin fa-refresh"></i>
+                        </td>
+                    </tr>
+                </table>
+                <div id="ketketliburkehadiranguru"></div>
+
+            </div>
+
+
+        </div>
+        <div class="w3-container" id="dataraport">
+            <h3>Pengolahan Raport dan Ijazah</h3>
+            <div class="tab">
+                <button class="tablinks tabraportpts" onclick="openCity(event, 'raportpts')">RAPORT PTS</button>
+                <button class="tablinks tabolahnilai" onclick="openCity(event, 'olahnilai')">OLAH NILAI</button>
+                <button class="tablinks tabraportasli" onclick="openCity(event, 'raporthasil')">RAPORT</button>
+                <button class="tablinks tabpetunjukraport" onclick="openCity(event, 'petunjukraport')">LANDASAN
+                    HUKUM</button>
+                <button class="tablinks tabolahijazah" onclick="openCity(event, 'olahijazah')">OLAH IJAZAH</button>
+                <button class="tablinks tabpengumumankelulusan"
+                    onclick="openCity(event, 'pengumumankelulusan')">PENGUMUMAN
+                    KELULUSAN</button>
+            </div>
+            <div id="petunjukraport" class="tabcontent w3-justify">
+                <h3>Dasar Penentuan Nilai Raport di Elamaso</h3>
+                Di elamaso, kami menerapkan sistem pengolahan nilai yang merujuk dokumen Petunjuk Penilaian untuk
+                Sekolah Dasar yang diterbitkan oleh Kemendikbud. Dalam dokumen tersebut kami terjemahkan kedalam
+                algoritma kurikulum 2013.
+                <br /><br />
+                Adapun dokumen tersebut Anda dapat mempelajarinya berikut ini:
+                <div class="containerbaru">
+                    <iframe class="responsive-iframebaru"
+                        src="https://drive.google.com/uc?export=view&id=1X2FDrmwn-jaU6vq-7bGphpybTPT1RlNZ"></iframe>
+
+                </div>
+                Oleh karena itu, kami melacak data <b class="w3-text-blue">KKM Satuan Pendidikan</b> di sekolah
+                Anda:
+                <div class="w3-border w3-border-blue w3-padding kkmsatuanpendidikan w3-jumbo w3-center"
+                    contenteditable="true">
+                </div>
+
+                KKM Satuan Pendidikan di atas dilacak berdasarkan KKM terendah, jika bukan angka di atas, silakan ubah
+                dan simpan untuk dijadikan Kriteria Predikat di Buku Raport Anda.
+
+            </div>
+            <div id="raportpts" class="tabcontent">
+                <h3 class="h3raportpts"> Raport PTS (Raport Bayangan)</h3>
+
+                Silakan Pilih Nama Siswa Anda:
+                <select id="namasiswaraportpts" class="w3-select w3-khaki" onchange="raportbayanganpilih()">
+                </select>
+                <hr />
+                <button class='w3button w3-green' onclick="printraportpts()"><i class="fa fa-print"></i> Print</button>
+                <button class='w3button w3-blue tombolpublikasiraportpts' title='Publikasikan ke Siswa'
+                    onclick="publikasikanraportpts()"><i class="fa fa-save"></i>
+                    Publikasikan</button>
+                <hr />
+                <i class="fa fa-gear"></i> Edit Alamat KOP Surat :<br />
+                <span id="editalamatkopsurat" class="w3-pale-green" contenteditable="true">########</span>
+                <hr />
+                <div id="tampilanraportpts"></div>
+                <h3>Publikasi Raport PTS</h3>
+                <button class="w3-button w3-dark-gray tombolcekpublikasiraportpts" onclick="cekpublikasiraportpts()">Cek
+                    Publikasi</button>
+                <div class="kesiapanrapotpts w3-card-4 w3-padding" style="overflow-x: auto;">
+
+                </div>
+                <hr />
+                Keterangan:<br />
+                <ul>
+                    <li>Isikan Data alamat sekolah untuk mengatur KOP SEKOLAH</li>
+                    <li> Pastikan Anda melihat data KKM anda di MENU KURIKULUM
+                    </li>
+                    <li> GAGAL MELODING artinya ada data yang dipanggil belum ada. Pastikan Anda mengisi seluruh data
+                        siswa Anda (terutama kolom Agama)
+                    </li>
+                    <li> Belum Dilaksanakan artinya ada Mata pelajaran yang belum dilaksanakan PTS-nya. Tunggu hingga
+                        siswa mengirimkan data nilainya agar muncul
+                    </li>
+                    <li> Kolom Nilai dan Kolom Ketuntasan pada tabel nilai PTS bisa diedit manual oleh Anda.
+                    </li>
+                    <li> Rekap Nilai, Rata-rata Nilai, dan Titimangsa Raport PTS bisa juga Anda edit manual.
+                    </li>
+                    <li> Nama Mata Pelajaran tergantung pengisian di KKM (Anda bisa mengedit identitas nama Mata
+                        Pelajaran di Tab KKM pada MENU KURIKULUM)
+                    </li>
+
+                </ul>
+
+            </div>
+            <div id="olahnilai" class="tabcontent">
+                <h3>Olah Nilai Raport Semester</h3>
+                Silakan Anda atur di beberapa data yang telah dilacak oleh Lamaso. Klik Tab Acordion di bawah ini untuk
+                melihatnya:
+                <button class="accordbutton w3-center tabacrdkriteria w3-block"
+                    onclick="accordiontab(event,'a_kriteria')">Kriteria dan Rentang KKM </button>
+                <div class="accordkonten w3-container w3-card-4" id="a_kriteria">
+                    <h4>Kriteria dan Rentang Predikat</h4>
+                    <table class="w3-table-all garis">
+                        <tr>
+                            <td>
+                                KKM Satuan Pendidikan :
+                            </td>
+                            <td>
+                                <span class="a_kkm"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Rentang Predikat :
+                            </td>
+                            <td>
+                                <span id="a_rentangkkm"></span> (Pembulatan terdekat)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Formula/rumus rentang :
+                            </td>
+                            <td>
+                                <img
+                                    src="https://chart.apis.google.com/chart?cht=tx&chl=%5Cfrac%7B(100%20-%20kkm)%7D%7B3%7D%20" />
+                                <br /><sub>KKM = KKM Satuan Pendidikan</sub>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <hr />
+                    <h4>Predikat Nilai </h4>
+                    <table class="versi-table tabelkriteriadanrentangkkm">
+                        <tr>
+                            <th>Kriteria</th>
+                            <th>Nilai minimal (>)</th>
+                            <th>Nilai Maksimal (&le;)</th>
+
+                        </tr>
+                        <tr>
+                            <td contenteditable="true">Sangat Baik</td>
+                            <td contenteditable="true" class="w3-center">0</td>
+                            <td class="w3-center">100</td>
+                        </tr>
+                        <tr>
+                            <td contenteditable="true">Baik</td>
+                            <td contenteditable="true" class="w3-center">0</td>
+                            <td contenteditable="true" class="w3-center">100</td>
+                        </tr>
+                        <tr>
+                            <td contenteditable="true">Cukup</td>
+                            <td contenteditable="true" class="a_kkm w3-center">0</td>
+                            <td contenteditable="true" class="w3-center">100</td>
+                        </tr>
+                        <tr>
+                            <td contenteditable="true">Perlu Bimbingan</td>
+                            <td contenteditable="true" class="a_kkm w3-center" colspan="2"> &le; 0
+                            </td>
+
+                        </tr>
+                    </table> <sub>Jika nilai muncul NaN, klik tab OLAH NILAI sekali lagi.</sub>
+                    <hr />
+                    <h4>Simulasi</h4>
+                    Anda dapat membuat simulasi nilai di sini untuk mengetahui predikat kriteria dari nilai tersebut di
+                    sini:
+                    <input type="number" min='0' max='100' onchange="simulasinilai()"
+                        class="w3-input w3-border w3-border-blue w3-aqua w3-center inputsimulasi"
+                        placeholder="masukan angka" />
+                    Kriteria dari nilai tersebut adalah: <b><em class="resultsimulasi"></em></b>
+
+
+                </div>
+                <button class="accordbutton tabacrdk1 w3-center w3-block"
+                    onclick="accordiontab(event,'a_k1')">Kompetensi
+                    Spritual
+                    [K-1]
+                </button>
+                <div class="accordkonten w3-container w3-card-4" id="a_k1">
+                    <h4>Kompetensi Spritual</h4>
+
+                    <div style="overflow-x: auto;" id="tabeldatanilaiki1">
+                        Tabel
+                    </div>
+                </div>
+                <button class="accordbutton w3-center w3-block tabacrdk2"
+                    onclick="accordiontab(event,'a_k2')">Kompetensi
+                    Sosial
+                    [K-2]</button>
+                <div class="accordkonten w3-container w3-card-4" id="a_k2">
+                    <h4>Kompetensi Sosial</h4>
+                    <div style="overflow-x: auto;" id="tabeldatanilaiki2">
+                        Tabel
+                    </div>
+                </div>
+                <button class="accordbutton w3-center w3-block tabacrdk3"
+                    onclick="accordiontab(event,'a_k3')">Kompetensi
+                    Pengetahuan
+                    [K-3]</button>
+                <div class="accordkonten w3-container w3-card-4" id="a_k3">
+                    <h4>Kompetensi Pengetahuan</h4>
+                    <button class="w3-button w3-dark-grey togglekesiapandata w3-tiny"><i class="fa fa-eye"></i> Sumber
+                        Data</button>
+                    <button class="w3-button w3-dark-gray w3-tiny" onclick="tabacrdk3.click()"><i
+                            class="fa fa-refresh"></i>
+                        Refresh</button>
+                    <div class="w3-border w3-border-blue w3-padding datatoggle" style="display: none;">
+                        Kesiapan Data:
+                        <table class="w3-table garis w3-tiny">
+                            <tr>
+                                <td>Status Data</td>
+                                <td>
+                                    Rekap PH <span class="statusdataPH"><i
+                                            class="fa fa-spin fa-spinner"></i></span><br />
+                                    Rekap PTS <span class="statusdataPTS"><i
+                                            class="fa fa-spin fa-spinner"></i></span><br />
+                                    <span class="teksrekappaspak">Rekap PAS/PAK</span> <span class="statusdataPASPAK"><i
+                                            class="fa fa-spin fa-spinner"></i></span>
+
+                                </td>
+                            </tr>
+
+                        </table>
+                        Data Sebaran KD dan KD yang diterima di data server
+                        <div class="resultkdyangdicek"></div>
+
+                    </div>
+                    <hr />
+                    <div id="menumenunilaikd3"></div>
+                    <div class="tab">
+                        <button class="w3-button tabtabrekapph">Rekap PH</button>
+                        <button class="w3-button tabtabrekappts">Rekap PTS</button>
+                        <button class="w3-button tabtabrekappaspak">Rekap PAS/PAK</button>
+                    </div>
+                    <div id="scrollatas" style="position:sticky;top:47px;">
+                        <div id="isiscrollatas">.</div>
+                    </div>
+                    <div style="overflow-x: scroll; overflow-y: hidden;" id="tabeldatanilaiki3">
+                        <i class="fa fa-spin fa-spinner w3-xxlarge"></i> Sedang proses kalkulasi rekap data KI-3,
+                        cek/klik tombol 'Sumber Data' untuk mengetahui prosesnya...
+
+                    </div>
+
+                </div>
+                <button class="accordbutton w3-center w3-block tabacrdk4"
+                    onclick="accordiontab(event,'a_k4')">Kompetensi
+                    Keterampilan [K-4]</button>
+                <div class="accordkonten" id="a_k4">
+                    <h4> Kompetensi Keterampilan</h4>
+                    <button class="w3-button w3-dark-grey togglekesiapandataketerampilan w3-tiny"><i
+                            class="fa fa-eye"></i>
+                        Sumber
+                        Data</button>
+                    <button class="w3-button w3-dark-gray w3-tiny" onclick="tabacrdk4.click()"><i
+                            class="fa fa-refresh"></i>
+                        Refresh</button>
+                    <div class="w3-border w3-border-blue w3-padding datatoggleketerampilan" style="display: none;">
+                        Kesiapan Data:
+                        <table class="w3-table garis w3-tiny">
+                            <tr>
+                                <td>Status Data</td>
+                                <td>
+                                    Rekap Nilai Praktik <span class="statusdatakpraktik"><i
+                                            class="fa fa-spin fa-spinner"></i></span><br />
+                                    Rekap Nilai Produk <span class="statusdatakproduk"><i
+                                            class="fa fa-spin fa-spinner"></i></span><br />
+                                    Rekap Nilai Proyek <span class="statusdatakproyek"><i
+                                            class="fa fa-spin fa-spinner"></i></span>
+
+                                </td>
+                            </tr>
+
+                        </table>
+                        Data Sebaran KD dan KD yang diterima di data server
+                        <div class="resultkdyangdicekketerampilan"></div>
+
+                    </div>
+
+
+                    <hr />
+                    <div id="menumenunilaikd4"></div>
+                    <div class="tab">
+                        <button class="w3-button tabtabrekapkpraktik">Rekap Nilai Praktik</button>
+                        <button class="w3-button tabtabrekapkproduk">Rekap Nilai Produk</button>
+                        <button class="w3-button tabtabrekapkproyek">Rekap Nilai Proyek</button>
+                    </div>
+                    <div id="scrollatasketerampilan">
+                        <div id="isiscrollatasketerampilan">.</div>
+                    </div>
+                    <div style="overflow-x: scroll; overflow-y: hidden;" id="tabeldatanilaiki4">
+                        <i class="fa fa-spin fa-spinner w3-xxlarge"></i> Sedang proses kalkulasi rekap data KI-4,
+                        cek/klik tombol 'Sumber Data' untuk mengetahui prosesnya...
+
+                    </div>
+
+                </div>
+                <button class="accordbutton w3-center w3-block tabdataperkembanganraport"
+                    onclick="accordiontab(event, 'b_lainnya')">Data Perkembangan Lainnya</button>
+                <div class="accordkonten w3-card-2 w3-container" id="b_lainnya">
+                    <h4> Data Perkembangan Siswa </h4>
+                    Silakan lengkapi data pada tabel di bawah ini untuk dijadikan bahan laporan kolektif di Buku Raport
+                    / Buku Induk.
+                    <div class="tab">
+                        <button class="w3-button tabtabekskul">Ekstrakurikuler</button>
+                        <button class="w3-button tabtabsaran">Saran-saran</button>
+                        <button class="w3-button tabtabtinggibadan">Tinggi & Berat Badan</button>
+                        <button class="w3-button tabtabkondisikesehatan">Kondisi Kesehatan</button>
+                        <button class="w3-button tabtabprestasi">Prestasi</button>
+                        <button class="w3-button tabtabkenaikankelas">Kenaikan kelas / Kelulusan</button>
+                    </div>
+                    <div class="w3-border w3-padding w3-border-blue">
+                        <button class="w3-button w3-dark-gray bl_simpanserver w3-round-xxlarge"><i
+                                class="fa fa-globe"></i>
+                            Simpan Ke Server</button>
+                        <button class="w3-button bl_print w3-dark-grey w3-round-xxlarge"><i class="fa fa-print"></i>
+                            Print</button>
+                        <button class="w3-button bl_excel w3-dark-grey w3-round-xxlarge"><i
+                                class="fa fa-file-excel-o"></i>
+                            Ms. Excel</button>
+                        <button class="w3-button bl_importexcel w3-dark-grey w3-round-xxlarge"><i
+                                class="fa fa-file-excel-o"></i>
+                            Import Excel</button>
+                    </div>
+
+
+                    <div id="scrollatas_b">
+                        <div id="isiscrollatas_b">.</div>
+                    </div>
+                    <div style="overflow-x: scroll; overflow-y: hidden;" id="tabel_data_b_lainnya">
+                        <i class="fa fa-spin fa-spinner w3-xxlarge"></i> Sedang proses pemanggilan data di server ...
+
+                    </div>
+
+
+
+                </div>
+                <button class="accordbutton w3-center w3-block tabdataleger"
+                    onclick="accordiontab(event, 'b_leger')">LEGER
+                    NILAI</button>
+                <div class="accordkonten w3-card-2 w3-container" id="b_leger">
+                    <div class="tab">
+                        <button class="w3-button tabverifs active" onclick="pindahTabSeleksi(this,'leger_k3')">Leger
+                            Nilai Pengetahuan</button>
+                        <button class="w3-button tabverifs " onclick="pindahTabSeleksi(this,'leger_k4')">Leger Nilai
+                            Keterampilan</button>
+                    </div>
+                    <div class="w3-border w3-border-blue w3-margin printleger">
+                        TEMPAT PRINT
+                    </div>
+                    <div class="leger_k3 w3-hide" style="overflow-x: auto;">leger k3</div>
+                    <div class="leger_k4 w3-hide" style="overflow-x: auto;">leger k4</div>
+
+
+                </div>
+            </div>
+            <div id="raporthasil" class="tabcontent">
+                <button class="accordbutton w3-center w3-block tr_kesiapandata"
+                    onclick="accordiontab(event,'b_data')">Kesiapan Data</button>
+                <div class="accordkonten w3-container w3-card" id="b_data">Fitur belum diaktifkan</div>
+
+                <button class="accordbutton w3-center w3-block tr_halamannilai"
+                    onclick="accordiontab(event,'b_halamannilai')">Buku Raport</button>
+                <div class="accordkonten w3-container" id="b_halamannilai">
+                    <label for='listnamaraport'>Pilih Nama Siswa:</label>
+                    <select id="listnamaraport" onchange="pilihlistnamaraport()"
+                        class="w3-select w3-border w3-border-blue"></select>
+
+                    <hr class="w3-border w3-border-bottom w3-border-blue" />
+                    <button onclick="cetakraportsiswaini()"><i class="fa fa-print"></i> Print</button>
+                    <button onclick="publikasikanraportsemester()" class="tombolpublikasiraportsemester"><i
+                            class="fa fa-globe"></i> Publikasikan</button>
+                    <button onclick="listpublikasiraportsemester()"><i class="fa fa-list"></i> Daftar Publikasi</button>
+                    <hr class="w3-border w3-border-bottom w3-border-blue" />
+                    <label class="switch">
+                        <input type="checkbox" id="cekbarcode" onchange="changebarcode()" checked>
+                        <span class="slider round"></span>
+                    </label> <span id="ttdbarcoderaport">
+                        Tanda Tangan Barcode (Aktif)
+                    </span>
+
+                    <hr class="w3-border w3-border-bottom w3-border-blue" />
+                    <div id="halamanraport"></div>
+                    <div class="w3-clear"></div>
+                    <hr class="w3-border w3-border-bottom w3-border-blue" />
+
+                    <div id="halamanlistraport"></div>
+
+                </div>
+                <button class="accordbutton w3-center w3-block tr_bukuinduk"
+                    onclick="accordiontab(event,'b_bukuinduk')">Buku Induk</button>
+                <div class="accordkonten w3-container w3-card" id="b_bukuinduk">Fitur belum diaktifkan</div>
+
+
+            </div>
+            <div id="olahijazah" class="tabcontent">
+                <button class="accordbutton w3-center w3-block btnolah_raport"
+                    onclick="accordiontab(event,'ijazah_raport')">Olah Raport</button>
+                <div class="accordkonten w3-container" id="ijazah_raport">
+                    <h3>Rekap Seluruh Raport Kelas 4-6</h3>
+
+                    Tabel ini merupakan rekapitulasi raport siswa dari kelas 4 s/d kelas 6 yang <b>diambil dari server
+                        Lamaso</b>. Nilai rekapitulasi pada tabel ini merupakan nilai rata-rata dari
+                    nilai Kompetensi Pengetahuan (KI-3) dan nilai Kompetensi Keterampilan(KI-4);
+
+                    <div class="w3-border  w3-container w3-padding w3-border-blue">
+                        <button onclick="printolahijazah('tabelolahraportus')"><i class="fa fa-print"></i>
+                            Print</button>
+                        <button onclick="excelolahijazah('tabelolahraportus')"><i class="fa fa-file-excel-o"></i> Ms.
+                            Excel</button>
+                        <button onclick="simpanolahijazah('tabelolahraportus')"><i class="fa fa-save"></i> Simpan di
+                            Server</button><b class="loadingraportus"></b>
+                    </div>
+                    <hr />
+                    <div class="tab">
+                        <button class="w3-button tabtabraport4_1">Kelas 4 Semester 1</button>
+                        <button class="w3-button tabtabraport4_2">Kelas 4 Semester 2</button>
+                        <button class="w3-button tabtabraport5_1">Kelas 5 Semester 1</button>
+                        <button class="w3-button tabtabraport5_2">Kelas 5 Semester 2</button>
+                        <button class="w3-button tabtabraport6_1">Kelas 6 Semester 1</button>
+                        <button class="w3-button tabtabraport6_2">Kelas 6 Semester 2</button>
+                    </div>
+                    Nilai Raport Kelas 6 Semester 2 mungkin saja berbeda dengan nilai yang Anda olah saat ini di menu
+                    Tab Raport. Tombol ini berguna untuk mengambil data nilai raport Kelas 6 Semester 2 berdasarkan
+                    pengolahan nilai di Tab Olah Nilai dan Tab Raport. <button
+                        class="w3-btn w3-green tabupdateraport">Update Nilai Semester Akhir</button>
+                    <hr />
+
+                    <div id="divtabelolahraport" style="overflow-x: auto;">
+
+                        <table class="versi-table tabelolahraportus w3-tiny">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2">No</th>
+                                    <th rowspan="2"
+                                        style="position:sticky;position:-webkit-sticky;left:0px;;box-shadow: inset 0 0 1px #000000">
+                                        Nama Siswa</th>
+                                    <th colspan="9">Kelas 4 Semester 1</th>
+                                    <th colspan="9">Kelas 4 Semester 2</th>
+                                    <th colspan="9">Kelas 5 Semester 1</th>
+                                    <th colspan="9">Kelas 5 Semester 2</th>
+                                    <th colspan="9">Kelas 6 Semester 1</th>
+                                    <th colspan="9">Kelas 6 Semester 2</th>
+                                </tr>
+                                <tr>
+                                    <th>AGAMA</th>
+                                    <th>PKN</th>
+                                    <th>BINDO</th>
+                                    <th>MTK</th>
+                                    <th>IPA</th>
+                                    <th>IPS</th>
+                                    <th>SBDP</th>
+                                    <th>PJOK</th>
+                                    <th>BSUND</th>
+
+                                    <th>AGAMA</th>
+                                    <th>PKN</th>
+                                    <th>BINDO</th>
+                                    <th>MTK</th>
+                                    <th>IPA</th>
+                                    <th>IPS</th>
+                                    <th>SBDP</th>
+                                    <th>PJOK</th>
+                                    <th>BSUND</th>
+
+                                    <th>AGAMA</th>
+                                    <th>PKN</th>
+                                    <th>BINDO</th>
+                                    <th>MTK</th>
+                                    <th>IPA</th>
+                                    <th>IPS</th>
+                                    <th>SBDP</th>
+                                    <th>PJOK</th>
+                                    <th>BSUND</th>
+
+                                    <th>AGAMA</th>
+                                    <th>PKN</th>
+                                    <th>BINDO</th>
+                                    <th>MTK</th>
+                                    <th>IPA</th>
+                                    <th>IPS</th>
+                                    <th>SBDP</th>
+                                    <th>PJOK</th>
+                                    <th>BSUND</th>
+
+                                    <th>AGAMA</th>
+                                    <th>PKN</th>
+                                    <th>BINDO</th>
+                                    <th>MTK</th>
+                                    <th>IPA</th>
+                                    <th>IPS</th>
+                                    <th>SBDP</th>
+                                    <th>PJOK</th>
+                                    <th>BSUND</th>
+
+                                    <th>AGAMA</th>
+                                    <th>PKN</th>
+                                    <th>BINDO</th>
+                                    <th>MTK</th>
+                                    <th>IPA</th>
+                                    <th>IPS</th>
+                                    <th>SBDP</th>
+                                    <th>PJOK</th>
+                                    <th>BSUND</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+                <button class="accordbutton w3-center w3-block btn_rekapraport"
+                    onclick="accordiontab(event,'ijazah_rekapraport')">Rekap Raport</button>
+                <div class="accordkonten w3-container" id="ijazah_rekapraport">
+                    <h4>Tabel Rekapitulasi Raport untuk Ijazah</h4>
+                    Tabel berikut ini merupakan rekapitulasi raport yang akan dijadikan nilai ijazah. Nilai
+                    masing-masing mata pelajaran diperolah berdasarkan rata-rata nilai tiap kelas dan semester di setiap
+                    mata pelajaran.
+                    <div class="w3-border  w3-container w3-padding w3-border-blue">
+                        <button onclick="printolahijazah('tabelrekapraportus')"><i class="fa fa-print"></i>
+                            Print</button>
+                        <button onclick="excelolahijazah('tabelrekapraportus')"><i class="fa fa-file-excel-o"></i> Ms.
+                            Excel</button>
+
+                    </div>
+                    <div style="overflow-x: auto;">
+                        <table class="versi-table tabelrekapraportus w3-tiny">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2">No</th>
+                                    <th rowspan="2">Nama Siswa</th>
+                                    <th colspan="9">Rekap Raport</th>
+                                </tr>
+                                <tr>
+                                    <th>AGAMA</th>
+                                    <th>PKN</th>
+                                    <th>BINDO</th>
+                                    <th>MTK</th>
+                                    <th>IPA</th>
+                                    <th>IPS</th>
+                                    <th>SBDP</th>
+                                    <th>PJOK</th>
+                                    <th>BSUND</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+
+                <button class="accordbutton w3-center w3-block btnolah_us"
+                    onclick="accordiontab(event,'ijazah_us')">Olah
+                    US</button>
+                <div class="accordkonten w3-container" id="ijazah_us">
+                    <h3>Pengolahan Nilai US (Tertulis dan Praktek)</h3>
+                    Ketika Anda melihat ini, ada beberapa hal yang harus dipahami. Di antaranya:
+                    <ul>
+                        <li>
+                            Saat Anda membuka laman ini, maka Lamaso sedang mengambil data <b>Pengolahan Nilai
+                                Server</b>
+                        </li>
+                        <li>
+                            Pengolahan Nilai Server adalah data yang pernah Anda simpan sebelumnya (pernah mengeklik
+                            tombol <b>Simpan di Server</b>);
+                        </li>
+                        <li>
+                            Data Pengolahan Nilai Server adalah data yang bisa Anda update langsung (mengubah nilainya)
+                            kemudian Anda simpan di server.
+                        </li>
+                        <li>
+                            Ketika Anda belum pernah menyimpan data di server (belum pernah mengeklik tombol <b>Simpan
+                                di Server</b>), data yang ditampilkan adalah data <b>Nilai US (Tertulis/Praktek)</b>
+                            yang pernah Anda laksanakan di Lamaso. Hal ini sama dengan Anda mengeklik tombol <b>Nilai US
+                                Asli</b>
+                        </li>
+                        <li>
+                            Tombol <b>Nilai US Asli</b> menampilkan data Nilai US yang telah diterima Lamaso. Nilai ini
+                            adalah nilai Asli siswa Anda sebelum Anda olah/edit. Untuk lebih jelasnya, lihat <b>Status
+                                Data</b> pada tabel.
+                        </li>
+                        <li>
+                            Tabel ini tetap menampilkan data US Praktek untuk semua mata pelajaran. Apabila ada mata
+                            pelajaran yang tidak diikutsertakan dalam Ujian praktek, maka nilainya akan kosong (tidak
+                            ada nilai). Nilai rekap US-nya akan diambil dari Nilai US Tertulis saja.
+                        </li>
+                        <li>
+                            Ada baiknya setelah Anda mengolah data nilai pada tabel ini, Anda wajib menyimpannya di
+                            server (dengan mengeklik tombol <b>Simpan di Server</b>). Sebab, data nilai yang disimpan di
+                            server (status data: Nilai Pengolahan US) adalah data yang siap untuk dijadikan nilai ijazah
+                            di sekolah Anda.
+                        </li>
+
+
+                    </ul>
+                    <div class="w3-border  w3-container w3-padding w3-border-blue">
+                        <button onclick="printolahijazah('tabelolahus')"><i class="fa fa-print"></i> Print</button>
+                        <button onclick="excelolahijazah('tabelolahus')"><i class="fa fa-file-excel-o"></i> Ms.
+                            Excel</button>
+                        <button onclick="simpanolahijazah('tabelolahus')"><i class="fa fa-save"></i> Simpan di
+                            Server</button>
+
+                        <button onclick="ambildataserverus()"><i class="fa fa-eye"></i> Nilai US Asli</button>
+                        <button onclick="document.querySelector('.btnolah_us').click()"><i class="fa fa-eye"></i> Nilai
+                            Pengolahan US</button>
+
+                        <b class="loadingolahus"></b>
+                    </div>
+                    <div class="tab">
+                        <button class="w3-button tabtabustertulis">US Tertulis</button>
+                        <button class="w3-button tabtabuspraktik">US Praktek</button>
+                    </div>
+                    <b class="statusdataolahus">Status
+                        Data: </b>
+                    <div id="divtabelolahus" style="overflow-x: auto;">
+                        <table class="versi-table tabelolahus w3-tiny">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2">No</th>
+                                    <th rowspan="2"
+                                        style="position:sticky;position:-webkit-sticky;left:0px;;box-shadow: inset 0 0 1px #000000">
+                                        Nama Siswa</th>
+                                    <th colspan="9">US Tertulis</th>
+                                    <th colspan="9">US Praktek</th>
+
+                                </tr>
+                                <tr>
+                                    <th>AGAMA</th>
+                                    <th>PKN</th>
+                                    <th>BINDO</th>
+                                    <th>MTK</th>
+                                    <th>IPA</th>
+                                    <th>IPS</th>
+                                    <th>SBDP</th>
+                                    <th>PJOK</th>
+                                    <th>BSUND</th>
+
+                                    <th>AGAMA</th>
+                                    <th>PKN</th>
+                                    <th>BINDO</th>
+                                    <th>MTK</th>
+                                    <th>IPA</th>
+                                    <th>IPS</th>
+                                    <th>SBDP</th>
+                                    <th>PJOK</th>
+                                    <th>BSUND</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
+
+
+                </div>
+                <button class="accordbutton w3-center w3-block btn_rekapus"
+                    onclick="accordiontab(event,'ijazah_rekapus')">Rekap US</button>
+                <div class="accordkonten w3-container" id="ijazah_rekapus">
+                    <h4>Tabel Rekapitulasi Nilai Ujian Sekolah</h4>
+                    keterangan:
+                    <ul>
+                        <li>
+                            Nilai US di sini adalah nilai US yang didapat dari rata-rata <b>Nilai US Tertulis</b> dan
+                            <b>Nilai US Praktik</b> berdasarkan data tabel sebelumnya (Tabel Pengolahan Nilai US atau
+                            tab accordion <b>Olah US</b>)
+                        </li>
+                        <li>
+                            Mata pelajaran untuk US Praktik yang telah diujikan terdeteksi berdasarkan data nilai yang
+                            telah masuk di server. Adapun mata pelajaran yang dimaksud adalah (baris yang berwarna
+                            kuning):
+                            <div class="deteksimapeluspraktek">class tabel</div>
+
+                        </li>
+                    </ul>
+
+                    <div class="w3-border  w3-container w3-padding w3-border-blue">
+                        <button onclick="printolahijazah('tabelrekapus')"><i class="fa fa-print"></i> Print</button>
+                        <button onclick="excelolahijazah('tabelrekapus')"><i class="fa fa-file-excel-o"></i> Ms.
+                            Excel</button>
+
+                    </div>
+                    <div style="overflow-x: auto;">
+                        <table class="versi-table tabelrekapus w3-tiny">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2">No</th>
+                                    <th rowspan="2">Nama Siswa</th>
+                                    <th colspan="9">Rekapitulasi Nilai US</th>
+
+                                </tr>
+                                <tr>
+                                    <th>AGAMA</th>
+                                    <th>PKN</th>
+                                    <th>BINDO</th>
+                                    <th>MTK</th>
+                                    <th>IPA</th>
+                                    <th>IPS</th>
+                                    <th>SBDP</th>
+                                    <th>PJOK</th>
+                                    <th>BSUND</th>
+
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <button class="accordbutton w3-center w3-block btn_nilaiijazah"
+                    onclick="accordiontab(event,'ijazah_nilaiijazah')">Nilai Ijazah</button>
+                <div class="accordkonten w3-container" id="ijazah_nilaiijazah">
+                    <h3 class="judulolahijazah">Daftar Nilai Ijazah</h3>
+                    <div class="tab">
+                        <button class="w3-button tabtabtabelolahijazah">Lihat Pengolahan</button>
+                        <button class="w3-button tabtabtabelnilaiijazahfix">Lihat Nilai Ijazah</button>
+                    </div>
+                    <div class="idtabelolahijazah w3-show" style="overflow-x: auto;">
+                        <div class="w3-border  w3-container w3-padding w3-border-blue">
+                            <button onclick="printolahijazah('tabelolahijazah')"><i class="fa fa-print"></i>
+                                Print</button>
+                            <button onclick="excelolahijazah('tabelolahijazah')"><i class="fa fa-file-excel-o"></i>
+                                Ms.
+                                Excel</button>
+
+                        </div>
+                        <hr />
+                        <table class="versi-table tabelolahijazah w3-tiny">
+                            <thead>
+                                <tr>
+                                    <th rowspan="3">No</th>
+                                    <th rowspan="3">Nama Siswa</th>
+                                    <th colspan="27">Mata Pelajaran / Rekap Raport / US / Nilai Ijazah</th>
+
+                                </tr>
+                                <tr>
+                                    <th colspan="3">AGAMA</th>
+                                    <th colspan="3">PKN</th>
+                                    <th colspan="3">BINDO</th>
+                                    <th colspan="3">MTK</th>
+                                    <th colspan="3">IPA</th>
+                                    <th colspan="3">IPS</th>
+                                    <th colspan="3">SBDP</th>
+                                    <th colspan="3">PJOK</th>
+                                    <th colspan="3">BSUND</th>
+
+                                </tr>
+                                <tr>
+                                    <th>Raport (70%)</th>
+                                    <th>US (30%)</th>
+                                    <th class="w3-yellow">Nilai Ijazah</th>
+
+                                    <th>Raport (70%)</th>
+                                    <th>US (30%)</th>
+                                    <th class="w3-yellow">Nilai Ijazah</th>
+
+                                    <th>Raport (70%)</th>
+                                    <th>US (30%)</th>
+                                    <th class="w3-yellow">Nilai Ijazah</th>
+
+                                    <th>Raport (70%)</th>
+                                    <th>US (30%)</th>
+                                    <th class="w3-yellow">Nilai Ijazah</th>
+
+                                    <th>Raport (70%)</th>
+                                    <th>US (30%)</th>
+                                    <th class="w3-yellow">Nilai Ijazah</th>
+
+                                    <th>Raport (70%)</th>
+                                    <th>US (30%)</th>
+                                    <th class="w3-yellow">Nilai Ijazah</th>
+
+                                    <th>Raport (70%)</th>
+                                    <th>US (30%)</th>
+                                    <th class="w3-yellow">Nilai Ijazah</th>
+
+                                    <th>Raport (70%)</th>
+                                    <th>US (30%)</th>
+                                    <th class="w3-yellow">Nilai Ijazah</th>
+
+                                    <th>Raport (70%)</th>
+                                    <th>US (30%)</th>
+                                    <th class="w3-yellow">Nilai Ijazah</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div class="idtabelnilaiijazahfix w3-hide" style="overflow-x: auto;">
+                        <div class="w3-border  w3-container w3-padding w3-border-blue">
+                            <button onclick="printolahijazah('tabelnilaiijazahfix')"><i class="fa fa-print"></i>
+                                Print</button>
+                            <button onclick="excelolahijazah('tabelnilaiijazahfix')"><i class="fa fa-file-excel-o"></i>
+                                Ms.
+                                Excel</button>
+
+                        </div>
+                        <hr />
+                        <table class="versi-table tabelnilaiijazahfix w3-tiny">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2">No</th>
+                                    <th rowspan="2">Nama Siswa</th>
+                                    <th colspan="9">Nilai Mapel Ijazah</th>
+                                    <th rowspan="2">Rata-rata</th>
+
+                                </tr>
+                                <tr>
+                                    <th>AGAMA</th>
+                                    <th>PKN</th>
+                                    <th>BINDO</th>
+                                    <th>MTK</th>
+                                    <th>IPA</th>
+                                    <th>IPS</th>
+                                    <th>SBDP</th>
+                                    <th>PJOK</th>
+                                    <th>BSUND</th>
+
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div id="pengumumankelulusan" class="tabcontent">
+                <button class="accordbutton w3-center w3-block btn_kelulusan"
+                    onclick="accordiontab(event,'divkelulusan')">Surat Kelulusan</button>
+                <div class="accordkonten" id="divkelulusan">
+                    <div class="w3-border  w3-container w3-padding w3-border-blue">
+                        <label for="idselectnamakelulusan">Pilih Nama Siswa</label>
+                        <select id="idselectnamakelulusan" class="w3-select w3-border w3-border-blue"
+                            onchange="selectnamakelulusan()">
+                            <i class="fa fa-spin fa-spinner w3-xxlarge"></i>
+                        </select>
+                        <hr />
+                        <button onclick="printformatijazah('htmlkelulusan')"><i class="fa fa-print"></i> Print</button>
+                        <button class="pub_skkelulusan"
+                            onclick="fn_publikasikan('pub_skkelulusan','htmlkelulusan','idselectnamakelulusan','skkelulusan')"><i
+                                class="fa fa-globe"></i> Publikasikan</button>
+                        <button class="tabel_skkelulusan"
+                            onclick="fn_tabelpublikasi('tabel_skkelulusan','htmlkelulusan','divpublikasikelulusan','skkelulusan')"><i
+                                class="fa fa-eye"></i> Tabel Publikasi</button>
+                        <label class="switch">
+                            <input type="checkbox" id="cekbarcodekelulusan" onchange="changebarcodekelulusan()" checked>
+                            <span class="slider round"></span>
+                        </label> <span id="ttdbarcodekelulusan">
+                            Tanda Tangan Barcode (Aktif)
+                        </span>
+                        <hr />
+                        <div id="idnosuratskl" contenteditable="true"> 42.2/... ... .../SD/VI/2021</div>
+                        <div id="idtglsuratskl" contenteditable="true">Pada Hari Senin, Tanggal 7 Juni Tahun 2021</div>
+                    </div>
+                    <div class="htmlkelulusan w3-show">
+                    </div>
+                    <div class="w3-clear"></div>
+                    <div class="divpublikasikelulusan w3-hide">tabel data publikasi</div>
+                </div>
+                <button class="accordbutton w3-center w3-block btn_skhu" onclick="accordiontab(event,'divskhu')">Surat
+                    Keterangan Hasil Belajar (SKHU)</button>
+                <div class="accordkonten" id="divskhu">
+                    <div class="w3-border  w3-container w3-padding w3-border-blue">
+                        <label for="idselectnamaskhu">Pilih Nama Siswa</label>
+                        <select id="idselectnamaskhu" class="w3-select w3-border w3-border-blue"
+                            onchange="selectnamaskhu()">
+                            <i class="fa fa-spin fa-spinner w3-xxlarge"></i>
+                        </select>
+                        <hr />
+                        <button onclick="printformatijazah('htmlskhu')"><i class="fa fa-print"></i> Print</button>
+                        <button class="pub_skhu"
+                            onclick="fn_publikasikan('pub_skhu','htmlskhu','idselectnamaskhu','skhu')"><i
+                                class="fa fa-globe"></i> Publikasikan</button>
+                        <button class="tabel_skhu"
+                            onclick="fn_tabelpublikasi('tabel_skhu','htmlskhu','div_skhu','skhu')"><i
+                                class="fa fa-eye"></i> Tabel Publikasi</button>
+                        <label class="switch">
+                            <input type="checkbox" id="cekbarcodeskhu" onchange="changebarcodeskhu()" checked>
+                            <span class="slider round"></span>
+                        </label> <span id="ttdbarcodeskhu">
+                            Tanda Tangan Barcode (Aktif)
+                        </span>
+
+                    </div>
+                    <div class="htmlskhu w3-show">
+
+                    </div>
+                    <div class="w3-clear"></div>
+                    <div class="div_skhu w3-hide">tabel data publikasi</div>
+                </div>
+                <button class="accordbutton w3-center w3-block btn_ketraport"
+                    onclick="accordiontab(event,'divketraport')">Daftar Nilai Raport</button>
+                <div class="accordkonten" id="divketraport">
+                    <div class="w3-border  w3-container w3-padding w3-border-blue">
+                        <label for="idselectnamasketraport">Pilih Nama Siswa</label>
+                        <select id="idselectnamaketraport" class="w3-select w3-border w3-border-blue"
+                            onchange="selectnamaketraport()">
+                            <i class="fa fa-spin fa-spinner w3-xxlarge"></i>
+                        </select>
+                        <hr />
+                        <button onclick="printformatijazah('htmlketraport')"><i class="fa fa-print"></i> Print</button>
+                        <button class="pub_daftarraport"
+                            onclick="fn_publikasikan('pub_daftarraport','htmlketraport','idselectnamaketraport','daftarraport')"><i
+                                class="fa fa-globe"></i> Publikasikan</button>
+                        <button class="tabel_daftarraport"
+                            onclick="fn_tabelpublikasi('tabel_daftarraport','htmlketraport','div_ketraport','daftarraport')"><i
+                                class="fa fa-eye"></i> Tabel Publikasi</button>
+                        <label class="switch">
+                            <input type="checkbox" id="cekbarcodeketraport" onchange="changebarcodeketraport()" checked>
+                            <span class="slider round"></span>
+                        </label> <span id="ttdbarcodeketraport">
+                            Tanda Tangan Barcode (Aktif)
+                        </span>
+
+                    </div>
+                    <div class="htmlketraport w3-show">
+
+                    </div>
+                    <div class="w3-clear"></div>
+                    <div class="div_ketraport w3-hide">tabel data publikasi</div>
+                </div>
+                <button class="accordbutton w3-center w3-block btn_formatijazah"
+                    onclick="accordiontab(event,'divformatijazah')">Sampel Ijazah</button>
+                <div class="accordkonten" id="divformatijazah">
+                    <div class="w3-border  w3-container w3-padding w3-border-blue">
+                        <label for="idselectnamaformatijazah">Pilih Nama Siswa</label>
+                        <select id="idselectnamaformatijazah" class="w3-select w3-border w3-border-blue"
+                            onchange="selectnamaformatijazah()">
+                            <i class="fa fa-spin fa-spinner w3-xxlarge"></i>
+                        </select>
+                        <hr />
+                        <button onclick="printformatijazah('htmlformatijazah')"><i class="fa fa-print"></i>
+                            Print</button>
+
+                    </div>
+                    Halaman ijazah ini hanya diperuntukkan untuk panduan penulisan ijazah sesuai dengan Persekjen
+                    Kemendikbud No. 23 Tahun 2020 tentang TENTANG
+                    SPESIFIKASI TEKNIS, BENTUK, DAN TATA CARA PENGISIAN BLANGKO IJAZAH PENDIDIKAN DASAR DAN PENDIDIKAN
+                    MENENGAH TAHUN PELAJARAN 2020/2021.
+                    <hr />
+                    Setting: NPSN sekolah Anda <b class="idnpsn" contenteditable="true">20228914 (contoh)</b>
+                    <hr />
+                    <div class="htmlformatijazah">
+
+                    </div>
+                    <div class="w3-clear"></div>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="w3-container w3-card" id="dataframekreatif">
+            <h3>Buat Frame </h3>
+            <div id="kesiapanmeme">
+                Kreasikan Poto Anda di sini:
+            </div>
+
+            <br />
+            <label for="pilihframe">Pilih Frame:</label>
+            <select id="pilihframe" class="w3-select  w3-deep-purple" onchange="selectframekreatif()">
+                <option value="0" selected>Silakan Pilih Frame</option>
+            </select>
+            <hr />
+
+
+            <!-- <div id="tampilinframe" style="overflow-x: auto;"> -->
+            <div id="tampilinframe" style="width:75%;margin:0 auto">
+                <input type="file" id="imageInput" accept="image/*" class="w3-hide">
+                <!-- <div id="bingkai" class="w3-display-container" style="width:600px"> -->
+                <div id="bingkai" class="w3-display-container w3-image">
+                    <img src="/img/192.png" id="potomeme"
+                        style="width:60%;height:70%;z-index: -10;position:absolute;top:21%;right:0;">
+                    <img id="scream" src="/img/192.png" class="w3-image" />
+
+                </div>
+            </div>
+            <canvas id="myCanvas" onclick="downloadCanvas(this)" style="width:600px;display: none;">
+            </canvas>
+            <hr />
+            <hr />
+            <label for="imageInput" class="w3-button w3-theme-dark w3-show"><i class="fa fa-camera"></i> Ambil
+                Poto</label>
+            <label id="downloadmeme" onclick="downloadCanvas()" class="w3-button w3-blue w3-hide"><i
+                    class="fa fa-download"></i> Download</label>
+        </div>
+        <div style="height:600px"></div>
+    </div>
+
+    <div class="w3-modal" id="modalbuatsebarankd">
+        <div class="w3-modal-content" style="width:90%">
+            <header class="w3-container w3-center w3-card-4 warnaeka w3-margin-bottom">
+                <span class="w3-button w3-red w3-right" onclick="modalbuatsebarankd.style.display='none'">&times;</span>
+                <h4>Tabel Bantu Sebaran KD</h4>
+            </header>
+            <div class="w3-container">
+
+                <table class="w3-table-all w3-centered w3-bordered mbs_tabelbantusebarankd">
+                    <thead>
+                        <tr>
+                            <th>Mata Pelajaran</th>
+                            <th>No. KD</th>
+                            <th>No Soal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <select class="w3-select mbs_selectmapel brsmapel_0"
+                                    onchange="fn_mbs_selectmapel(this)">
+                                    <option value="" selected>PILIH MAPEL</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="w3-select mbs_selectkd brskd_0" onchange="fn_mbs_selectkd(this)">
+                                    <option value="" selected>PILIH KD</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input class="w3-input w3-border w3-border-teal mbs_textarea brsnosoal_0"
+                                    placeholder="Contoh pengisian: 1, 2, 3 (di akhir nomor jangan diberi koma)"></input>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td><button class="w3-btn warnaeka w3-border-bottom w3-border-black w3-small w3-round-large"
+                                    onclick="fn_mbs_tambahbaris()">Tambah Baris</button></td>
+                            <td><button class="w3-btn warnaeka w3-border-bottom w3-border-black w3-small w3-round-large"
+                                    onclick="fn_mbs_hapusbaris()">Hapus Baris</button></td>
+                            <td><button class="w3-btn warnaeka w3-border-bottom w3-border-black w3-small w3-round-large"
+                                    onclick="fn_mbs_simpansebarankd()">Simpan ke Text Area</button></td>
+
+                        </tr>
+                    </tfoot>
+                </table>
+                <div class="w3-tiny">
+
+                    Keterangan:
+                    <ul>
+                        <li>Piihan Nomor KD pada masing-masing KD adalah KD yang telah Anda ceklis sebelumnya di menu
+                            KURIKULUM</li>
+
+                        <li>Isikan nomor soal aja dengan dipisahkan koma setiap nomor. contoh: 1, 2, 3 (di akhir nomor
+                            jangan diberi koma)</li>
+                        <li>Apabila ada baris sel yang berwarna merah, artinya ada kesalahan dalam pembuatan kode
+                            sebaran KD atau KD yang tidak dipilih di menu Kurikulum.</li>
+                    </ul>
+                </div>
+            </div>
+            <footer class="w3-container w3-center w3-card-4 warnaeka w3-margin-top">
+                Sebaran KD di elamaso sifatnya wajib meskipun Anda tidak membuat konten materi yang berisi soal (jenis
+                tagihan lainnya). Jika Anda hanya membuat konten materi tanpa memerlukan sebaran KD, Anda klik tombol di
+                bawah ini:
+                <br /><br /><button onclick="tanpasebarankd()"
+                    class="w3-btn w3-yellow w3-border-bottom w3-border-black w3-round-large">Tanpa Sebaran KD</button>
+                <br /><br /><button onclick="modalbuatsebarankd.style.display='none'"
+                    class="w3-btn w3-yellow w3-border-bottom w3-border-black w3-round-large">Tutup</button>
+            </footer>
+        </div>
+    </div>
+    <!--  08 modaledituser -->
+    <div id="modaledituser" class="modal">
+        <div class="modal-contentt container animate">
+            <div class="imgcontainer">
+                <img src="/img/lamaso.webp" style="width:90px;height:90px;border:1px solid blue"
+                    class="w3-circle" /><br />
+                <h3 id="judulpetunjukedit">Profil Guru</h3>
+                <h5>Anda dapat mengubah data profil Anda di sini.</h5>
+                <span onclick="document.getElementById('modaledituser').style.display='none';" class="close"
+                    title="Tutup Form">&times;</span>
+            </div>
+            <div id="divedituser">
+                <form id="formedituser">
+                    <fieldset style="border:1px solid red;padding:5px;border-radius: 5px;background-color: aquamarine;">
+                        <label for="email">Akun Gmail :</label><br />
+                        <input name="email" id="emailedit" type="text" style="width:80%;border:1px solid blue"
+                            onchange="formatemail()" /><br /><br />
+                    </fieldset><br />
+                    <h3>Nama Pengguna dan Password saat Login</h3>
+                    <fieldset
+                        style="border:1px solid red;padding:5px;border-radius: 5px;background-color: rgb(160, 206, 243);">
+                        <label for="username">Nama Pengguna: </label><br />
+                        <input type="text" name="username" id="usernameedit" autocomplete="username"
+                            style="width:80%;border:1px solid blue" onchange="fnjangandobel()" />
+                        <br /><span id="jangandobeledit">...</span>
+                        <br /><br />
+                        <label for="password">Password :</label><br />
+                        <input type="password" name="password" id="passwordedit" style="width:80%;border:1px solid blue"
+                            autocomplete="current-password" /><br />
+                        <label id="lihatpasswordedit" for="checkboxlihatpasswordedit"><i class="fa fa-eye"></i>
+                            Lihat
+                            Password</label>
+                        <input type="checkbox" onclick="fnlihatpasswordedit()" id="checkboxlihatpasswordedit"
+                            style="display: none;"><br />
+                    </fieldset><br />
+                    <h3>Data Sekolah: </h3>
+                    <fieldset
+                        style="border:1px solid red;padding:5px;border-radius: 5px;background-color: rgb(185, 255, 127);">
+                        <label for="sekolah">Nama Sekolah:</label><br />
+                        <input type="text" name="sekolah" id="sekolahedit"
+                            style="width:80%;border:1px solid blue" /><br /><br />
+                        <label for="kepsek_namalengkap">Nama Kepala Sekolah:</label><br />
+                        <input type="text" name="kepsek_namalengkap" id="kepsek_namalengkapedit"
+                            style="width:80%;border:1px solid blue" /><br /><br />
+                        <label for="kepsek_nip">NIP Kepala Sekolah:</label><br />
+                        <input type="text" name="kepsek_nip" id="kepsek_nipedit"
+                            style="width:80%;border:1px solid blue" /><br /><br />
+
+                    </fieldset>
+
+                    <h3>Data Diri Anda </h3>
+                    <fieldset
+                        style="border:1px solid red;padding:5px;border-radius: 5px;background-color: rgb(247, 240, 177);">
+                        <label for="guru_namalengkapedit">Nama Anda:</label><br />
+                        <input id="guru_namalengkapedit" name="guru_namalengkap" type="text"
+                            style="width:80%;border:1px solid blue" /><br /><br />
+                        <label for="gurukelas_gmp">Anda sebagai Guru Kelas/Guru Mata Pelajaran:</label>
+                        <select id="gurukelas_gmpedit" name="gurukelas_gmp"
+                            style="width:80%;border:1px solid blue" /><br /><br />
+                        <option value="Guru Kelas">Guru Kelas</option>
+                        <option value="Guru Mapel">Guru Mapel</option>
+                        </select><br /><br />
+                        <label for="jenjangedit">Jenjang Kelas</label><br />
+                        <input id=" jenjangedit" name="jenjang" type="number"
+                            style="width:50%;border:1px solid blue" /><br /><br />
+                        <label for="kelas">Kelas Anda mengajar</label><br />
+                        <input id="kelasedit" name="kelas" type="text"
+                            style="width:50%;border:1px solid blue" /><br /><br />
+                        <label for="guru_nip">NIP :</label><br />
+                        <input id="guru_nipedit" name="guru_nip" style="width:80%;border:1px solid blue" /><br /><br />
+                        <label for="no_wa_user">No. WhatsApp :</label><br />
+                        <input id="no_wa_useredit" name="no_wa_user" type="tel"
+                            style="width:80%;border:1px solid blue" /><br /><br />
+                        <input id="kelasampu" name="kelasampu" class="w3-hide" />
+                        <input id="idabsen" name="idabsen" class="w3-hide" />
+
+                        <label for="upl_avataredit"
+                            style="cursor:pointer;border:1px solid blue;background-color:#eee;padding:5px;border-radius:5px"><i
+                                class="fa fa-upload"></i> Upload Avatar</label><br />
+                        <img id="avatarkuedit" scr="/img/lamaso.webp" style="width:200px;border:1px solid red" />
+                        <div id="idpoto_potoguruedit" style="display: none;">
+                            <input type="text" id="idpoto_potoguru" name="idpoto_potoguru" style="display: block;" />
+                            <!-- <input type="text" name="filename" />
+                                <input type="text" name="mimeType" /> -->
+                            <!-- <input type="text" name="dobel" /> -->
+                        </div>
+                    </fieldset>
+
+                </form>
+                <input type="file" id="upl_avataredit" onchange="ungg_avataredit()" style="display: none"
+                    accept="image/*" />
+                <div id="prosesloadingdaftaredit"></div>
+            </div>
+            <button onclick="tomboledituser()" id="registrasikanedit" class="login">Simpan</button>
+            <button onclick="document.getElementById('modaledituser').style.display='none'" id="tutupeksekusitambahuser"
+                class="login">Tutup</button>
+
+        </div>
+    </div>
+    <!--  DIV MODAL INPUTAN (EDIT, HAPUS, TAMBAH, BANTU ABSENSI -->
+    <div id="modal_edit_siswa" class="modal">
+        <div class="modal-content container">
+            <div class="imgcontainer modal-content">
+                <h2 id="ketedithapus">EDIT SISWA</h2>
+                <div id="testestestes" style="display: none;">Loading ...</div>
+                <h4 id="resultedit">Result</h4>
+
+                <b id="namalama" style="display:none"></b>
+            </div>
+            <div id="inputtambahan" style="overflow-x: auto;"></div>
+            <form id="modaledithapus">
+                DIEDIT OLEH:
+                <input id="dieditoleh" name="dieditoleh" style="display:block" disabled />
+                <br />
+                <label for="aktif">Keaktifan </label><br />
+                <input id="aktif" name="aktif" style="width:50%;height:30px;border:1px solid blue;border-radius:10px"
+                    disabled /><br />
+                <sub style="color:blue">Aktif maksudnya siswa ini berada di kelas Anda</sub>
+                <br />
+                <br />
+
+                <label for="jenjang">Jenjang </label><br />
+                <input id="jenjang" name="jenjang"
+                    style="width:50px;height:30px;border:1px solid blue;border-radius:10px" disabled /><br />
+                <br />
+
+                <label for="id">
+                    ID database Siswa (KODE TOKEN):
+                </label><br />
+                <input id="id" name="id" style="width:50px;height:30px;border:1px solid blue;border-radius:10px"
+                    disabled /><br />
+                <br />
+
+                <label for="nama_rombel">Kelas:</label><br />
+                <select id="nama_rombel" name="nama_rombel"
+                    style="width:50px;height:30px;border:1px solid blue;border-radius:10px">
+                </select>
+                <br /><br />
+
+                <label for="pd_hp">No Whatsapp:</label><br />
+
+                <input id="pd_hp" type="tel" name="pd_hp"
+                    style="width:80%;height:30px;border:1px solid blue;border-radius:10px" /><br />
+                <br />
+
+                <label for="nis">No. Induk Siswa:</label><br />
+                <input id="nis" name="nis"
+                    style="width:90%;height:30px;border:1px solid blue;border-radius:10px" /><br /><br />
+                <label for="nisn">NISN:</label><br />
+                <input type="text" id="nisn" name="nisn"
+                    style="width:90%;height:30px;border:1px solid blue;border-radius:10px" /><br /><br />
+                <label for="pd_nama">Nama Siswa:</label><br />
+                <input type="text" id="pd_nama" name="pd_nama"
+                    style="width:90%;height:30px;border:1px solid blue;border-radius:10px" /><br /><br />
+                <label for="pd_jk">Jenis Kelamin:</label><br />
+                <select name="pd_jk" id="pd_jk" style="width:30%;height:30px;border:1px solid blue;border-radius:10px">
+                    <option value="L" id="L">Laki-laki</option>
+                    <option value="P" id="P">Perempuan</option>
+                </select> <br /><br />
+                <label for="pd_tl">Tempat Lahir:</label><br />
+                <input type="text" id="pd_tl" name="pd_tl"
+                    style="width:90%;height:30px;border:1px solid blue;border-radius:10px" /><br /><br />
+                <label for="pd_tanggallahir">Tanggal Lahir: (bulan/tanggal/tahun):</label><br />
+                <input id="pd_tanggallahir" name="pd_tanggallahir" type="Date" /><br />
+                <sub style="color:red" id="terjemahantanggal"></sub>
+                <br /><br />
+                <label for="pd_agama">Agama:</label><br />
+                <select name="pd_agama" id="pd_agama"
+                    style="width:30%;height:30px;border:1px solid blue;border-radius:10px">
+                    <option value="" id="pilihagama">Pilih Agama</option>
+                    <option value="ISLAM" id="Islam">Islam</option>
+                    <option value="KRISTEN" id="Kristen">Kristen/Protestan</option>
+                    <option value="KATHOLIK" id="Katholik">Katholik</option>
+                    <option value="HINDU" id="Hindu">Hindu</option>
+                    <option value="BUDHA" id="Budha">Budha</option>
+                    <option value="KHONGHUCU" id="Khonghucu">Khonghucu</option>
+                    <option value="Kepercayaan Lain" id="Kepercayaan">Kepercayaan Lainnya</option>
+                </select> <br /> <br />
+                <label for="nik">NIK</label>
+                <br />
+                <input id="nik" name="nik"
+                    style="width:80%;height:30px;border:1px solid blue;border-radius:10px" /><br /><br />
+                <label for="nokk">No Kartu Keluarga</label><br />
+                <input id="nokk" name="nokk"
+                    style="width:80%;height:30px;border:1px solid blue;border-radius:10px" /><br /><br />
+                <label for="pd_alamat">Alamat:</label><br />
+                <input id="pd_alamat" name="pd_alamat"
+                    style="width:80%;height:30px;border:1px solid blue;border-radius:10px" /><br /><br />
+                <label for="modalnamaayahsiswa">Nama Ayah:</label><br />
+                <input id="pd_namaayah" name="pd_namaayah"
+                    style="width:90%;height:30px;border:1px solid blue;border-radius:10px" /><br /><br />
+                <label for="pd_namaibu">Nama Ibu:</label><br />
+                <input id="pd_namaibu" name="pd_namaibu"
+                    style="width:90%;height:30px;border:1px solid blue;border-radius:10px" /><br />
+
+
+            </form>
+
+
+
+            <button id="tomboledithapus" class="login" style="display:block" onclick="kirimeditsiswa()"><i
+                    class="fa fa-edit"></i> SUBMIT DATA</button>
+
+            <button onclick="document.getElementById('modal_edit_siswa').style.display='none'" id="tomboleditlogin"
+                class="login">Batal</button>
+        </div>
+    </div>
+    <!--  Kirim WA ke siswa -->
+    <div id="wasiswa" class="modal">
+        <form id="kirimwasiswa" class="modal-content animate" name="kirimwasiswa">
+            <div class="imgcontainer"><i class="fa fa-whatsapp w3-xxxlarge"></i><br />Kirim Pesan Whatsapp ke Siswa
+            </div>
+            <div class="container">
+
+                <span id="pesanawalwa">Masukkan No. WA </span><b id="namaanakdiwa"></b><br />
+                <input type="tel" id="nowasiswa" placeholder="Gunakan Format +62, contoh +628123456789"
+                    style="width:100%;height:30px" name="nowasiswa" /><br />
+                Tulis pesan khusus:<br />
+                <textarea name="tekssiswa" cols="20" rows="30"></textarea>
+            </div>
+
+        </form>
+        <div id="tombolotomatis" class="modal-contentt animate">
+            <!--  <button type="button" id="tombolwasiswa" class="login" ><i class="fa fa-whatsapp"></i>  Kirim Pesan</button> -->
+        </div>
+        <div class="modal-contentt" style="background-color:#f1f1f1">
+            <button type="button" onclick="document.getElementById('wasiswa').style.display='none'"
+                class="cancelbtn wa"><i class="fa fa-cross"></i> Keluar</button>
+
+        </div>
+    </div>
+    <!--  bantu Absen siswa -->
+    <div id="divbantuabsen" class="modal">
+        <div class="modal-contenta animate">
+            <div class="imgcontainer">
+                <img id="potosiswa" style="width:100px;width:100px;border:2px dotted red;padding:2px" /><br />
+                <span id="bantusiapa"></span>
+            </div>
+
+            <form name="bantuisi" class="animate">
+                <div class="container">
+                    <label for="timp_stampbantu">Tanggal Absen:</label><br />
+                    <input id="time_stampbantu" name="time_stampbantu" onchange="bantuisitanggal()"
+                        type="date" /><br /><span id="dibaca"></span><br /><br />
+                    <!-- <input id="time_stampbantu" name="time_stampbantu" type="date" /><br /><span
+                        id="dibaca"></span><br /><br /> -->
+                    <label for="pilih_kehadiran">Pilih Jenis Kehadiran:</label>
+                    <select id="pilih_kehadiran" name="pilih_kehadiran" onchange="gantikehadiranbantu()"
+                        style="height:30px;width:100%">
+                        <option value="Hadir" selected>Hadir</option>
+                        <option value="Ijin">Ijin
+                        </option>
+                        <option value="Sakit">Sakit
+                        </option>
+                    </select>
+                    <br /><br />
+                    Ambil Gambar:<br />
+                    <label for="lampirkanpotoabsen"
+                        style="border-radius:15px;border:1px solid black;background-color:#eee;padding:5px"><i
+                            class="fa fa-camera"></i> Ambil Poto:</label><br />
+                    <input type="file" id="lampirkanpotoabsen" onchange="uploadfilebantu()" style="display:none" />
+                </div>
+            </form>
+            <hr />
+
+            <form name="bantukirim" id="bantukirim">
+                <div id="thankyou_messagekirim">Terima kasih, data sudah berhasil tersimpan
+                </div>
+                <div id="sembunyikan" style="display:none">
+                    time_stamp:
+                    <input name="Time_Stamp" id="Time_Stampbantukirim" /><br />
+                    <input name="tokensiswa" id="tokensiswabantukirim" /><br />
+                    id:
+                    <input name="id" id="idbantukirim" /><br />
+                    name:
+                    <input name="name" id="namebantukirim" /><br />
+                    kehadiran(Select)diijinkan:
+                    <input name="kehadiran" id="kehadiranbantukirim" value="Hadir" /><br />
+                    fileContent diijinkan:
+                    <div id="kodefilepotosiswaabsen">Di sini akan muncul elemen input yang memiliki attribute name:
+                        data/fileContent, filename, mimeType</div>
+                    <!-- <input name="fileContent" id="fileContentbantukirim" /><br /> -->
+                    kelas:
+                    <input name="kelas" id="kelasbantukirim" />
+                </div>
+            </form>
+            <div id="tombolbantusimpan">
+                <button onclick="tombolbantukirim()" style="display:none" class="login" id="loginbantu"><i
+                        class="fa fa-floppy-o"></i>
+                    Simpan</button>
+                <button
+                    onclick="document.getElementById('divbantuabsen').style.display='none';thankyou_messagekirim.innerHTML=''"
+                    class="login" id="loginclosebantu">Batal</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modaleditkaldik" class="modal">
+        <div class="modal-content">
+            <span onclick="document.getElementById('modaleditkaldik').style.display='none' ;"
+                class="w3-right w3-xxlarge w3-border" title="Tutup Form">&times;</span>
+            <div class="container w3-center">
+                <h3 id="juduleditkaldik">Edit Kalender Pendidikan</h3>
+
+
+                <img src="/img/lamaso.webp" class="w3-circle" style="width:90px;border:5px dotted blue" />
+
+            </div>
+
+            <div class="container">
+
+
+                <form id="formmodaleditkaldik" name="formmodaleditkaldik">
+                    <input id="idbariskaldik" type="hidden" name="idbariskaldik" />
+                    <label for="keterangan" class="w3-text-blue">Keterangan</label>
+                    <input id="keterangan" type="text" name="keterangan" class="w3-input w3-border w3-round" />
+                    <br />
+                    <label for="start_tgl" class="w3-text-blue">Tanggal
+                        Mulai</label><br><sub>format(MM/DD/YYY)</sub>
+                    <input id="start_tgl" name="start_tgl" type="date" class="w3-input w3-border w3-round"
+                        style="width:50%" />
+                    <br />
+                    <label for="end_tgl" class="w3-text-blue">Tanggal Akhir</label>
+                    <br><sub>Jika hanya satu hari, isikan sama
+                        dengan Tanggal Mulai (wajib diisi).<br />format(MM/DD/YYY)</sub>
+                    <input id="end_tgl" name="end_tgl" type="date" class="w3-input w3-border w3-round"
+                        style="width:50%" />
+                </form>
+                <div id="datakalenderdihapus" style="overflow-x:auto;text-align: center;"></div>
+                <button onclick="kirimeditkalender()" class="wa" id="tomboleditkaldik">EDIT</button>
+                <button onclick=" document.getElementById('modaleditkaldik').style.display='none'" ; class="
+                    login">&times; Batal</button>
+            </div>
+        </div>
+    </div>
+    <div class="w3-modal w3-white w3-animate-zoom" id="pranalamateri">
+        <div class="w3-modal-content w3-card-4" style="width:98%">
+            <span class="w3-btn w3-red w3-right w3-card-4"
+                onclick="pranalamateri.style.display='none';idpracetak.innerHTML=''">&times;</span>
+            <div class="w3-container classReviewMateri w3-margin" id="idpracetak">
+
+                INI KONTEN MATERI
+            </div>
+        </div>
+    </div>
+    <div class="w3-modal w3-white" id="modaldaftarnilai">
+        <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="width:98%">
+            <header class="w3-container w3-pale-blue">
+                <span class="w3-button w3-hover-red w3-card-4 w3-xlarge w3-display-topright "
+                    onclick="modaldaftarnilai.style.display='none'">&times;</span>
+                <h2>DAFTAR NILAI
+                    <span id="modalidmapel">IDMAPEL</span>
+                </h2>
+            </header>
+            <div class="w3-bar w3-border-bottom">
+                <button class="tablink w3-bar-item w3-button w3-border-right"
+                    onclick="bukaModalTab(event, 'tablinkKD')">Nilai KD</button>
+                <button class="tablink w3-bar-item w3-button w3-border-right tabpg"
+                    onclick="bukaModalTab(event, 'tablinkPG')">PG</button>
+                <button class="tablink w3-bar-item w3-button w3-border-right tabskor"
+                    onclick="bukaModalTab(event, 'tablinkSkor')">Skor</button>
+                <!-- <button class="tablink w3-bar-item w3-button w3-border-right tabgabungan"
+                    onclick="bukaModalTab(event, 'tablinkGabungan')">Gabungan</button> -->
+            </div>
+            <div id="idtabaktif" class="w3-hide">idtabaktif</div>
+            <div id="koreksidarimana" class="w3-hide">koreksidarimana</div>
+            <div id="tablinkKD" class="w3-container city w3-padding">
+                <h3>Rekap Nilai Per KD</h3>
+                <hr>
+                <div id="tablinkKDtabel" style="overflow-x: auto;">
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Soluta, omnis maiores eligendi quam
+                    quis
+                    harum
+
+                </div>
+
+            </div>
+            <div id="tablinkPG" class="w3-container city w3-padding">
+                <h3>Analisis Soal tipe Pilihan Ganda</h3>
+                <hr>
+                <div id="tablinkPGtabel" style="overflow-x: auto;">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed ratione iste provident temporibus
+                    voluptatem. Temporibus asperiores placeat esse mollitia tempore. Quis debitis error ab et!
+                    Ducimus
+                    aliquam iusto voluptatem nisi!
+                </div>
+            </div>
+            <div id="tablinkSkor" class="w3-container city w3-padding">
+                <h3>Analisis Soal tipe SKOR</h3>
+                <hr>
+                <div id="tablinkSkortabel" style="overflow-x: auto;">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat ex illo tempore cumque
+                    provident?
+                    Sapiente, veritatis. Aspernatur numquam, odit expedita voluptatibus repellat aliquam architecto,
+                    ex
+                    amet
+                    veniam earum corrupti alias!
+                </div>
+            </div>
+            <!-- <div id="tablinkGabungan" class="w3-container city  w3-padding">
+                <h3>Analisis Gabungan</h3>
+                <hr>
+                <div id="tablinkGabungantabel" style="overflow-x: auto;">
+                </div>
+            </div> -->
+
+            <!-- <div class="w3-container tabdaftarnilai">
+                DI SINI AKAN TAMPIL TABEL DAN TAB
+            </div> -->
+        </div>
+    </div>
+
+    <div class="w3-modal w3-white" id="prevhp">
+        <div class="w3-modal-container w3-animate-zoom">
+            <div class="w3-modal-content">
+
+                <div
+                    style="border:1px solid black;width:320px;height:500px;margin:0px auto;padding:0;border-radius:5px 5px 0px 0px">
+                    <div style="padding:0px 2px;height:50px;background-color:black;color:white;margin-top:0px;">
+                        &nbsp;
+                        <span class="w3-right" style="font-size:12px"> 07:30 </span> <i
+                            class="fa fa-battery-full w3-right">&nbsp; </i> <i class="fa fa-signal w3-right">&nbsp;
+                        </i>
+                        <i class="fa fa-wifi w3-right"> </i> &nbsp;
+                        <div style="border-top:1px solid white">
+                            <span class="w3-left"><i class="fa fa-bars"></i> MENU</span>
+                            <span class="w3-right"> e-LAMASO SISWA</span>
+                        </div>
+                    </div>
+                    <div id="previewhp">
+                        <div class="imgcontainer" id="previewlogohp">
+                            <img src="/img/lamaso.webp" class="w3-circle"
+                                style="width:60px;border:2px dotted red" /><br />
+                            e-Lamaso Siswa
+                        </div>
+                        <div id="materiimport"
+                            style="width:310px;height:440px;overflow-y:auto;display:blodk;padding:15px;text-align:justify;font-size:12px">
+                            DI SINI AKAN MUNCUL teks html dari upload file notepad
+                        </div>
+                    </div>
+                </div>
+                <div
+                    style="width:320px;z-index:5;padding:0px 2px;height:50px;background-color:black;color:white;margin:auto;border:1px solid black;border-radius:0px 0px 5px 5px">
+                    <div id="tombolback" onclick="prevhp.style.display ='none'"
+                        style="font-size:26px;width:33%;float:left;text-align:left">&#9665;</div>
+                    <div id="tomboltengah" style="font-size:26px;width:33%;float:left;text-align:center">&#9898;
+                    </div>
+                    <div id="tombolkanan" style="font-size:26px;width:33%;float:left;text-align:right">&#9634;</div>
+                </div><br />
+                <button class="w3-button w3-display-topright w3-red"
+                    onclick="prevhp.style.display ='none';materiimport.innerHTML=''">TUTUP</button>
+            </div>
+        </div>
+
+    </div>
+    <div class="w3-modal w3-white w3-animate-zoom" id="koleksigambar">
+        <div class="w3-modal-container">
+            <div class="w3-modal-content w3-card-4 w3-padding" id="uploadkoleksigambamateri" style="width:98%">
+                <button class="w3-button w3-red w3-right w3-card-4 w3-margin-bottom"
+                    onclick="koleksigambar.style.display='none';tempattextarea.innerHTML = ''">&times;</button>
+                UNGGAH GAMBAR: <br>
+                <label for="tmbluploadgambarmatei" class="w3-button w3-green w3-hover-blue w3-round-xlarge">
+                    <i class="fa fa-camera"></i> Upload
+                </label>
+                <input type="file" id="tmbluploadgambarmatei" onchange="uploadgambarmateri()" class="w3-hide"
+                    accept="image/*">
+                <div id="resultuploadpotomateri">
+                    ...
+                </div>
+
+                <hr class="w3-border-bottom w3-border-brown">
+                <div class="w3-padding w3-card-4" id="tabelkoleksigambarmateri" style="overflow-x: auto;">
+                    <table class="w3-table-all">
+                        <tr class="w3-pale-red">
+                            <th>No.</th>
+                            <th>Preview</th>
+                            <th>Link Copy</th>
+                        </tr>
+                        <tr>
+                            <td>No.</td>
+                            <td>preview</td>
+                            <td>Link Copy</td>
+                        </tr>
+                    </table>
+                </div>
+                <button class="w3-button w3-red w3-card-4" style="position: fixed; top:35px; right:0px"
+                    onclick="koleksigambar.style.display='none';tempattextarea.innerHTML = ''">&times;
+                    TUTUP</button>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="w3-modal w3-white w3-animate-zoom" id="petunjukcarabuatmateri">
+        <div class="w3-modal-container ">
+            <div class="w3-modal-content w3-padding " style="width: 98%;">
+                <button class="w3-button w3-red w3-badge " style="position: fixed; right:0px"
+                    onclick="petunjukcarabuatmateri.style.display='none';txtareapetunjuk.style.display ='none';">TUTUP</button>
+                <div class="w3-padding isipetunjukbuatmateri w3-card-4" style="overflow-x: auto;">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="tempattextarea">....</div>
+    <div id="txtareapetunjuk" style="display:none">
+        <textarea id="ketpen1">_JUDUL_</textarea>
+        <textarea id="ketpen2">_YOUTUBE_</textarea>
+        <textarea id="ketpen3">
+_START-TABEL_ 
+NO <|HEADER|>	NAMA<|HEADER|>KELAS 
+1    <|>      ADZKA      <|> 3A 
+2    <|>      NUHAA      <|> 4A 
+_SELESAI-TABEL_ 	
+</textarea>
+        <textarea id="ketpen4">
+_PG_1 isikan pertanyaan ....
+_OPSI-PG_1A isikan opsi jawaban A
+_OPSI-PG_1B isikan opsi jawaban B
+_OPSI-PG_1C isikan opsi jawaban C
+_OPSI-PG_1D isikan opsi jawaban D
+</textarea>
+        <textarea id="ketpen5">
+_PG_1 Pertanyaan  
+_START-TABEL-OPSI_
+Opsi <|HEADER|>	teks    <|HEADER|>	teks Head
+_OPSI-SEL_1A	<|>	teks opsi A	<|>	teks  opsi A
+_OPSI-SEL_1B 	<|>	teks opsi B	<|>	teks  opsi B
+_OPSI-SEL_1C 	<|>	teks opsi C	<|>	teks  opsi C
+_OPSI-SEL_1D 	<|>	teks opsi D	<|>	teks  opsi D
+_SELESAI-TABEL-OPSI_
+</textarea>
+        <textarea id="ketpen6">_ESSAY-NO_1 Pertanyaan Essay</textarea>
+        <textarea id="ketpen7">_PECAHAN-BIASA_a/b</textarea>
+        <textarea id="ketpen8">_PECAHAN-CAMPURAN_a/b/c</textarea>
+        <textarea id="ketpen9">_AKAR-KUADRAT_a</textarea>
+        <textarea id="ketpen10">_AKAR-TIGA_a</textarea>
+        <textarea id="ketpen11">_PANGKAT_a/b</textarea>
+        <textarea id="ketpen12">_PANGKAT-HURUF_a/b</textarea>
+        <textarea id="ketpen13">_EQUATION-LAINNYA_kodeeditortanpaspasi</textarea>
+        <textarea id="ketpen14">&#247;</textarea>
+        <textarea id="ketpen15">&#176;</textarea>
+        <textarea id="ketpen16">&ang;</textarea>
+        <textarea id="ketpen17">&angrtvb;</textarea>
+        <textarea id="ketpen18">&PlusMinus;</textarea>
+        <textarea id="ketpen19">&checkmark;</textarea>
+        <textarea id="ketpen20">&#8508;</textarea>
+        <textarea id="ketpen21">&larr;</textarea>
+        <textarea id="ketpen22">&rarr;</textarea>
+        <textarea id="ketpen23">&DoubleLongRightArrow;</textarea>
+        <textarea id="ketpen24">&DoubleLongLeftArrow;</textarea>
+        <textarea id="ketpen25">_KUNCI-PG_</textarea>
+        <textarea id="ketpen26">_KUNCI-KD_</textarea>
+        <textarea id="ketpen27">
+_PG_1 isikan pertanyaan ....
+_OPSI-PG-C_1A isikan opsi jawaban A
+_OPSI-PG-C_1B isikan opsi jawaban B
+_OPSI-PG-C_1C isikan opsi jawaban C            
+        </textarea>
+
+
+    </div>
+
+    <div class="w3-modal w3-white" id="modaldaftarnilaikronologi">
+        <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="width:98%">
+            <header class="w3-container w3-green">
+                <span class="w3-button w3-hover-red w3-card-4 w3-xlarge w3-display-topright "
+                    onclick="modaldaftarnilaikronologi.style.display='none'">&times;</span>
+                <h2>DAFTAR NILAI
+                    <span id="modalidmapelkronologi">IDMAPEL</span>
+                </h2>
+            </header>
+            <div class="w3-bar w3-border-bottom">
+                <button class="tablinkkronologi  w3-bar-item w3-button w3-border-right"
+                    onclick="bukaModalTabkronologi(event, 'tablinkKDkronologi')">Nilai KD</button>
+                <button class="tablinkkronologi  w3-bar-item w3-button w3-border-right tabpgkronologi"
+                    onclick="bukaModalTabkronologi(event, 'tablinkPGkronologi')">PG</button>
+                <button class="tablinkkronologi  w3-bar-item w3-button w3-border-right tabskorkronologi"
+                    onclick="bukaModalTabkronologi(event, 'tablinkSkorkronologi')">Skor</button>
+
+            </div>
+            <div id="idtabaktifkronologi" class="w3-hide">idtabaktif</div>
+            <div id="tablinkKDkronologi" class="w3-container citykronologi w3-padding">
+                <h3>Rekap Nilai Per KD</h3>
+                <hr>
+                <div id="tablinkKDkronologitabel" style="overflow-x: auto;">
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Soluta, omnis maiores eligendi quam
+                    quis
+                    harum
+
+                </div>
+
+            </div>
+            <div id="tablinkPGkronologi" class="w3-container citykronologi w3-padding">
+                <h3>Analisis Soal tipe Pilihan Ganda</h3>
+                <hr>
+                <div id="tablinkPGkronologitabel" style="overflow-x: auto;">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed ratione iste provident temporibus
+                    voluptatem. Temporibus asperiores placeat esse mollitia tempore. Quis debitis error ab et!
+                    Ducimus
+                    aliquam iusto voluptatem nisi!
+                </div>
+            </div>
+            <div id="tablinkSkorkronologi" class="w3-container citykronologi w3-padding">
+                <h3>Analisis Soal tipe SKOR</h3>
+                <hr>
+                <div id="tablinkSkorkronologitabel" style="overflow-x: auto;">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat ex illo tempore cumque
+                    provident?
+                    Sapiente, veritatis. Aspernatur numquam, odit expedita voluptatibus repellat aliquam architecto,
+                    ex
+                    amet
+                    veniam earum corrupti alias!
+                </div>
+            </div>
+
+
+            <!-- <div class="w3-container tabdaftarnilai">
+                DI SINI AKAN TAMPIL TABEL DAN TAB
+            </div> -->
+        </div>
+    </div>
+
+    <!-- <div id="loadingljk" class="w3-modal w3-white">
+        <div class="w3-modal-container">
+            <div class="w3-modal-content w3-card-4 w3-padding-16" style="width: 98%;">
+                   <span class="w3-btn w3-blue w3-right w3-badge" onclick="tutuploadingljk()">&times;</span>
+                <div id="infoloadingljk" class="w3-margin">
+                    <i class=" fa fa-spin fa-spinner w3-jumbo w3-display-middle"></i>
+                </div>
+                <div style="height: 50px;"></div>
+            </div>
+        </div>
+    </div> -->
+    <div id="loadingljk" class="w3-modal">
+        <div class="w3-modal-content w3-card-4 " style="width: 98%">
+            <header class="warnaeka w3-card-4  w3-border-bottom w3-border-black w3-container">
+                <span class="w3-button w3-right w3-round-large w3-light-blue" onclick="tutuploadingljk()">&times;</span>
+            </header>
+            <div id="infoloadingljk" class="w3-margin">
+                <!-- <i class=" fa fa-spin fa-spinner w3-jumbo w3-display-middle"></i> -->
+                <p class="w3-center"><img src="/img/barloading.gif"></p>
+            </div>
+            <div style="height: 50px;clear:both"></div>
+            <footer class="warnaeka w3-card-4  w3-topbar w3-border-black w3-container"><br></footer>
+        </div>
+
+    </div>
+    <div id="previewpotoabsen" class="w3-modal" onclick="this.style.display='none';pesanpreviewpotoabsen.innerHTML=''">
+        <div class="w3-modal-content w3-animate-zoom">
+            <span class="w3-button w3-hover-red w3-xlarge w3-display-topright">&times;</span>
+            <div class="w3-display-topmiddle w3-white w3-center" id="pesanpreviewpotoabsen"></div>
+            <img id="img01" style="width:100%">
+        </div>
+
+    </div>
+    <div class="w3-modal w3-white w3-animate-zoom" id="koleksivideo">
+        <div class="w3-modal-container">
+            <div class="w3-modal-content w3-card-4 w3-padding" id="uploadkoleksivideomateri" style="width:80%">
+                <button class="w3-button w3-red w3-right w3-card-4 w3-margin-bottom"
+                    onclick="tutupkamera();koleksivideo.style.display='none';tempattextarea.innerHTML = ''">&times;</button>
+                <span onclick="bukaelemenwebcam()" class="w3-button w3-dark-grey w3-round-xlarge"> VIDEO
+                    WEBCAM</span>
+                <span id="kontrolgaleri" onclick="bukaelemengaleri()" class="w3-button w3-dark-gray w3-round-xlarge"
+                    style="display:inline-block">
+                    UNGGAH GALERI </span>
+                <span id="kontrolscreenrecorder" onclick="bukascreenrecorder()"
+                    class="w3-button w3-dark-gray w3-round-xlarge" style="display:inline-block">
+                    REKAM LAYAR </span>
+
+                <br>
+                <div id="elemenwebcam">
+                    <div class='containerbaru w3-center w3-show ' id="divvid1">
+                        <video class='responsive-iframebaru' poster="/img/192.png" id="vid1">
+                            Wew ... Browser Anda tidak mendukungnya
+                        </video>
+                        <div class="w3-blue w3-opacity w3-display-topmiddle w3-hide" id="statusrekaman">SEDANG
+                            MEREKAM
+                        </div>
+                    </div>
+                    <div class='containerbaru w3-center w3-hide' id="divvid2">
+                        <video class='responsive-iframebaru' poster="/img/192.png" id="vid2" controls>
+                            Wew ... Browser Anda tidak mendukungnya
+                        </video>
+                    </div>
+                    <div id="tomboltombolwebcam" class="w3-center">
+                        <button class="fa fa-video-camera w3-round-large w3-text-light-green" id="btnBack">
+                            Kamera</button>
+                        <button class="fa fa-play w3-round-large w3-green" id="btnStart"> Mulai Rekam</button>
+                        <button class="fa fa-stop w3-round-large w3-red" id="btnStop"> Stop Rekam</button><br />
+                        <span id="spanstatusrekaman"></span>
+                        <hr class="w3-border w3-border-bottom w3-border-blue" />
+                        <button class="w3-amber w3-button w3-round-xxlarge w3-padding" onclick="uplvideomateri()">Unggah
+                            Ke
+                            Server</button>
+                        <button class="w3-red w3-button w3-round-xxlarge w3-padding" onclick="uplvideomateriyt()">Unggah
+                            Ke Youtube <i class="fa fa-youtube"></i></button>
+                    </div>
+                    <div id="tomboltombolscreenrecorder" class="w3-center">
+                        <button class="fa fa-desktop w3-round-large w3-text-light-green" id="bukalayar">
+                            Pilih Layar</button>
+                        <button class="fa fa-play w3-round-large w3-green" id="start"> Mulai Rekam</button>
+                        <button class="fa fa-stop w3-round-large w3-red" id="stop"> Stop Rekam</button><br />
+                        <span id="spanstatusrekaman2"></span>
+                        <hr class="w3-border w3-border-bottom w3-border-blue" />
+                        <button class="w3-amber w3-button w3-round-xxlarge w3-padding" onclick="uplvideomateri()">Unggah
+                            Ke
+                            Server</button>
+                        <button class="w3-red w3-button w3-round-xxlarge w3-padding" onclick="uplvideomateriyt()">Unggah
+                            Ke Youtube <i class="fa fa-youtube"></i></button>
+                    </div>
+                </div>
+                <hr />
+                <br />
+                <div id="elemenvideogaleri" style="display: none;">
+                    <label for="tmbluploadvideomateri" class="w3-button w3-green w3-hover-blue w3-round-xlarge">
+                        <i class="fa fa-folder-open"></i> Upload dari Galeri
+                    </label>
+
+                </div>
+                <input type="file" id="tmbluploadvideomateri" onchange="uploadvideomateri()" class="w3-hide" />
+
+                <div id="resultuploadvideomateri">
+                    ...
+                </div>
+                <hr class="w3-border-bottom w3-border-brown">
+                <div class="w3-padding w3-card-4" id="tabelkoleksivideomateri" style="overflow-x: auto;">
+                    <table class="w3-table-all">
+                        <tr class="w3-pale-red">
+                            <th>No.</th>
+                            <th>Preview</th>
+                            <th>Link Copy</th>
+                        </tr>
+                        <tr>
+                            <td>No.</td>
+                            <td>preview</td>
+                            <td>Link Copy</td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+    <div id="modaltanggal" class="w3-modal w3-animate-zoom">
+        <div class="w3-modal-container">
+            <div class="w3-modal-content w3-card-4 w3-padding w3-green w3-center">
+                <span id="tutupmodaltanggal" class="w3-button w3-right w3-red"
+                    onclick="modaltanggal.style.display='none';dataubahtanggal.innerHTML=''">&times;</span>
+                <div id="dataubahtanggal">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modalagama" class="w3-modal w3-animate-zoom">
+        <div class="w3-modal-container">
+            <div class="w3-modal-content w3-card-4 w3-padding w3-green w3-center" style="height: 80%;">
+                <span id="tutupmodalagama" class="w3-button w3-right w3-red"
+                    onclick="modalagama.style.display='none';">&times;</span>
+                <div id="dataubahmodalagama">
+                    <label for="pd_agama_modal">Agama:</label><br />
+                    <select name="pd_agama_modal" id="pd_agama_modal" class="w3-select w3-khaki">
+                        <option value="" selected>Pilih Agama</option>
+                        <option value="ISLAM">Islam</option>
+                        <option value="KRISTEN">Kristen/Protestan</option>
+                        <option value="KATHOLIK">Katholik</option>
+                        <option value="HINDU">Hindu</option>
+                        <option value="BUDHA">Budha</option>
+                        <option value="KHONGHUCU">Khonghucu</option>
+
+                    </select> <br /> <br />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="w3-modal w3-animate-zoom" id="add_tambahindikatorkomepentsi">
+        <div class="w3-modal-container w3-card-4">
+            <div class="w3-modal-content w3-padding">
+                <h3 class="w3-teal w3-round-large w3-padding w3-center judul_addindikatorkompetensi">Judul</h3>
+                <h3 class="w3-khaki w3-center w3-padding" id="simulasinama">Nama Siswa</h3>
+
+                Silakan pilih Indikator-indikator di tabel berikut untuk dijadikan deskripsi di Raport:
+                <div class="tabel_indikatorindikatorraport" style="overflow-x: auto;"></div>
+                <hr />
+                Contoh Tampilan Deskripsi di Buku Raport:<br />
+                <button id="simulasikanpredikat">Cek Deskripsi</button>
+                <div class="result_indikatorindikatorraport w3-border w3-border-cyan w3-center w3-padding">
+                    <table class="versi-table simulasiraportkki w3-tiny w3-centered">
+                        <tr>
+                            <th>Predikat</th>
+                            <th>Deskripsi</th>
+                        </tr>
+                        <tr>
+                            <td>Predikat (Sangat Baik, Baik, Cukup, Pelu Bimbingan</td>
+                            <td>
+                                <b class="w3-text-blue">Andanda</b> Nama Siswa
+                                <b class="w3-text-blue">Selalu</b> kumpulan deskipsi Indikator Maksimal,
+                                <b class="w3-text-blue">dan mulai bekembang dalam</b> kumpulan deskipsi Indikator
+                                Minimal
+                            </td>
+                        </tr>
+                    </table>
+
+
+
+                </div>
+                <hr />
+                <button class="wa" id="tombol_addindikatorkompetensi">Simpan dan Keluar</button>
+
+            </div>
+
+
+        </div>
+    </div>
+
+    <div id="datasiswaprint" style="display:hide;overflow-x:auto"></div>
+    <input type="file" id="fileImportExcel" class="w3-hide" />
+    <input type="file" id="inputimportdatasiswa" class="w3-hide" />
+
+    <iframe id="iframeprint" name="iframeprint" style="display:none"></iframe>
+
+    <script src="/gk/barcode.js"></script>
+    <script src="/guru/exceltabel.js" defer></script>
+    <script src="/guru/variabel.js" defer></script>
+    <script src="/gk/materiguru.js" defer></script>
+    <script src="/gk/uploadmateri.js" defer></script>
+    <script src="/gk/datasiswa.js"></script>
+    <script src="/gk/gurukelas.js"></script>
+    <script src="/guru/guruprofildankehadiran.js"></script>
+    <script src="/gk/absen.js"></script>
+    <script src="/guru/waktu.js"></script>
+    <script src="/guru/editor.js"></script>
+    <script src="/guru/nilai.js"></script>
+    <script src="/guru/videoelamaso.js"></script>
+    <script src="/guru/aafnbaruv7.js"></script>
+    <script src="/guru/kurikulum.js"></script>
+    <script src="/guru/zframe.js"></script>
+    <script src="/gk/raportsemester.js"></script>
+    <!-- <script src="/guru/app.js"></script> -->
+    <script src="/timekbm.js"></script>
+    <script src="/guru/app.js"></script>
+
+
+</body>
+
+</html>

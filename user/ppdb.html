@@ -1,0 +1,1692 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sampel PPDB</title>
+  <style>
+    label.asemfile {
+      border: 1px solid #adacac;
+      background-color: #ddd;
+      padding: 5px;
+      width: 200px;
+      border-radius: 10px;
+      -webkit-border-radius: 10px;
+      cursor: pointer
+    }
+
+    label.asemfile::before {
+      content: url('https://2.bp.blogspot.com/-csTsNXg0TRw/XplxjRsmTYI/AAAAAAAAPok/h0tINX8PkZYgowlH4O9wAgwtR1N99wNbACLcBGAsYHQ/s20/PDFFile.png')
+    }
+
+    label.asemfile::after {
+      content: " Lampirkan File"
+    }
+
+    .title-ppdb-form {
+      border: 1px solid black;
+      background-color: #fcd7b6;
+      color: blue;
+      text-align: center;
+      font-size: 150%;
+      font-weight: 700;
+    }
+
+    .hider-form {
+      border: 1px solid black;
+      background-color: blue;
+      color: white;
+      text-align: center;
+      font-size: 100%;
+      font-weight: 700;
+    }
+
+    #tanggalinput {
+      width: 30px;
+      padding: 0px 5px;
+      border: 1px solid #ddd
+    }
+
+    #bulaninput {
+      width: 30px;
+      padding: 0px 5px;
+      border: 1px solid #ddd
+    }
+
+    #tahuninput {
+      width: 30px;
+      padding: 0px 5px;
+      border: 1px solid #ddd
+    }
+
+    ol.Noform {
+      list-style: decimal;
+      margin: 0.5em 0 0.5em 2em;
+      padding: 0;
+    }
+
+    .button-success {
+      align: center;
+      border-radius: 15px;
+      webkit-border-radius: 15px;
+      padding: 10px;
+      background-color: #f048ea;
+      -webkit-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+      -moz-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+      box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+      cursor: pointer
+    }
+
+    .pesanawalawal {
+      background-color: #e6fffd;
+      border-radius: 0px 0px 30px 30px;
+      -webkit-border-radius: 0px 0px 30px 30px;
+      padding: 15px;
+      border: 2px double #28c74a
+    }
+
+    input[name="Nama_Calon_PD"] {
+      width: 100%;
+      height: 30px;
+      border: 1px solid blue;
+    }
+
+    input[id=NISN] {
+      width: 100%;
+      height: 30px;
+      border: 1px solid blue;
+    }
+
+    input[id=NIK] {
+      width: 100%;
+      height: 30px;
+      border: 1px solid blue;
+    }
+
+    input[id=Tempat_Lahir],
+    input[id=No_Reg_Akte],
+    input[name=PD_Alamat_Jalan],
+    input[name=PD_Dusun],
+    input[name=PD_Kecamatan],
+    input[name=PD_Kelurahan_Desa],
+    input[name=No_KKS],
+    input[name=No_KPSPKH],
+    input[name=Kewarganegaraan],
+    input[name=No_KK],
+    input[name=No_KIP],
+    input[name=Nama_KIP],
+    input[name=Nama_Ayah_Kandung_PD],
+    input[name=NIK_Ayah_Kandung_PD],
+    input[name=Nama_Ibu_Kandung_PD],
+    input[name=NIK_Ibu_Kandung_PD],
+    input[name=Nama_Wali_PD],
+    input[name=NIK_Wali_PD],
+    input[name=masalah_upload_gambar],
+    input[name=email],
+    input[name=No_HP],
+    input[id=alamatkotaanak],
+    input[id=alamatprovinsianak] {
+      width: 100%;
+      height: 30px;
+      border: 1px solid blue;
+    }
+
+    input[id=Tanggal_Lahir],
+    input[id=TTL_Wali_PD],
+    input[id=TTL_Ibu_Kandung_PD],
+    input[id=TTL_Ayah_Kandung_PD],
+    input[name=PD_RT],
+    input[name=PD_RW],
+    input[name=PD_Kode_Pos],
+    input[name=Anak_Ke] {
+      width: 130px;
+      height: 30px;
+      border: 1px solid blue;
+    }
+
+
+    input[type=button] {
+      width: 98%;
+      height: auto;
+      padding: 10px;
+      word-warp: break-word;
+      border: 1px solid blue;
+      background-color: #e2affa;
+      border-radius: 12px;
+      -webkit-border-radius: 12px;
+      cursor: pointer
+    }
+
+    .gformdd sub {
+      color: green
+    }
+
+    .gformdd sup {
+      color: blue
+    }
+
+    .gformdd select {
+      width: auto
+    }
+
+    img .gambarfile {
+      width: 100px;
+      max-width: 98%;
+    }
+  </style>
+  <script>
+    function waktumendaftar() {
+      var d = new Date();
+      var n = addZero(d.getDate());
+      var y = d.getFullYear();
+      var m = addZero(d.getMonth() + 1);
+      var j = addZero(d.getHours());
+      var mnt = addZero(d.getMinutes());
+      //document.getElementById("WaktuMengerjakan").innerHTML = "Tgl " + n +"/" + m + "/" + y + " Pkl. " + j + ":" + mnt;
+      document.getElementById("tanggalinput").innerHTML = n;
+      document.getElementById("bulaninput").innerHTML = m;
+      document.getElementById("tahuninput").innerHTML = y;
+    }
+  </script>
+</head>
+
+<body>
+  <script>
+    $(document).ready(function () { waktumendaftar() })
+    function addZero(i) {
+      if (i < 10) {
+        i = "0" + i;
+      };
+      return i;
+    }
+  </script>
+
+  <div class="title-ppdb-form">FORMULIR PENDAFTARAN PPDB 2020</div>
+  <div style="margin:10px">
+    Tanggal Daftar : <b id="tanggalinput">00</b>/<b id="bulaninput">00</b>/<b id="tahuninput">00</b>
+    <div style="float:right;padding:0px 5px;border:1px solid #00d">F-PD</div>
+  </div>
+  <div class="hider-form">DATA PRIBADI CALON PESERTA DIDIK</div>
+  <form class="gformdd"
+    action="https://script.google.com/macros/s/AKfycbzX15ebNfccrhlX-Qc3RaOtxUnUfBi9jFiIvikRjc0DVSanhNM/exec"
+    method="POST" name="ppdb">
+
+    <!-- https://script.google.com/macros/s/AKfycbxztkiU5GpcUQ4WWiYBaGcH-_Qm50n69h9ynLZSJ6fC1zvTo5bA/exec" -->
+    <div class="form-elementsdd" style="display:block">
+      <fieldset class="pure-group">
+        <label for="email">email : </label><input type="text" id="email" name="email"
+          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required></input>
+        <br /><sub>
+          Pastikan email Anda aktif untuk mendapatkan informasi lebih lanjut. Disarankan menggunakan akun gmail.com yang
+          terintegrasi di ponsel Anda.
+        </sub>
+
+        <br />
+        <label for="noHP">No HP : </label><input type="number" id="noHP" name="No_HP" required></input>
+      </fieldset>
+      <fieldset class="pure-group">
+        <ol class="Noform">
+          <li>
+            <label for="Nama_Calon_PD">Nama Lengkap : </label><input type="text" id="Nama_Calon_PD" name="Nama_Calon_PD"
+              required></input>
+            <br /><sub>Nama peserta didik sesuai dokumen resmi yang berlaku (Akta atau Ijazah sebelumnya ).</sub>
+          </li><br />
+          <li>
+            <label for="Jenis_Kelamin_PD">Jenis Kelamin : </label><input type="" id="Jenis_Kelamin_PD"
+              style="display:none"></input><br />
+            <input type="radio" class="radio-inline" id="Jenis_Kelamin_PD_Lk" name="Jenis_Kelamin_PD"
+              value="L">Laki-laki</input>
+            <input type="radio" class="radio-inline" id="Jenis_Kelamin_PD_Pr" name="Jenis_Kelamin_PD"
+              value="P">Perempuan</input>
+          </li><br />
+          <li>
+            <label for="NISN">NISN : </label><input type="number" id="NISN" pattern="[0-9]{10}" name="NISN"></input>
+            <br /><sub>
+              Nomor Induk Siswa Nasional peserta didik (jika memiliki). Jika belum memiliki, maka wajib dikosongkan.
+              NISN
+              memiliki format 10 digit angka. Contoh: 0009321234. Untuk memeriksa NISN, dapat mengunjungi laman
+              http://nisn.data.kemdikbud.go.id/page/data
+            </sub>
+          </li><br />
+          <li>
+            <label for="NIK">NIK : </label><input type="number" id="NIK" name="NIK"></input>
+            <br /><sub>
+              Nomor Induk Kependudukan yang tercantum pada Kartu Keluarga, Kartu Identitas Anak, atau KTP (jika sudah
+              memiliki) bagi WNI. NIK memiliki format 16 digit angka. Contoh: 6112090906021104.<br />
+              Pastikan NIK tidak tertukar dengan No. Kartu Keluarga, karena keduanya memiliki format yang sama. Bagi
+              WNA,
+              diisi dengan nomor Kartu Izin Tinggal Terbatas (KITAS)
+            </sub><br />
+            <label for="No_KK">No Kartu Keluarga : </label><input type="number" id="No_KK" name="No_KK"></input>
+          </li><br />
+          <li>
+            <label for="Tempat_Lahir">Tempat Lahir : </label><input type="text" id="Tempat_Lahir"
+              name="Tempat_Lahir"></input>
+            <br /><sub>
+              Tempat lahir peserta didik sesuai dokumen resmi yang berlaku
+            </sub>
+          </li><br />
+          <li>
+            <label for="Tanggal_Lahir">Tanggal Lahir : </label><br /><input type="date" id="Tanggal_Lahir"
+              name="Tanggal_Lahir" /><br />
+            <sub>
+              Tanggal lahir peserta didik sesuai dokumen resmi yang berlaku.
+            </sub><br />
+            <sup id="KonfirmasiTTL"></sup>
+
+          </li><br />
+          <li>
+            <label for="No_Reg_Akte">No Registrasi Akte : </label><input type="text" id="No_Reg_Akte"
+              name="No_Reg_Akte" /><br />
+            <sub>
+              Nomor registrasi Akta Kelahiran. Nomor registrasi yang dimaksud umumnya tercantum pada bagian tengah atas
+              lembar kutipan akta kelahiran
+            </sub>
+          </li><br />
+          <li>
+            <label for="agamakepercayaan">Agama & Kepercayaan: </label><br />
+            <select id="slct_agamakepercayaan" name="kode_agamakepercayaan" onchange="select_agamakepercayaan()"
+              style="height:30px">
+              <option value="" disabled="" selected="selected">Pilih Agama yang Dianut?</option>
+              <option value="01">Islam
+              </option>
+              <option value="02">Kristen/Protestan
+              </option>
+              <option value="03">Katholik
+              </option>
+              <option value="04">Hindu
+              </option>
+              <option value="05">Budha
+              </option>
+              <option value="06">Khong hu chu
+              </option>
+              <option value="07">Kepercayaan Kepada Tuhan YME
+              </option>
+            </select>
+            <br />
+            <sub>
+              Agama atau kepercayaan yang dianut oleh peserta didik.
+            </sub><br />
+            <input type="text" id="agamakepercayaan" name="Agama_Kepercayaan" disabled="true" /><br />
+            <sup id="agamadipilih"></sup>
+
+          </li><br />
+          <li>
+            <label for="kewarganegaraan">Kewarganegaraan : </label><br />
+            <select id="slct_kewarganegaraan" name="slct_kewarganegaraan" onchange="select_kewarganegaraan()"
+              style="height:30px">
+              <option value="" disabled="" selected="selected">Pilih Kewarganegaraan?</option>
+              <option value="WNI">WNI
+              </option>
+              <option value="WNA">WNA
+              </option>
+            </select>
+            <br />
+            <sub>
+              Kewarganegaraan peserta didik
+            </sub>
+            <br />
+            <input type="text" id="kewarganegaraan" name="Kewarganegaraan" / disabled="true"><br />
+
+          </li><br />
+          <li>
+            <label for="abkanak">Berkebutuhan Khusus : </label><br />
+            <select id="slct_ABK" name="kode_anak_ABK" onchange="select_ABK()" style="height:30px">
+              <option value="" disabled="" selected="selected">Pilih Berkebutuhan Khusus/Tidak?</option>
+              <option value="01">Tidak
+              </option>
+              <option value="02">Netra (A)
+              </option>
+              <option value="03">Rungu (B)
+              </option>
+              <option value="04">Grahita Ringan (C)
+              </option>
+              <option value="05">Grahita Sedang (C1)
+              </option>
+              <option value="06">Daksa Ringan (D)
+              </option>
+              <option value="07">Daksa Sedang (D1)
+              </option>
+              <option value="08">Indigo (O)
+              </option>
+              <option value="09">Down Sindrome (P)
+              </option>
+              <option value="10">Autis (Q)
+              </option>
+              <option value="11">Laras ( E)
+              </option>
+              <option value="12">Wicara (F)
+              </option>
+              <option value="13">Tuna Ganda (G)
+              </option>
+              <option value="14">Hiperaktif (G)
+              </option>
+              <option value="15">Hiperaktif (H)
+              </option>
+              <option value="16">Cerdas Istimewa (i)
+              </option>
+              <option value="17">Bakat Istimewa (J)
+              </option>
+              <option value="18">Kesulitan Belajar (K)
+              </option>
+            </select>
+
+            <br /><sub>Kebutuhan khusus yang disandang oleh peserta didik. </sub><br />
+            <input type="text" id="abkanak" name="PD_ABK" / disabled="true"><br />
+          </li><br />
+          <li>
+            <label for="alamatjalananak">Alamat Jalan : </label><input type="text" id="alamatjalananak"
+              name="PD_Alamat_Jalan" /><br />
+            <br />
+            <sub>
+              Jalur tempat tinggal peserta didik, terdiri atas gang, kompleks, blok, nomor rumah, dan sebagainya selain
+              informasi yang diminta oleh kolom-kolom yang lain pada bagian ini. Sebagai contoh, peserta didik tinggal
+              di
+              sebuah kompleks perumahan Griya Adam yang berada pada Jalan Kemanggisan, dengan nomor rumah 4-C, di
+              lingkungan RT 005 dan RW 011, Dusun Cempaka, Desa Salatiga. Maka dapat diisi dengan Jl. Kemanggisan, Komp.
+              Griya Adam, No. 4-C
+            </sub>
+          </li><br />
+          <li>
+            <label for="alamatrtanak">RT : </label><br /><input type="number" id="alamatrtanak" name="PD_RT" /><br />
+            <sub>
+              Nomor RT tempat tinggal peserta didik saat ini. Dari contoh di atas, misalnya dapat diisi dengan angka 5
+            </sub>
+          </li><br />
+          <li>
+            <label for="alamatrwanak">RW : </label><br /><input type="number" id="alamatrwanak" name="PD_RW" /><br />
+            <sub>
+              Nomor RW tempat tinggal peserta didik saat ini. Dari contoh di atas, misalnya dapat diisi dengan angka 11
+            </sub>
+          </li><br />
+          <li>
+            <label for="alamatdusunanak">Nama Dusun : </label><input type="text" id="alamatdusunanak"
+              name="PD_Dusun" /><br />
+            <sub>
+              Nama dusun tempat tinggal peserta didik saat ini. Dari contoh di atas, misalnya dapat diisi dengan Campak
+            </sub>
+          </li><br />
+          <li>
+            <label for="alamatkelurahananak">Nama Kelurahan/Desa : </label><input type="text" id="alamatkelurahananak"
+              name="PD_Kelurahan_Desa" /><br />
+            <sub>
+              Nama desa atau kelurahan tempat tinggal peserta didik saat ini. Dari contoh di atas, dapat diisi dengan
+              Bayongbong
+            </sub>
+          </li><br />
+          <li>
+            <label for="alamatkecamatananak">Nama Kecamatan : </label><input type="text" id="alamatkecamatananak"
+              name="PD_Kecamatan" /><br />
+            <sub>
+              Kecamatan tempat tinggal peserta didik saat ini(seusai Kartu Keluarga).
+            </sub>
+          </li><br />
+          <li>
+            <label for="alamatkotaanak">Nama Kota/Kabupaten : </label><input type="text" id="alamatkotaanak"
+              name="PD_Kota" /><br />
+            <sub>
+              Kota tempat tinggal peserta didik saat ini (seusai Kartu Keluarga)..
+            </sub>
+          </li><br />
+          <li>
+            <label for="alamatprovinsianak">Nama Provinsi : </label><input type="text" id="alamatprovinsianak"
+              name="PD_Provinsi" /><br />
+            <sub>
+              Provinsi tempat tinggal peserta didik saat ini (seusai Kartu Keluarga)..
+            </sub>
+          </li><br />
+          <li>
+            <label for="alamatkodeposanak">Kode Pos : </label><br /><input type="number" id="alamatkodeposanak"
+              name="PD_Kode_Pos" /><br />
+            <sub>
+              Kode pos tempat tinggal peserta didik saat ini
+            </sub>
+            <br /><br />
+          </li>
+        </ol>
+      </fieldset>
+      <fieldset class="pure-group">
+        <ol class="Noform" start="20">
+          <label for="tombolcoordinate">Lintang dan Bujur : </label>
+          <div style="text-align:center">
+            <div id="tombolcoordinate" class="button-success" onclick="getLocation()"><img border="0"
+                src="https://2.bp.blogspot.com/-4cLCcbb3kAE/Xpx0SRMIATI/AAAAAAAAPpA/I1Tgy8a_M0wnXV7epD9ABzbvjrwLQfW8ACLcBGAsYHQ/s20/icon-location-png-5-original.png"
+                data-original-width="40" data-original-height="40" /> &nbsp;&nbsp;&nbsp;Tampilkan Koordinat Lintang dan
+              Bujur</div>
+          </div>
+
+          <sub>
+            Klik tombol di atas, dan pastikan HP Anda diizinkan untuk mengakses lokasi Anda saat ini. Disarankan diakses
+            di tempat tinggal saat ini untuk menjga keakuratan koordinate (tidak sedang di luar rumah/ atau di luar
+            tempat
+            tinggal).
+          </sub>
+          <br />
+          <br />
+          <li><label for="lintang">Lintang (Latitude) : </label><br /><input type="text" id="lintang" name="Lintang"
+              disabled="true" />
+          </li><br />
+          <li><label for="bujur">Bujur (Longitude) : </label><br /><input type="text" id="bujur" name="Bujur"
+              disabled="true" /><br />
+            <input type="text" id="jarakK" name="Jarak_ke_SekolahK" style="display:none" /><br />
+          </li>
+        </ol>
+      </fieldset>
+      <fieldset class="pure-group">
+        <ol class="Noform" start="22">
+          <li>
+            <label for="tempattinggal">Tempat Tinggal : </label><br />
+            <select id="slct_tempat_tinggal" name="kode_tempat_tinggal" onchange="select_tempat_tinggal()"
+              style="height:30px">
+              <option value="" disabled="" selected="selected">Pilih opsi tempat tinggal?</option>
+              <option value="01">Bersama Orang tua
+              </option>
+              <option value="02">Wali
+              </option>
+              <option value="03">Kos
+              </option>
+              <option value="04">Asrama
+              </option>
+              <option value="05">Panti Asuhan
+              </option>
+              <option value="99">Lainnya
+              </option>
+            </select>
+            <br />
+            <sub>
+              Kepemilikan tempat tinggal peserta didik saat ini (yang telah diisikan pada kolom-kolom sebelumnya di
+              atas)
+            </sub><br />
+            <input type="text" id="tempattinggal" name="Tempat_Tinggal" disabled="true" /><br /> <sup
+              id="tempattinggaldipilih"></sup>
+          </li><br />
+          <li>
+            <label for="modatransportasi">Moda Transportasi : </label><br />
+            <select id="slct_modatransportasi" name="kode_modatransportasi" onchange="select_modatransportasi()"
+              style="height:30px;">
+              <option value="" disabled="" selected="selected">Pilih opsi moda transportasi?</option>
+              <option value="01">Jalan Kaki
+              </option>
+              <option value="02">Kendaraan Pribadi
+              </option>
+              <option value="03">Kendaraan Umum/Angkot/Pete-pete
+              </option>
+              <option value="04">Jemputan Sekolah
+              </option>
+              <option value="05">Kereta Api
+              </option>
+              <option value="06">Ojek
+              </option>
+              <option value="07">Andong/Bendi/Sado/Dokar/Delman/Beca
+              </option>
+              <option value="08">Perahu Penyebrangan/Rakit/Getek
+              </option>
+              <option value="99">Lainnya
+              </option>
+            </select>
+            <br />
+            <sub>
+              Jenis transportasi utama atau yang paling sering digunakan peserta didik untuk berangkat ke sekolah
+            </sub><br />
+            <input type="text" id="modatransportasi" name="Moda_Transportasi" disabled="true" /><br /> <sup
+              id="modatransportasidipilih"></sup>
+          </li><br />
+          <li>
+            <label for="No_KKS">Nomor KKS (Kartu Keluarga Sejahtera) : </label><input type="text" id="No_KKS"
+              name="No_KKS" /><br />
+            <sub>
+              Nomor Kartu Keluarga Sejahtera (jika memiliki). Nomor yang dimaksud adalah 6 digit kode yang tertera pada
+              sisi
+              belakang kiri atas kartu (di bawah lambang Garuda Pancasila).<br />
+              Peserta didik dinyatakan sebagai anggota KKS apabila tercantum di dalam kartu keluarga dengan kepala
+              keluarga
+              pemegang KKS. Sebagai contoh, peserta didik tercantum pada KK dengan kepala keluarganya adalah kakek.
+              Apabila
+              kakek peserta didik tersebut pemegang KKS, maka nomor KKS milik kakek peserta didik yang bersangkutan
+              dapat
+              diisikan pada kolom ini
+            </sub>
+          </li><br />
+          <li>
+            <label for="anakke">Anak Ke- : </label><br /><input type="number" id="anakke" name="Anak_Ke" /><br />
+          </li><br />
+          <li>
+            <label for="slct_KPSPKH">Penerima KPS/PKH : </label><br />
+            <select id="slct_KPSPKHYesNo" name="kode_KPSPKHYesNo" onchange="select_KPSPKHYesNo()" style="height:30px">
+              <option value="" disabled="" selected="selected">Pilih Ya/Tidak?</option>
+              <option value="Ya">Ya
+              </option>
+              <option value="Tidak">Tidak
+              </option>
+            </select>
+            <br /><sub>
+              Status peserta didik sebagai penerima manfaat KPS (Kartu Perlindungan Sosial)/PKH (Program Keluarga
+              Harapan). Peserta didik dinyatakan sebagai penerima KPS/PKH apabila tercantum di dalam kartu keluarga
+              dengan
+              kepala keluarga pemegang KPS/PKH. Sebagai contoh, peserta didik tercantum pada KK dengan kepala
+              keluarganya
+              adalah kakek. Apabila kakek peserta didik tersebut pemegang KPS/PKH, maka peserta didik yang bersangkutan
+              dinyatakan penerima KPS/PKH.
+            </sub><br />
+            <br />Status Penerima:
+            <input type="text" id="slct_KPSPKH" name="Status_Penerima_KPSPKH" style="display:block"
+              disabled="true"></input>
+            <label for="No_KPSPKH">Isi No. KPS/PKH jika "YA" sebagai penerima:</label><br />
+            <input type="text" id="No_KPSPKH" name="No_KPSPKH" style="display:block;" disabled="true"
+              required></input><br />
+          </li><br />
+          <li>
+            <label for="punyaKIP">Apakah Punya KIP : </label><br />
+            <select id="slct_KIP" name="Kode_punya_KIP" onchange="select_KIP()" style="height:30px">
+              <option value="" disabled="" selected="selected">Pilih Ya/Tidak?</option>
+              <option value="Ya">Ya
+              </option>
+              <option value="Tidak">Tidak
+              </option>
+            </select>
+            <br /><sub>
+              Pilih Ya apabila peserta didik sudah memiliki Kartu Indonesia Pintar (seperti BSM dan sejenisnya). Pilih
+              Tidak jika tidak memiliki Kartu Indonesia Pintar.
+            </sub><br />
+            <br />Status Penerima:
+            <input type="text" id="status_KIP" name="Status_Penerima_KIP" style="display:block" disabled="true"></input>
+          </li><br />
+          <li>
+            <label for="No_KPSPKH">Isi No. KIP jika "YA" sebagai penerima:</label><br />
+            <input type="text" id="No_KIP" name="No_KIP" style="display:block;" disabled="true" required></input><br />
+            <sub>
+              Nomor KIP milik peserta didik apabila sebelumnya telah dipilih sebagai penerima KIP. Nomor yang dimaksud
+              adalah 6 digit kode yang tertera pada sisi belakang kanan atas kartu (di bawah lambang toga).
+            </sub>
+          </li><br />
+          <li>
+            <label for="Nama_KIP">Nama tertera pada KIP: </label><br />
+            <input type="text" id="Nama_KIP" name="Nama_KIP" style="display:block;" disabled="true"
+              required></input><br />
+            <sub>
+              Nama yang tertera pada KIP milik peserta didik
+            </sub>
+          </li><br />
+          <li>
+            <label for="alasanlayak">Alasan Layak PIP: </label><br />
+            <input type="text" id="alasanlayak" name="Alasan_Layak_PIP" style="display:block;"
+              disabled="true"></input><br />
+            <sub>Diisi oleh DAPODIK</sub>
+
+          </li>
+        </ol>
+      </fieldset>
+      <div class="hider-form">BANK DIPERUNTUKAN PIP (DIISI OLEH PUSAT)</div>
+      <fieldset class="pure-group">
+        <ol class="Noform" start="31">
+          <li>
+            <label for="Nama_Bank_PIP">Nama Bank : </label><br />
+            <input type="text" id="Nama_Bank_PIP" name="Nama_Bank_PIP" style="display:block;"
+              disabled="true"></input><br />
+            <sub>Disii oleh Pusat</sub>
+          </li>
+          <li>
+            <label for="No_Rekening_PIP">No Rekening: </label><br />
+            <input type="text" id="No_Rekening_PIP" name="No_Rekening_PIP" style="display:block;"
+              disabled="true"></input><br />
+            <sub>Disii oleh Pusat</sub>
+          </li>
+          <li>
+            <label for="KCP_PIP">Kantor Cabang Pembantu (KCP): </label><br />
+            <input type="text" id="KCP_PIP" name="KCP_PIP" style="display:block;" disabled="true"></input><br />
+            <sub>Disii oleh Pusat</sub>
+          </li>
+          <li>
+            <label for="Atas_Nama_PIP">Rekening Atas Nama: </label><br />
+            <input type="text" id="Atas_Nama_PIP" name="Atas_Nama_PIP" style="display:block;"
+              disabled="true"></input><br />
+            <sub>Disii oleh Pusat</sub>
+          </li>
+        </ol>
+      </fieldset>
+      <div class="hider-form">DATA AYAH KANDUNG</div>
+      <fieldset class="pure-group">
+        <ol class="Noform" start="35">
+          <li>
+            <label for="Nama_Ayah_Kandung_PD">Nama Ayah Kandung: </label><br />
+            <input type="text" id="Nama_Ayah_Kandung_PD" name="Nama_Ayah_Kandung_PD"
+              style="display:block;"></input><br />
+            <sub>
+              Nama ayah kandung peserta didik sesuai dokumen resmi yang berlaku. Hindari penggunaan gelar akademik atau
+              sosial (seperti Alm., Dr., Drs., S.Pd, dan H.)
+            </sub>
+          </li>
+          <li>
+            <label for="NIK_Ayah_Kandung_PD">NIK Ayah Kandung: </label><br />
+            <input type="number" id="NIK_Ayah_Kandung_PD" name="NIK_Ayah_Kandung_PD"
+              style="display:block;"></input><br />
+            <sub>
+              Nomor Induk Kependudukan yang tercantum pada Kartu Keluarga atau KTP ayah kandung peserta didik
+            </sub>
+          </li>
+          <li>
+            <label for="TTL_Ayah_Kandung_PD">Tanggal Lahir Ayah Kandung : </label><br />
+            <input type="date" id="TTL_Ayah_Kandung_PD" name="TTL_Ayah_Kandung_PD" style="display:block;"></input><br />
+            <sub>
+              Tahun lahir ayah kandung peserta didik
+            </sub>
+          </li>
+          <li>
+            <label for="Pendidikan_Ayah_Kandung_PD">Pendidikan Ayah Kandung : </label><br />
+            <select id="slct_Pendidikan_Ayah_Kandung_PD" name="Kode_Pendidikan_Ayah_Kandung_PD"
+              onchange="select_Pendidikan_Ayah_Kandung_PD()" style="height:30px;">
+              <option value="" disabled="" selected="selected">Pilih Pendidikan Ayah?</option>
+              <option value="01">Tidak Sekolah
+              </option>
+              <option value="02">Putus SD
+              </option>
+              <option value="03">SD Sederajat
+              </option>
+              <option value="04">SMP Sederajat
+              </option>
+              <option value="05">SMA Sederajat
+              </option>
+              <option value="06">D1
+              </option>
+              <option value="07">D2
+              </option>
+              <option value="08">D3
+              </option>
+              <option value="09">D4/S1
+              </option>
+              <option value="10">S2
+              </option>
+              <option value="11">S3
+              </option>
+            </select>
+            <br />
+            <input type="text" id="Pendidikan_Ayah_Kandung_PD" name="Pendidikan_Ayah_Kandung_PD" style="display:block;"
+              disabled="true"></input><br />
+            <sub>
+              Pendidikan Terakhir ayah kandung peserta didik
+            </sub>
+          </li>
+          <li>
+            <label for="Pekerjaan_Ayah_Kandung_PD">Pekerjaan Ayah Kandung : </label><br />
+            <select id="slct_Pekerjaan_Ayah_Kandung_PD" name="Kode_Pekerjaan_Ayah_Kandung_PD"
+              onchange="select_Pekerjaan_Ayah_Kandung_PD()" style="height:30px;">
+              <option value="" disabled="" selected="selected">Pilih Pekerjaan Ayah?</option>
+              <option value="01">Tidak bekerja
+              </option>
+              <option value="02">Nelayan
+              </option>
+              <option value="03">Petani
+              </option>
+              <option value="04">Peternak
+              </option>
+              <option value="05">PNS/TNI/Polri
+              </option>
+              <option value="06">Karyawan Swasta
+              </option>
+              <option value="07">Pedagang Kecil
+              </option>
+              <option value="08">Pedagang Besar
+              </option>
+              <option value="09">Wiraswasta
+              </option>
+              <option value="10">Wirausaha
+              </option>
+              <option value="11">Buruh
+              </option>
+              <option value="12">Pensiunan
+              </option>
+              <option value="13">Tenaga Kerja Indonesia (TKI)
+              </option>
+              <option value="14">Tidak dapat diterapkan
+              </option>
+              <option value="15">Meninggal Dunia
+              </option>
+              <option value="16">Lainnya
+
+              </option>
+            </select>
+            <br />
+            <input type="text" id="Pekerjaan_Ayah_Kandung_PD" name="Pekerjaan_Ayah_Kandung_PD" style="display:block;"
+              disabled="true"></input><br />
+            <sub>
+              Pilih Meninggal Dunia apabila Ayah Kandung peserta didik telah meninggal dunia;<br />
+              Ojek online termasuk wirausaha karena bermitra dengan perusahaan penyedia provider jasa ojek.
+            </sub>
+          </li>
+          <li>
+            <label for="Penghasilan_Ayah_Kandung_PD">Penghasilan Ayah Kandung : </label><br />
+            <select id="slct_Penghasilan_Ayah_Kandung_PD" name="Kode_Penghasilan_Ayah_Kandung_PD"
+              onchange="select_Penghasilan_Ayah_Kandung_PD()" style="height:30px;">
+              <option value="" disabled="" selected="selected">Pilih Penghasilan Ayah?</option>
+              <option value="01">Kurang dari Rp. 1.000.000,-
+              </option>
+              <option value="02">Rp. 1.000.000 - Rp. 2.000.000
+              </option>
+              <option value="03">Lebih dari Rp. 2.000.000
+              </option>
+              <option value="04">Kurang dari Rp. 500.000
+              </option>
+              <option value="05">Rp. 500.000 - Rp. 999.999
+              </option>
+              <option value="06">Rp. 1.000.000 - Rp. 1.999.999
+              </option>
+              <option value="07">Rp. 2.000.000 - Rp. 4.999.999
+              </option>
+              <option value="08">Rp. 5.000.000 - Rp. 20.000.000
+              </option>
+              <option value="09">Lebih dari Rp.20.000.000
+              </option>
+              <option value="10">Tidak Berpenghasilan
+              </option>
+              <option value="99">Lainnya
+
+              </option>
+            </select>
+            <br />
+            <input type="text" id="Penghasilan_Ayah_Kandung_PD" name="Penghasilan_Ayah_Kandung_PD"
+              style="display:block;" disabled="true"></input><br />
+            <sub>
+              Kosongkan kolom ini apabila ayah kandung peserta didik telah meninggal dunia atau tidak bekerja
+            </sub>
+          </li>
+          <li>
+            <label for="ABK_Ayah">Berkebutuhan Khusus : </label><br />
+            <select id="slct_ABK_Ayah" name="kode_ABK_Ayah" onchange="select_ABK_Ayah()" style="height:30px">
+              <option value="" disabled="" selected="selected">Pilih Berkebutuhan Khusus/Tidak?</option>
+              <option value="01">Tidak
+              </option>
+              <option value="02">Netra (A)
+              </option>
+              <option value="03">Rungu (B)
+              </option>
+              <option value="04">Grahita Ringan (C)
+              </option>
+              <option value="05">Grahita Sedang (C1)
+              </option>
+              <option value="06">Daksa Ringan (D)
+              </option>
+              <option value="07">Daksa Sedang (D1)
+              </option>
+              <option value="08">Indigo (O)
+              </option>
+              <option value="09">Down Sindrome (P)
+              </option>
+              <option value="10">Autis (Q)
+              </option>
+              <option value="11">Laras ( E)
+              </option>
+              <option value="12">Wicara (F)
+              </option>
+              <option value="13">Tuna Ganda (G)
+              </option>
+              <option value="14">Hiperaktif (G)
+              </option>
+              <option value="15">Hiperaktif (H)
+              </option>
+              <option value="16">Cerdas Istimewa (i)
+              </option>
+              <option value="17">Bakat Istimewa (J)
+              </option>
+              <option value="18">Kesulitan Belajar (K)
+              </option>
+            </select>
+
+            <br /><sub>Kebutuhan khusus yang disandang oleh ayah kandung peserta didik. </sub><br />
+            <input type="text" id="ABK_Ayah" name="ABK_Ayah" disabled="true"><br />
+          </li>
+        </ol>
+      </fieldset>
+      <div class="hider-form">DATA IBU KANDUNG</div>
+      <fieldset class="pure-group">
+        <ol class="Noform" start="42">
+          <li>
+            <label for="Nama_Ibu_Kandung_PD">Nama Ibu Kandung: </label><br />
+            <input type="text" id="Nama_Ibu_Kandung_PD" name="Nama_Ibu_Kandung_PD" style="display:block;"></input><br />
+            <sub>
+              Nama Ibu kandung peserta didik sesuai dokumen resmi yang berlaku. Hindari penggunaan gelar akademik atau
+              sosial (seperti Alm., Dr., Drs., S.Pd, dan H.)
+            </sub>
+          </li>
+          <li>
+            <label for="NIK_Ibu_Kandung_PD">NIK Ibu Kandung: </label><br />
+            <input type="number" id="NIK_Ibu_Kandung_PD" name="NIK_Ibu_Kandung_PD" style="display:block;"></input><br />
+            <sub>
+              Nomor Induk Kependudukan yang tercantum pada Kartu Keluarga atau KTP Ibu kandung peserta didik
+            </sub>
+          </li>
+          <li>
+            <label for="TTL_Ibu_Kandung_PD">Tanggal Lahir Ibu Kandung : </label><br />
+            <input type="date" id="TTL_Ibu_Kandung_PD" name="TTL_Ibu_Kandung_PD" style="display:block;"></input><br />
+            <sub>
+              Tahun lahir Ibu kandung peserta didik
+            </sub>
+          </li>
+          <li>
+            <label for="Pendidikan_Ibu_Kandung_PD">Pendidikan Ibu Kandung : </label><br />
+            <select id="slct_Pendidikan_Ibu_Kandung_PD" name="Kode_Pendidikan_Ibu_Kandung_PD"
+              onchange="select_Pendidikan_Ibu_Kandung_PD()" style="height:30px;">
+              <option value="" disabled="" selected="selected">Pilih Pendidikan Ibu?</option>
+              <option value="01">Tidak Sekolah
+              </option>
+              <option value="02">Putus SD
+              </option>
+              <option value="03">SD Sederajat
+              </option>
+              <option value="04">SMP Sederajat
+              </option>
+              <option value="05">SMA Sederajat
+              </option>
+              <option value="06">D1
+              </option>
+              <option value="07">D2
+              </option>
+              <option value="08">D3
+              </option>
+              <option value="09">D4/S1
+              </option>
+              <option value="10">S2
+              </option>
+              <option value="11">S3
+              </option>
+            </select>
+            <br />
+            <input type="text" id="Pendidikan_Ibu_Kandung_PD" name="Pendidikan_Ibu_Kandung_PD" style="display:block;"
+              disabled="true"></input><br />
+            <sub>
+              Pendidikan Terakhir Ibu kandung peserta didik
+            </sub>
+          </li>
+          <li>
+            <label for="Pekerjaan_Ibu_Kandung_PD">Pekerjaan Ibu Kandung : </label><br />
+            <select id="slct_Pekerjaan_Ibu_Kandung_PD" name="Kode_Pekerjaan_Ibu_Kandung_PD"
+              onchange="select_Pekerjaan_Ibu_Kandung_PD()" style="height:30px;">
+              <option value="" disabled="" selected="selected">Pilih Pekerjaan Ibu?</option>
+              <option value="01">Tidak bekerja
+              </option>
+              <option value="02">Nelayan
+              </option>
+              <option value="03">Petani
+              </option>
+              <option value="04">Peternak
+              </option>
+              <option value="05">PNS/TNI/Polri
+              </option>
+              <option value="06">Karyawan Swasta
+              </option>
+              <option value="07">Pedagang Kecil
+              </option>
+              <option value="08">Pedagang Besar
+              </option>
+              <option value="09">Wiraswasta
+              </option>
+              <option value="10">Wirausaha
+              </option>
+              <option value="11">Buruh
+              </option>
+              <option value="12">Pensiunan
+              </option>
+              <option value="13">Tenaga Kerja Indonesia (TKI)
+              </option>
+              <option value="14">Tidak dapat diterapkan
+              </option>
+              <option value="15">Meninggal Dunia
+              </option>
+              <option value="16">Lainnya
+
+              </option>
+            </select>
+            <br />
+            <input type="text" id="Pekerjaan_Ibu_Kandung_PD" name="Pekerjaan_Ibu_Kandung_PD" style="display:block;"
+              disabled="true"></input><br />
+            <sub>
+              Pilih Meninggal Dunia apabila Ibu Kandung peserta didik telah meninggal dunia;<br />
+              Ojek online termasuk wirausaha karena bermitra dengan perusahaan penyedia provider jasa ojek.
+            </sub>
+          </li>
+          <li>
+            <label for="Penghasilan_Ibu_Kandung_PD">Penghasilan Ibu Kandung : </label><br />
+            <select id="slct_Penghasilan_Ibu_Kandung_PD" name="Kode_Penghasilan_Ibu_Kandung_PD"
+              onchange="select_Penghasilan_Ibu_Kandung_PD()" style="height:30px;">
+              <option value="" disabled="" selected="selected">Pilih Penghasilan Ibu?</option>
+              <option value="01">Kurang dari Rp. 1.000.000,-
+              </option>
+              <option value="02">Rp. 1.000.000 - Rp. 2.000.000
+              </option>
+              <option value="03">Lebih dari Rp. 2.000.000
+              </option>
+              <option value="04">Kurang dari Rp. 500.000
+              </option>
+              <option value="05">Rp. 500.000 - Rp. 999.999
+              </option>
+              <option value="06">Rp. 1.000.000 - Rp. 1.999.999
+              </option>
+              <option value="07">Rp. 2.000.000 - Rp. 4.999.999
+              </option>
+              <option value="08">Rp. 5.000.000 - Rp. 20.000.000
+              </option>
+              <option value="09">Lebih dari Rp.20.000.000
+              </option>
+              <option value="10">Tidak Berpenghasilan
+              </option>
+              <option value="99">Lainnya
+
+              </option>
+            </select>
+            <br />
+            <input type="text" id="Penghasilan_Ibu_Kandung_PD" name="Penghasilan_Ibu_Kandung_PD" style="display:block;"
+              disabled="true"></input><br />
+            <sub>
+              Kosongkan kolom ini apabila Ibu kandung peserta didik telah meninggal dunia atau tidak bekerja
+            </sub>
+          </li>
+          <li>
+            <label for="ABK_Ibu">Berkebutuhan Khusus : </label><br />
+            <select id="slct_ABK_Ibu" name="kode_ABK_Ibu" onchange="select_ABK_Ibu()" style="height:30px">
+              <option value="" disabled="" selected="selected">Pilih Berkebutuhan Khusus/Tidak?</option>
+              <option value="01">Tidak
+              </option>
+              <option value="02">Netra (A)
+              </option>
+              <option value="03">Rungu (B)
+              </option>
+              <option value="04">Grahita Ringan (C)
+              </option>
+              <option value="05">Grahita Sedang (C1)
+              </option>
+              <option value="06">Daksa Ringan (D)
+              </option>
+              <option value="07">Daksa Sedang (D1)
+              </option>
+              <option value="08">Indigo (O)
+              </option>
+              <option value="09">Down Sindrome (P)
+              </option>
+              <option value="10">Autis (Q)
+              </option>
+              <option value="11">Laras ( E)
+              </option>
+              <option value="12">Wicara (F)
+              </option>
+              <option value="13">Tuna Ganda (G)
+              </option>
+              <option value="14">Hiperaktif (G)
+              </option>
+              <option value="15">Hiperaktif (H)
+              </option>
+              <option value="16">Cerdas Istimewa (i)
+              </option>
+              <option value="17">Bakat Istimewa (J)
+              </option>
+              <option value="18">Kesulitan Belajar (K)
+              </option>
+            </select>
+
+            <br /><sub>Kebutuhan khusus yang disandang oleh Ibu kandung peserta didik. </sub><br />
+            <input type="text" id="ABK_Ibu" name="ABK_Ibu" disabled="true"><br />
+          </li>
+
+        </ol>
+      </fieldset>
+
+      <div class="hider-form">DATA WALI</div>
+      <fieldset class="pure-group">
+        <ol class="Noform" start="49">
+          <li>
+            <label for="Nama_Wali_PD">Nama Wali: </label><br />
+            <input type="text" id="Nama_Wali_PD" name="Nama_Wali_PD" style="display:block;"></input><br />
+            <sub>
+              Nama Wali peserta didik sesuai dokumen resmi yang berlaku. Hindari penggunaan gelar akademik atau sosial
+              (seperti Alm., Dr., Drs., S.Pd, dan H.)
+            </sub>
+          </li>
+          <li>
+            <label for="NIK_Wali_PD">NIK Wali: </label><br />
+            <input type="number" id="NIK_Wali_PD" name="NIK_Wali_PD" style="display:block;"></input><br />
+            <sub>
+              Nomor Induk Kependudukan yang tercantum pada Kartu Keluarga atau KTP Wali peserta didik
+            </sub>
+          </li>
+          <li>
+            <label for="TTL_Wali_PD">Tanggal Lahir Wali : </label><br />
+            <input type="date" id="TTL_Wali_PD" name="TTL_Wali_PD" style="display:block;"></input><br />
+            <sub>
+              Tahun lahir Wali peserta didik
+            </sub>
+          </li>
+          <li>
+            <label for="Pendidikan_Wali_PD">Pendidikan Wali : </label><br />
+            <select id="slct_Pendidikan_Wali_PD" name="Kode_Pendidikan_Wali_PD" onchange="select_Pendidikan_Wali_PD()"
+              style="height:30px;">
+              <option value="" disabled="" selected="selected">Pilih Pendidikan Wali?</option>
+              <option value="01">Tidak Sekolah
+              </option>
+              <option value="02">Putus SD
+              </option>
+              <option value="03">SD Sederajat
+              </option>
+              <option value="04">SMP Sederajat
+              </option>
+              <option value="05">SMA Sederajat
+              </option>
+              <option value="06">D1
+              </option>
+              <option value="07">D2
+              </option>
+              <option value="08">D3
+              </option>
+              <option value="09">D4/S1
+              </option>
+              <option value="10">S2
+              </option>
+              <option value="11">S3
+              </option>
+            </select>
+            <br />
+            <input type="text" id="Pendidikan_Wali_PD" name="Pendidikan_Wali_PD" style="display:block;"
+              disabled="true"></input><br />
+            <sub>
+              Pendidikan Terakhir Wali peserta didik
+            </sub>
+          </li>
+          <li>
+            <label for="Pekerjaan_Wali_PD">Pekerjaan Wali : </label><br />
+            <select id="slct_Pekerjaan_Wali_PD" name="Kode_Pekerjaan_Wali_PD" onchange="select_Pekerjaan_Wali_PD()"
+              style="height:30px;">
+              <option value="" disabled="" selected="selected">Pilih Pekerjaan Wali?</option>
+              <option value="01">Tidak bekerja
+              </option>
+              <option value="02">Nelayan
+              </option>
+              <option value="03">Petani
+              </option>
+              <option value="04">Peternak
+              </option>
+              <option value="05">PNS/TNI/Polri
+              </option>
+              <option value="06">Karyawan Swasta
+              </option>
+              <option value="07">Pedagang Kecil
+              </option>
+              <option value="08">Pedagang Besar
+              </option>
+              <option value="09">Wiraswasta
+              </option>
+              <option value="10">Wirausaha
+              </option>
+              <option value="11">Buruh
+              </option>
+              <option value="12">Pensiunan
+              </option>
+              <option value="13">Tenaga Kerja Indonesia (TKI)
+              </option>
+              <option value="14">Tidak dapat diterapkan
+              </option>
+              <option value="15">Meninggal Dunia
+              </option>
+              <option value="16">Lainnya
+
+              </option>
+            </select>
+            <br />
+            <input type="text" id="Pekerjaan_Wali_PD" name="Pekerjaan_Wali_PD" style="display:block;"
+              disabled="true"></input><br />
+            <sub>
+              Ojek online termasuk wirausaha karena bermitra dengan perusahaan penyedia provider jasa ojek.
+            </sub>
+          </li>
+          <li>
+            <label for="Penghasilan_Wali_PD">Penghasilan Wali : </label><br />
+            <select id="slct_Penghasilan_Wali_PD" name="Kode_Penghasilan_Wali_PD"
+              onchange="select_Penghasilan_Wali_PD()" style="height:30px;">
+              <option value="" disabled="" selected="selected">Pilih Penghasilan Wali?</option>
+              <option value="01">Kurang dari Rp. 1.000.000,-
+              </option>
+              <option value="02">Rp. 1.000.000 - Rp. 2.000.000
+              </option>
+              <option value="03">Lebih dari Rp. 2.000.000
+              </option>
+              <option value="04">Kurang dari Rp. 500.000
+              </option>
+              <option value="05">Rp. 500.000 - Rp. 999.999
+              </option>
+              <option value="06">Rp. 1.000.000 - Rp. 1.999.999
+              </option>
+              <option value="07">Rp. 2.000.000 - Rp. 4.999.999
+              </option>
+              <option value="08">Rp. 5.000.000 - Rp. 20.000.000
+              </option>
+              <option value="09">Lebih dari Rp.20.000.000
+              </option>
+              <option value="10">Tidak Berpenghasilan
+              </option>
+              <option value="99">Lainnya
+
+              </option>
+            </select>
+            <br />
+            <input type="text" id="Penghasilan_Wali_PD" name="Penghasilan_Wali_PD" style="display:block;"
+              disabled="true"></input><br />
+
+          </li>
+        </ol>
+      </fieldset>
+
+
+      <div class="hider-form">LAMPIRKAN FILE PESERTA DIDIK</div>
+      <fieldset class="pure-group">
+        <ol class="Noform">
+          <li>File Akte Kelahiran/Surat Keterangan Lahir: <br />
+            <label class="asemfile" for="attach" required></label><br />
+            <input type="text" name="filename" id="filename" style="display:none" />
+            <input type="text" name="fileContent" id="fileContent" style="display:none" />
+            <input id="attach" name="attach" type="file" onchange="UploadFile()" style="display:none" />
+            <br /><sup id="namafileatach">Silakan Unggah file Akte Kelahiran/Surat Keterangan Lahir</sup>
+          </li>
+          <br />
+          <li>File Kartu Keluarga: <br />
+            <label class="asemfile" for="attach1"></label><br />
+
+            <input type="text" name="filename1" id="filename1" style="display:none" />
+            <input type="text" name="fileContent1" id="fileContent1" style="display:none" />
+            <input id="attach1" name="attach1" type="file" onchange="UploadFilee(1)" style="display:none" />
+            <br /><sup id="namafileatach1">Silakan Unggah file Kartu Keluarga</sup>
+          </li>
+          <br />
+          <li>File KTP Orang Tua : <br /><sub>(Ayah atau Ibu, Pilih Salah Satu saja)</sub> <br />
+            <label class="asemfile" for="attach2"></label><br />
+
+            <input type="text" name="filename2" id="filename2" style="display:none" />
+            <input type="text" name="fileContent2" id="fileContent2" style="display:none" />
+            <input id="attach2" name="attach2" type="file" onchange="UploadFilee(2)" style="display:none" />
+            <br /><sup id="namafileatach2">Silakan Unggah file KTP</sup>
+          </li>
+          <br />
+          <li>File Surat Keterangan Domisili : <br /><sub>(Bagi KK Luar Kota Depok, KK Depok tidak perlu)</sub><br />
+            <label class="asemfile" for="attach3"></label><br />
+
+            <input type="text" name="filename3" id="filename3" style="display:none" />
+            <input type="text" name="fileContent3" id="fileContent3" style="display:none" />
+            <input id="attach3" name="attach3" type="file" onchange="UploadFilee(3)" style="display:none" />
+            <br /><sup id="namafileatach3">Silakan Unggah file Surat Keterangan Domisili</sup>
+          </li>
+          <br />
+          <li>File Ijazah TK/RA/PAUD : <br /><sub>(Jika Ada)</sub> <br />
+            <label class="asemfile" for="attach4"></label><br />
+
+            <input type="text" name="filename4" id="filename4" style="display:none" />
+            <input type="text" name="fileContent4" id="fileContent4" style="display:none" />
+            <input id="attach4" name="attach4" type="file" onchange="UploadFilee(4)" style="display:none" />
+            <br /><sup id="namafileatach4">Silakan Unggah file IJazah TK/RA/PAUD</sup>
+          </li>
+          <br />
+          <li>File Kartu KPS/PKH : <br /><sub>(Jika Ada)</sub> <br />
+            <label class="asemfile" for="attach5"></label><br />
+
+            <input type="text" name="filename5" id="filename5" style="display:none" />
+            <input type="text" name="fileContent5" id="fileContent5" style="display:none" />
+            <input id="attach5" name="attach5" type="file" onchange="UploadFilee(5)" style="display:none" />
+            <br /><sup id="namafileatach5">Silakan Unggah file KPS/PKH</sup>
+
+          </li>
+          <br />
+          <li>File Kartu KIP : <br /><sub>(Jika Ada)</sub> <br />
+            <label class="asemfile" for="attach6"></label><br />
+
+            <input type="text" name="filename6" id="filename6" style="display:none" />
+            <input type="text" name="fileContent6" id="fileContent6" style="display:none" />
+            <input id="attach6" name="attach6" type="file" onchange="UploadFilee(6)" style="display:none" />
+            <br /><sup id="namafileatach6">Silakan Unggah file KIP</sup>
+          </li>
+
+          <br />
+          <li>File Surat Keterangan Pertanggung Jawaban Mutlak (SPTJM) : <br /><sub>Poto SPTJM yang diberi materi 6000
+              dan
+              ditandatangani</sub> <br />
+            <label class="asemfile" for="attach7"></label><br />
+
+            <input type="text" name="filename7" id="filename7" style="display:none" />
+            <input type="text" name="fileContent7" id="fileContent7" style="display:none" />
+            <input id="attach7" name="attach7" type="file" onchange="UploadFilee(7)" style="display:none" />
+            <br /><sup id="namafileatach7">Silakan Unggah file SPTJM</sup>
+            <br />Silakan download <a class="download"
+              href="https://sites.google.com/site/siintankkg/input-aset-sipkd-kota-depok/SURAT%20PERNYATAAN%20TANGGUNG%20JAWAB%20MUTLAK%20ortu.docx?attredirects=0&amp;d=0"
+              target="_blank">Contoh SPTJM</a>
+          </li>
+
+        </ol>
+
+
+
+      </fieldset>
+      <fieldset class="pure-group honeypot-field" style="display:none;">
+        <label for="honeypot">
+          Peringatan ini muncul karena proses pengiriman nilai Lamaso dihentikan oleh tim kami. Masalah ini bisa jadi
+          karena Anda tidak mengisi formulir email yang tepat sehingga nilai yang dikirim mengalami kegagalan. Cobalah
+          beberapa saat lagi.<br /><br />
+          Tim Lamaso: <i>Ade Andriansyah</i>
+        </label>
+        <input id="honeypot" type="text" name="honeypot" value="" />
+      </fieldset>
+
+    </div>
+
+    <div class="thankyou_message" style="display:none;">
+      <h2><em>Terimakasih, Ananda <b id="selamatpdberhasil"> ...</b>, </em></h2>
+      Data telah berhasil diinput ke Database PPDB kami ....!
+      <hr />
+      Silakan kunjungi laman Konfirmasi Pendaftaran Peserta Didik Baru Sementara untuk mengecek berhasil diinput di link
+      berikut ini:
+      <a href="https://www.sdnratujaya1.net/p/tes-final.html">Konfirmasi Pendaftaran</a>.
+
+      Status Tekirim:<br />
+      <progress id="progress" value="0"></progress>
+      <span id="display"></span>
+
+    </div> <!-- Customise the Thankyou Message People See when they submit the form: -->
+    <div class="pesanawalawal">
+      <h2 style="text-align:center">Kirim Formulir</h2>
+      <br />
+      <div style="text-align:center">
+        <button class="button-success pure-button button-xlarge" style="text-align:center">
+          <i class="fa fa-paper-plane"></i> &nbsp;&nbsp;&nbsp; Kirim Formulir</button>
+
+      </div>
+      <br />
+      Pengumuman selanjutnya akan kami posting di web sekolah kami: <a
+        href="https://www.sdnratujaya1.net">www.sdnratujaya1.net</a>.
+    </div>
+
+  </form>
+
+  <script>
+    function UploadFile() {
+      var reader = new FileReader();
+      var file = document.getElementById('attach').files[0];
+      reader.onload = function () {
+        document.getElementById('fileContent').value = reader.result;
+        document.getElementById('filename').value = file.name;
+        document.getElementById('namafileatach').innerHTML = file.name + " ( " + (file.size / 1000).toFixed(2) + " Kb )";
+        //document.getElementById('uploadForm').submit();
+      }
+      reader.readAsDataURL(file);
+    }
+  </script>
+  <script>
+    function UploadFilee(no) {
+      var reader = new FileReader();
+      var file = document.getElementById('attach' + no).files[0];
+      reader.onload = function () {
+        document.getElementById('fileContent' + no).value = reader.result;
+        document.getElementById('filename' + no).value = file.name;
+        document.getElementById('namafileatach' + no).innerHTML = file.name + " ( " + (file.size / 1000).toFixed(2) + " Kb )";
+        //document.getElementById('uploadForm').submit();
+      }
+      reader.readAsDataURL(file);
+    }
+  </script>
+
+  <script>
+    var a = 0;
+    var progressBar = document.getElementById("progress"),
+      loadBtn = document.getElementById("button"),
+      display = document.getElementById("display");
+
+    function Testing() {
+
+      if (a == 0) {
+        i = 1;
+        var width = 10;
+        progressBar.value = 100;
+        var id = setInterval(frame, 10);
+        function frame() {
+          if (width >= 100) {
+
+            clearInterval(id);
+            i = 0;
+          } else {
+
+            width++;
+            progressBar.value = width;
+            display.innerHTML = width + "%";
+          }
+        }
+      }
+    }
+
+  </script>
+
+
+
+  <script>
+    var blogtes = window.location.href;
+    var blogini = blogtes.search("ppdb");
+
+    if (blogini == -1) { alert("Maaf, Anda mengubah pengaturan script kami."); location.replace("https://www.sdnratujaya1.net") }
+
+
+
+    document.getElementById("email").addEventListener("input", tambahattribute);
+    function tambahattribute() {
+      var balasemail = document.ppdb.email.value;
+      document.ppdb.setAttribute("data-email", balasemail);
+    };
+    document.getElementById("Nama_Calon_PD").addEventListener("input", namaberhasil);
+    function namaberhasil() {
+      var namapdberhasil = document.ppdb.Nama_Calon_PD.value;
+      document.getElementById("selamatpdberhasil").innerHTML = namapdberhasil;
+    };
+    document.getElementById("Tanggal_Lahir").addEventListener("input", konfirmasittlku);
+    function konfirmasittlku() {
+      var nnama = document.ppdb.Nama_Calon_PD.value;
+      var tgl = document.getElementById("Tanggal_Lahir").value;
+      var tglpisah = tgl.split('-')
+      var bulanku = tglpisah[1] - 1;
+      var tahunku = tglpisah[0];
+      var tanggalku = tglpisah[2];
+      var arrbulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"]
+      var fixbulan = arrbulan[bulanku];
+      document.getElementById("KonfirmasiTTL").innerHTML = "Ananda " + nnama + " Lahir pada tanggal: " + tanggalku + " bulan : " + fixbulan + " tahun: " + tahunku;
+    };
+    function select_agamakepercayaan() {
+      var agamax = document.ppdb.kode_agamakepercayaan;
+      var dipilihagamax = agamax.selectedIndex;
+      document.ppdb.Agama_Kepercayaan.value = agamax.options[dipilihagamax].text;
+      document.getElementById("agamadipilih").innerHTML = " Kode Agama : " + agamax[dipilihagamax].value;
+    };
+    function select_kewarganegaraan() {
+      var ddkewarganegaraan = document.ppdb.slct_kewarganegaraan;
+      var dipilihkewarganegaraan = ddkewarganegaraan.selectedIndex;
+      if (dipilihkewarganegaraan === 1) {
+        document.ppdb.Kewarganegaraan.disabled = true;
+        document.ppdb.Kewarganegaraan.value = "WNI";
+      }
+      if (dipilihkewarganegaraan === 2) {
+        document.ppdb.Kewarganegaraan.disabled = false;
+        document.ppdb.Kewarganegaraan.value = "WNA [masukkan nama negara]";
+      }
+    };
+    function select_ABK() {
+      var ddABK = document.ppdb.kode_anak_ABK;
+      var dipilihABK = ddABK.selectedIndex;
+      document.ppdb.PD_ABK.value = ddABK.options[dipilihABK].text
+    }
+    var xlintang = document.ppdb.Lintang;
+    var xbujur = document.ppdb.Bujur;
+    var xjarak = document.ppdb.Jarak_ke_SekolahK;
+
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+      } else {
+        xlintang.value = "Duh, HP Anda tidak support. Coba dengan HP Lain";
+        xbujur.value = "Duh, HP Anda tidak support. Coba dengan HP Lain";
+      }
+    }
+    function showPosition(position) {
+      xlintang.value = position.coords.latitude;
+      xbujur.value = position.coords.longitude;
+      var xJarak = distance(xlintang.value, xbujur.value, "K");
+      xjarak.value = xJarak.toFixed(2);
+    }
+    function distance(lat1, lon1, unit) {
+      //sekolah:
+      var lat2 = -64197468;
+      var lon2 = 1068128224;
+
+      var radlat1 = Math.PI * lat1 / 180
+      var radlat2 = Math.PI * lat2 / 180
+
+      var radlon1 = Math.PI * lon1 / 180
+      var radlon2 = Math.PI * lon2 / 180
+      var theta = lon1 - lon2
+      var radtheta = Math.PI * theta / 180
+      var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+      dist = Math.acos(dist)
+      dist = dist * 180 / Math.PI
+      dist = dist * 60 * 1.1515
+      //if (unit=="K") { dist = dist * 1.609344 }
+      if (unit == "K") { dist = dist * 0.01609344 }
+      if (unit == "N") { dist = dist * 0.8684 }
+      return dist
+    }
+
+    function select_tempat_tinggal() {
+      var tmpttinggal = document.ppdb.kode_tempat_tinggal;
+      var dipilihtmpttinggal = tmpttinggal.selectedIndex;
+      document.ppdb.Tempat_Tinggal.value = tmpttinggal.options[dipilihtmpttinggal].text;
+      document.getElementById("tempattinggaldipilih").innerHTML = "Kode Tempat Tinggal: " + tmpttinggal[dipilihtmpttinggal].value;
+    }
+    function select_modatransportasi() {
+      var modatrnsport = document.ppdb.kode_modatransportasi;
+      var dipilihmodatrnsport = modatrnsport.selectedIndex;
+      document.ppdb.Moda_Transportasi.value = modatrnsport.options[dipilihmodatrnsport].text;
+      document.getElementById("modatransportasidipilih").innerHTML = "Kode Moda Transportasi: " + modatrnsport[dipilihmodatrnsport].value;
+    };
+    function select_KPSPKHYesNo() {
+      var ddKPSPKHYesNo = document.ppdb.kode_KPSPKHYesNo;
+      var dipilihddKPSPKHYesNo = ddKPSPKHYesNo.selectedIndex;
+      document.ppdb.slct_KPSPKH.value = ddKPSPKHYesNo.options[dipilihddKPSPKHYesNo].text;
+      if (dipilihddKPSPKHYesNo === 1) {
+        document.ppdb.No_KPSPKH.disabled = false;
+      }
+      if (dipilihddKPSPKHYesNo === 2) {
+        document.ppdb.No_KPSPKH.disabled = true;
+      }
+    };
+    function select_KIP() {
+      var ddKIP = document.ppdb.Kode_punya_KIP;
+      var dipilihddKIP = ddKIP.selectedIndex;
+      document.ppdb.status_KIP.value = ddKIP.options[dipilihddKIP].text;
+      if (dipilihddKIP === 1) {
+        document.ppdb.No_KIP.disabled = false;
+        document.ppdb.Nama_KIP.disabled = false;
+      }
+      if (dipilihddKIP === 2) {
+        document.ppdb.No_KIP.disabled = true;
+        document.ppdb.Nama_KIP.disabled = true;
+      }
+    };
+    function select_Pendidikan_Ayah_Kandung_PD() {
+      var xxx = document.ppdb.Kode_Pendidikan_Ayah_Kandung_PD;
+      var dipilihPendidikan_Ayah_Kandung_PD = xxx.selectedIndex;
+      document.ppdb.Pendidikan_Ayah_Kandung_PD.value = xxx.options[dipilihPendidikan_Ayah_Kandung_PD].text;
+    };
+    function select_Pekerjaan_Ayah_Kandung_PD() {
+      var xxx = document.ppdb.Kode_Pekerjaan_Ayah_Kandung_PD;
+      var dipilihPekerjaan_Ayah_Kandung_PD = xxx.selectedIndex;
+      document.ppdb.Pekerjaan_Ayah_Kandung_PD.value = xxx.options[dipilihPekerjaan_Ayah_Kandung_PD].text;
+    };
+    function select_Penghasilan_Ayah_Kandung_PD() {
+      var xxx = document.ppdb.Kode_Penghasilan_Ayah_Kandung_PD;
+      var dipilihPenghasilan_Ayah_Kandung_PD = xxx.selectedIndex;
+      document.ppdb.Penghasilan_Ayah_Kandung_PD.value = xxx.options[dipilihPenghasilan_Ayah_Kandung_PD].text;
+    };
+    function select_ABK_Ayah() {
+      var dddd = document.ppdb.kode_ABK_Ayah;
+      var dipilihABK_Ayah = dddd.selectedIndex;
+      document.ppdb.ABK_Ayah.value = dddd.options[dipilihABK_Ayah].text
+    };
+    function select_Pendidikan_Ibu_Kandung_PD() {
+      var xxx = document.ppdb.Kode_Pendidikan_Ibu_Kandung_PD;
+      var dipilihPendidikan_Ibu_Kandung_PD = xxx.selectedIndex;
+      document.ppdb.Pendidikan_Ibu_Kandung_PD.value = xxx.options[dipilihPendidikan_Ibu_Kandung_PD].text;
+    };
+    function select_Pekerjaan_Ibu_Kandung_PD() {
+      var xxx = document.ppdb.Kode_Pekerjaan_Ibu_Kandung_PD;
+      var dipilihPekerjaan_Ibu_Kandung_PD = xxx.selectedIndex;
+      document.ppdb.Pekerjaan_Ibu_Kandung_PD.value = xxx.options[dipilihPekerjaan_Ibu_Kandung_PD].text;
+    };
+    function select_Penghasilan_Ibu_Kandung_PD() {
+      var xxx = document.ppdb.Kode_Penghasilan_Ibu_Kandung_PD;
+      var dipilihPenghasilan_Ibu_Kandung_PD = xxx.selectedIndex;
+      document.ppdb.Penghasilan_Ibu_Kandung_PD.value = xxx.options[dipilihPenghasilan_Ibu_Kandung_PD].text;
+    };
+    function select_ABK_Ibu() {
+      var dddd = document.ppdb.kode_ABK_Ibu;
+      var dipilihABK_Ibu = dddd.selectedIndex;
+      document.ppdb.ABK_Ibu.value = dddd.options[dipilihABK_Ibu].text
+    };
+    function select_Pendidikan_Wali_PD() {
+      var xxx = document.ppdb.Kode_Pendidikan_Wali_PD;
+      var dipilihPendidikan_Wali_PD = xxx.selectedIndex;
+      document.ppdb.Pendidikan_Wali_PD.value = xxx.options[dipilihPendidikan_Wali_PD].text;
+    };
+    function select_Pekerjaan_Wali_PD() {
+      var xxx = document.ppdb.Kode_Pekerjaan_Wali_PD;
+      var dipilihPekerjaan_Wali_PD = xxx.selectedIndex;
+      document.ppdb.Pekerjaan_Wali_PD.value = xxx.options[dipilihPekerjaan_Wali_PD].text;
+    };
+    function select_Penghasilan_Wali_PD() {
+      var xxx = document.ppdb.Kode_Penghasilan_Wali_PD;
+      var dipilihPenghasilan_Wali_PD = xxx.selectedIndex;
+      document.ppdb.Penghasilan_Wali_PD.value = xxx.options[dipilihPenghasilan_Wali_PD].text;
+    }
+  </script>
+
+
+  <script type="text/javascript">
+    (function () {
+
+      // get all data in form and return object
+      function getFormData(form) {
+        var elements = form.elements;
+        var honeypot;
+
+        var fields = Object.keys(elements).filter(function (k) {
+          if (elements[k].name === "honeypot") {
+            honeypot = elements[k].value;
+            return false;
+          }
+          return true;
+        }).map(function (k) {
+          if (elements[k].name !== undefined) {
+            return elements[k].name;
+            // special case for Edge's html collection
+          } else if (elements[k].length > 0) {
+            return elements[k].item(0).name;
+          }
+        }).filter(function (item, pos, self) {
+          return self.indexOf(item) == pos && item;
+        });
+
+        var formData = {};
+        fields.forEach(function (name) {
+          var element = elements[name];
+
+          // singular form elements just have one value
+          formData[name] = element.value;
+
+          // when our element has multiple items, get their values
+          if (element.length) {
+            var data = [];
+            for (var i = 0; i < element.length; i++) {
+              var item = element.item(i);
+              if (item.checked || item.selected) {
+                data.push(item.value);
+              }
+            }
+            formData[name] = data.join(', ');
+          }
+        });
+
+        // add form-specific values into the data
+        formData.formDataNameOrder = JSON.stringify(fields);
+        formData.formGoogleSheetName = form.dataset.sheet || "responses"; // default sheet name
+        formData.formGoogleSendEmail
+          = form.dataset.email || ""; // no email by default
+
+        return { data: formData, honeypot: honeypot };
+      }
+
+      function handleFormSubmit(event) {  // handles form submit without any jquery
+
+        event.preventDefault();           // we are submitting via xhr below
+        var form = event.target;
+        var formData = getFormData(form);
+        var data = formData.data;
+
+        // If a honeypot field is filled, assume it was done so by a spam bot.
+        if (formData.honeypot) {
+          return false;
+        }
+
+        disableAllButtons(form);
+        var url = form.action;
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', url, true);
+        //xhr.withCredentials = true;
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        xhr.onreadystatechange = function () {
+
+
+          //  if (formsUbmit) {
+          //            formsUbmit.style.display = "none"; // hide form
+          //          }
+
+
+
+          //  if (xhr.readyState <= 3){
+          //    var formElementsx = form.querySelector(".button-success");
+          //    if (formElementsx) {
+          //     formElementsx.style.display = "none";
+          //     }
+          //    
+          // }
+
+          if (xhr.readyState === 4) {// && xhr.status === 200) {
+            form.reset();
+            Testing();
+            var formElements = form.querySelector(".form-elementsdd");
+            if (formElements) {
+              formElements.style.display = "none"; // hide form
+            }
+            var formElementsPlus = form.querySelector(".pesanawalawal");
+            if (formElementsPlus) {
+              formElementsPlus.style.display = "none"; // hide form
+            }
+            var thankYouMessage = form.querySelector(".thankyou_message");
+            if (thankYouMessage) {
+              thankYouMessage.style.display = "block";
+              //   var namathankyou = document.namaku.panggilsaya.value;
+              // document.getElementById("siswasukses").innerHTML = namathankyou;
+              //  var namathankyou2 = document.ppdb.Nama_Calon_PD.value;
+              //document.getElementById("selamatpdberhasil").innerHTML = namathankyou2;
+            }
+          }
+        };
+        // url encode form data for sending as post data
+        var encoded = Object.keys(data).map(function (k) {
+          return encodeURIComponent(k) + "=" + encodeURIComponent(data[k]);
+        }).join('&');
+        xhr.send(encoded);
+      }
+
+
+
+      function loaded() {
+        // bind to the submit event of our form
+
+        var forms = document.querySelectorAll("form.gformdd");
+        for (var i = 0; i < forms.length; i++) {
+          forms[i].addEventListener("submit", handleFormSubmit, false);
+        }
+      };
+      document.addEventListener("DOMContentLoaded", loaded, false);
+
+      function disableAllButtons(form) {
+        var buttons = form.querySelectorAll("button");
+        for (var i = 0; i < buttons.length; i++) {
+          buttons[i].innerHTML = "Sedang Proses ...";
+          buttons[i].disabled = true;
+        }
+      }
+    })();
+
+
+  </script>
+</body>
+
+</html>

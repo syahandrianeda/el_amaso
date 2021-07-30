@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <title>e-LAMASO</title>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/img/lamaso.webp" rel="shortcut icon" type="image/x-icon" />
+    <meta name="description"
+        content="Aplikasi Pembelajaran Jarak Jauh (PJJ) selama Belajar di Rumah (BDR) untuk Siswa, Guru Kelas, Guru Mata Pelajaran, Kepala Sekolah, dan Orang tua">
+
+    <link href='https://sdnratujaya1-elamaso.net/user/guru.html' hreflang='x-default' rel='alternate' />
+    <meta content='en_US' property='og:locale' />
+    <meta content='en_GB' property='og:locale:alternate' />
+    <meta content='id_ID' property='og:locale:alternate' />
+    <meta content='ll-cc' http-equiv='content-language' />
+
+    <!-- meta tag sosial media     -->
+    <meta property="og:url" content="https://sdnratujaya1-elamaso.net" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="e-LAMASO" />
+    <meta property="og:description" content="Sebuah Web Aplikasi Pembelajaran Jarak Jauh PT EKA CIPTA MULTITAMA" />
+    <meta property="og:image" content="/img/lamaso.webp" />
+
+    <meta name='twitter:card' content='summary' />
+    <meta property='twitter:title' content='ELAMASO' />
+    <meta property='twitter:url' content='https://sdnratujaya1-elamaso.net' />
+    <meta property='twitter:description' content="Sebuah Web Aplikasi Pembelajaran Jarak Jauh PT EKA CIPTA MULTITAMA" />
+    <meta property="twitter:image" content="/img/lamaso.webp" />
+    <!-- end meta tag sosial media     -->
+
+    <link rel="stylesheet" href="/css/w3.css">
+
+    <link rel="stylesheet" href="/css/w3-theme-blue-grey.css">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="/idsekolah.js"></script>
+    <link rel="stylesheet" href="/css/firststyle.css">
+    <link rel="manifest" href="/manifest.json">
+    <!-- ios support-->
+    <link rel="apple-touch-icon" href="/img/icons/pic96.png">
+    <meta name="apple-mobile-web-app-status-bar" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+    <script>
+        if (localStorage.hasOwnProperty("typeuser")) {
+            let m = JSON.parse(localStorage.getItem("typeuser"))
+            //console.log(m.akses);
+            if (m.akses == "Guru Kelas") {
+                //window.location.href="/user/guru.html";
+                window.location.replace("/user/guru.html");
+            } else if (m.akses == "Guru Mapel") {
+                window.location.replace("/user/gmp.html");
+            } else if (m.akses == "Kepala Sekolah") {
+                window.location.replace("/user/kepsek.html");
+            } else if (m.akses == "siswa") {
+                window.location.replace("/user/siswa.html");
+            } else if (m.akses == "Staff") {
+                window.location.replace("/user/staff.html");
+            } else {
+            }
+        }
+    </script>
+
+</head>
+
+
+<body>
+    <!-- Top container -->
+    <div class="w3-bar w3-top  w3-large w3-card-4" style="z-index:4;background-color: rgb(250, 234, 8)">
+        <button class="w3-bar-item w3-button w3-hover-black w3-hover-text-light-grey" onclick="w3_open();"><i
+                class="fa fa-bars"></i>  Menu</button>
+        <span class="w3-bar-item w3-right">e-Lamaso</span>
+    </div>
+
+
+    <!-- Sidebar/menu -->
+    <nav class="w3-sidebar w3-card w3-collapse w3-animate-left tesbody" style="z-index:9;width:300px;" id="mySidebar">
+        <br>
+        <!-- A. SIDEBAR-->
+        <div class="w3-container w3-row">
+            <!-- 1. Logo Sekolah -->
+            <div class="w3-col s4">
+                <img src="/img/lamaso.webp" id="logosekolahmenu" class="w3-circle w3-margin-right" style="
+                width:90px;height:90px;border:1px solid blue" alt="logo lamaso" />
+            </div>
+            <!-- 2. Keterangan di bawah logo sekolah -->
+            <div class="w3-col s8 w3-bar">
+                <!-- Bar nama sekolah -->
+                <strong id="namasekolah">
+                    SEKOLAH e-LAMASO
+                </strong>
+                <br />
+                <!-- Bar 'namakota', diisi untuk mengisi identitas NAMA, JABATAN, dan Kelas yang diampu user (guru) yang login -->
+                <strong id="namakota">
+                    KOTA SEKOLAH
+                </strong>
+                <br />
+                <!-- Bar 'tapel' otomatis mengisi Kode TAhun Pelajaran -->
+                <strong id="tapel">
+                    (2020/2021)
+                </strong>
+            </div>
+        </div>
+        <!-- >>>>>> SELESAI A. SIDEBAR -->
+
+        <!-- B. MENU BAR -->
+
+        <hr>
+        <div class="w3-container">
+            <h5>Menu e-Lamaso</h5>
+        </div>
+        <div class="w3-bar-block" id="barlogin">
+
+            <a href="#" class="w3-bar-item w3-button w3-padding" onclick="loginelamaso()"><i class="fa fa-sign-in"></i> 
+                Login</a>
+            <!-- <a href="#" class="w3-bar-item w3-button w3-padding" onclick="maudaftarelamaso()"><i
+                class="fa fa-sign-in"></i>  Daftar</a> -->
+            <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black"
+                onclick="w3_close()" title="close menu">
+                <i class="fa fa-remove fa-fw"></i>  Tutup Menu
+            </a>
+
+        </div>
+
+
+
+
+
+    </nav>
+    <!-- Overlay effect when opening sidebar on small screens -->
+    <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer"
+        title="close side menu" id="myOverlay">
+    </div>
+    <div class="w3-main" style="margin-left:300px;margin-top:43px;background-color: rgb(248, 242, 242);" id="mainlogin">
+        <div class="w3-row-padding">
+            <div class="w3-third w3-center" style="height: 735px;">
+                <div class="w3-card-4 w3-margin" style="background-color: rgb(250, 234, 8)">
+                    <h4>Login sebagai Siswa</h4>
+
+                </div>
+                <div class="w3-card-4 w3-margin w3-round-large" style="background-color: rgba(250, 234, 8, 0.5)">
+                    <form name="flogin" id="flogin">
+                        <div class="imgcontainer">
+                            <br />
+                            <img src="/img/anaksd.png" style="width:90px;margin:auto" alt="login siswa lamaso" />
+                            <br />
+                            <label for="previewtoken">Token/Sandi:</label><br /><input type="text" id="previewtoken"
+                                class="w3-input w3-border w3-round-xxlarge w3-center" style="width:75%;margin:0 auto" />
+                            <br /><br />
+
+                            <div id="ceksiswa"></div>
+                        </div>
+
+                    </form>
+                    <button id="mulaimulai" class="w3-button w3-yellow w3-round-large w3-card-4" onclick="kliklamaso()"
+                        title="klik Untuk Memulai">Login Siswa</button>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                </div>
+            </div>
+            <div class="w3-third w3-center" style="height: 735px;">
+                <div class="w3-card-4 w3-margin" style="background-color: rgb(250, 234, 8)">
+                    <h4>Login sebagai PTK</h4>
+                </div>
+                <div class="w3-card-4 w3-margin w3-round-large" style="background-color: rgba(250, 234, 8, 0.5)">
+                    <form class="w3-animate-zoom w3-round w3-round-xxlarge" name="frmlogin" id="frmlogin"
+                        style="margin-bottom: 8px;">
+                        <div class="imgcontainer">
+                            <br />
+                            <img id="frmlogo" src="/img/PTK.png" style="width:80px;height:75px;"
+                                alt="login sebagai guru elamaso" />
+                            <div id="loaderform"></div>
+
+                        </div>
+                        <div class="container">
+                            <label for="namauser">User:</label>
+                            <input id="namauser" name="namauser" type="text"
+                                class="w3-input w3-center w3-border w3-round-xxlarge" />
+                            <!-- style=" width:100%;height:30px;border-radius:5px" /><br /><br /> -->
+                            <label for="passwordlogin">Password:</label><br />
+                            <input name="passwordlogin" id="passwordlogin" type="password"
+                                class="w3-input w3-center w3-border w3-round-xxlarge " />
+
+                            <label id="lihatpassword2" for="checkboxlihat2password"><i class="fa fa-eye"></i> Lihat
+                                Password</label>
+                            <input type="checkbox" onclick="fn2lihatpassword('passwordlogin','lihatpassword2')"
+                                id="checkboxlihat2password" style="display: none;">
+                        </div>
+                    </form>
+                    <button type="button" onclick="gurulogin()" class="w3-button w3-yellow w3-round-large w3-card-4"
+                        id="loginpertama">Login Guru</button>
+                    <br />
+                    <br />
+                </div>
+            </div>
+            <div class="w3-third  w3-center" style="height: 735px;">
+                <div class="w3-card-4 w3-margin" style="background-color: rgb(250, 234, 8)">
+                    <h5>Login sebagai Orang Tua</h5>
+                </div>
+                <div class="w3-card-4 w3-margin w3-round-large" style="background-color: rgba(250, 234, 8, 0.5)">
+                    <form name="flogin1" id="flogin1">
+                        <div class="imgcontainer">
+                            <br />
+                            <img src="/img/Gambar Orangtua copy.png" style="height:90px;margin:auto"
+                                alt="login orang tua di lamaso" />
+                            <br />
+                            <label for="previewtokenn">Token/Sandi:</label><br /><input type="text" id="previewtokenn"
+                                class="w3-input w3-border w3-round-xxlarge  w3-center"
+                                style="width:75%;margin:0 auto" />
+                            <br /><br />
+
+                            <div id="cek"></div>
+                        </div>
+
+                    </form>
+                    <button id="mulaimulaiortu" onclick="loginot()" class="w3-button w3-yellow w3-round-large w3-card-4"
+                        title="klik Untuk Memulai">Login Orang Tua</button>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+
+                </div>
+            </div>
+
+        </div>
+        <div class="w3-light-grey w3-container  w3-justify w3-card-4">
+            <h2>
+                Tentang e-Lamaso
+            </h2>
+            e-Lamaso merupakan platform pembelajaran dalam jaringan (daring/online) yang dapat digunakan untuk
+            mempermudah guru dan siswa dalam kegiatan pembelajaran jarak jauh (PJJ).
+            <br /><br />
+            e-Lamaso sendiri merupakan pengembangan lamaso versi sebelumnya. pada versi e-Lamaso ini, konten materi
+            dapat diatur/disetting dengan mudah oleh guru tanpa harus mengetahui . Pun kepada siswa, platform e-Lamaso
+            dapat dijadikan sarana latihan, ulangan, pengumuman nilai yang dapat dilakukan secara otomatis di web
+            sekolah/e-Lamaso versi Siswa.
+            <br /><br />
+            e-Lamaso ada 2 versi. Versi pertama adalah versi guru (e-Lamaso Guru). Versi kedua adalah versi siswa
+            (e-Lamaso Siswa). Masing-masing memiliki keterhubungan yang sama. <b style="color:red">e-Lamaso guru</b>
+            oleh guru untuk mengupload materi, mengoreksi soal uraian
+            (Poto/audio/video tugas siswa), memberikan nilai, dan memberikan akses pengumuman. Sementara untuk <b
+                style="color:red">e-Lamaso Siswa</b>, peserta didik dapat membaca, mengerjakan tugas, mengupload tagihan
+            tugas baik dalam bentuk poto, audio, ataupun video. Untuk tagihan tugas berupa video kemungkinan akan ada
+            fitur upload di youtube via e-Lamaso di chanel sekolah, tetapi fitur ini masih dalam pengembangan. Melalui
+            <b style="color:red">e-Lamaso Siswa</b> juga, peserta didik dapat mengetahui pengumuman (nilai/pengumuman
+            lainnya) yang telah diberikang guru pada <b style="color:red">e-Lamaso Guru</b>.
+            <br /><br />
+            <h3>Platform e-Lamaso</h3>
+            Sebagai platform, e-Lamaso dapat diterapkan di web sekolah maupun sebagai file html. Versi yang Anda pakai
+            saat ini adalah platform <em>file html</em>. Sedangkan untuk platform web dapat diakses di web sekolah
+            masing-masing setelah sekolah/admin e-Lamaso memberikan alamat link-nya. Versi Web dan file memungkinkan
+            tampilannya berbeda namun akses penggunaannya akan tetap sama.<br /><br />
+
+            <h3>
+                Kemudahan e-Lamaso
+            </h3>
+            e-Lamaso sengaja didesain untuk mempermudah kinerja guru dan siswa. Siswa hanya perlu memasukkan kode token
+            miliknya pada saat pertama kali (atau login) selanjutnya, tidak perlu lagi login dengan memasukkan kode
+            token lagi.
+            <br><br>
+            Begitu juga dengan guru. Sedikit berbeda dengan cara login pada siswa, guru diberikan tahap login yang
+            sengaja dipermudah. Tanpa harus memverifikasi ulang (kecuali saat mengganti profil pribadinya dan ini masih
+            bisa diakses oleh admin).
+        </div>
+    </div>
+
+
+
+
+
+
+    <div id="loadingmodal" class="modal w3-opacity-min">
+        <i class="fa fa-spin fa-spinner w3-jumbo w3-display-middle"></i>
+
+    </div>
+
+
+
+
+    <script src="/script/main.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/gh/syahandrianeda/script@0.0.3/script.js"></script> -->
+    <!-- <script src="https://github.com/syahandrianeda/elamaso2021/blob/main/script/main.js"></script> -->
+
+    <!-- <script src="/js/gsscript.js"></script> -->
+    <!-- <script src="/js/waktu.js"></script> -->
+    <script src="/script/app.js"></script>
+   
+</body>
+
+</html>

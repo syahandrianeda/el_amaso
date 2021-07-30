@@ -1,0 +1,67 @@
+{
+    "name": "e-Lamaso",
+    "short_name": "eLamaso",
+    "start_url": "/index.html",
+    "display": "standalone",
+    "description": "Aplikasi Pembelajaran Jarak Jauh (PJJ) selama Belajar di Rumah (BDR) untuk Siswa, Guru Kelas, Guru Mata Pelajaran, Kepala Sekolah, dan Orang tua",
+    "background_color": "#ffffff",
+    "theme_color": "#ffffff",
+    "orientation": "portrait-primary",
+    "prefer_related_applications": true,
+    "related_applications": [
+        {
+            "platform": "web",
+            "url": "/index.html"
+        }
+    ],
+    "icons": [
+        {
+            "src": "/img/icons/pic72.png",
+            "type": "image/png",
+            "sizes": "72x72",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/img/icons/pic96.png",
+            "type": "image/png",
+            "sizes": "96x96",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/img/icons/pic128.png",
+            "type": "image/png",
+            "sizes": "128x128",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/img/icons/pic144.png",
+            "type": "image/png",
+            "sizes": "144x144",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/img/icons/pic152.png",
+            "type": "image/png",
+            "sizes": "152x152",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/img/icons/pic192.png",
+            "type": "image/png",
+            "sizes": "192x192",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/img/icons/pic384.png",
+            "type": "image/png",
+            "sizes": "384x384",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/img/icons/pic512.png",
+            "type": "image/png",
+            "sizes": "512x512",
+            "purpose": "any maskable"
+        }
+    ]
+}

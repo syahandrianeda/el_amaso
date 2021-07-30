@@ -1,0 +1,62 @@
+textarea{width:100%;height:200px;padding:12px 20px;margin:8px 0;display:inline-block;border:1px solid #ccc;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}button.login{background-color:#00f}button.wa{background-color:#4caf50}button.login,button.wa{color:#fff;padding:14px 20px;margin:8px 0;border:none;cursor:pointer;width:100%;border-radius:30px}button.wa:hover{opacity:.8}.cancelbtn{width:auto;padding:10px 18px;background-color:#f44336}.imgcontainer{text-align:center;margin:24px 0 12px 0;position:relative}img.avatar{width:40%;border-radius:50%}.container{padding:16px;border:2px double red;border:30px;padding:5px}span.psw{float:right;padding-top:16px}.modal{display:none;position:fixed;z-index:3;left:0;top:0;width:100%;height:100%;overflow:auto;background-color:#000;background-color:rgba(0,0,0,.514);padding-top:30px}.modal-petunjuk{width:90%}.modal-content{width:80%}.modal-contenta{width:65%}.modal-content,.modal-contenta,.modal-petunjuk{background-color:#fefefe;margin:1% auto 0 auto;border:1px solid #888}.modal-contentt{background-color:#fefefe;margin:0 auto 0 auto;width:80%}.close{position:absolute;right:25px;top:0;color:#000;font-size:35px;font-weight:700}.close:focus,.close:hover{color:red;cursor:pointer}.animate{-webkit-animation:animatezoom .6s;animation:animatezoom .6s}@-webkit-keyframes animatezoom{from{-webkit-transform:scale(0)}to{-webkit-transform:scale(1)}}@keyframes animatezoom{from{transform:scale(0)}to{transform:scale(1)}}@media screen and (max-width:300px){span.psw{display:block;float:none}.cancelbtn{width:100%}}#tombolregistrasi{display:none}
+.w3-margin8{margin:8px!important;padding:10px;}
+.bgradialgradian {background-image: linear-gradient(145deg, #d9b3ff , #ffffcc,#b3ffb3)}
+.hero { 
+    position: relative; 
+    
+    display: flex;
+    background-image: url("/img/bgwa.png");
+    background-size: cover;
+}
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    background-color: rgba(0,0,0,0.7);
+}
+.hero::after {background-color: white;}
+.tesbody{background: rgba(250, 244, 164, 0.651) url("/img/bgwa2.png") repeat }
+/* .tesbody{background: rgba(250, 244, 164, 0.6) url("/img/lg_bg.png") repeat } */
+    /* background-image: url(/img/bgwa.png);background-repeat: repeat; background-color: #faf4a4} */
+    
+.n_zoom:hover{
+    animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+  
+  @keyframes shake {
+    10%, 90% {
+      transform: translate3d(-1px, 0, 0);
+    }
+    
+    20%, 80% {
+      transform: translate3d(2px, 0, 0);
+    }
+  
+    30%, 50%, 70% {
+      transform: translate3d(-4px, 0, 0);
+    }
+  
+    40%, 60% {
+      transform: translate3d(4px, 0, 0);
+    }
+  };
+  .loaderin {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spinx 2s linear infinite;
+  }
+  
+  @keyframes spinx {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  .warnaeka{background-color:rgb(250, 234, 8)}

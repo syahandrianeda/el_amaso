@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>e-LAMASO SISWA</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Aplikasi Pembelajaran Jarak Jauh (PJJ) selama Belajar di Rumah (BDR) untuk Siswa">
+    <link href='https://sdnratujaya1-elamaso.net/user/gmp.html' hreflang='x-default' rel='alternate' />
+    <meta content='en_US' property='og:locale' />
+    <meta content='en_GB' property='og:locale:alternate' />
+    <meta content='id_ID' property='og:locale:alternate' />
+    <meta content='ll-cc' http-equiv='content-language' />
+    <link href="/img/lamaso.webp" rel="shortcut icon" type="image/x-icon" />
+
+    <!-- meta tag sosial media     -->
+    <meta property="og:url" content="https://sdnratujaya1-elamaso.net/user/siswa.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="e-LAMASO Siswa" />
+    <meta property="og:description" content="Sebuah Web Aplikasi Pembelajaran Jarak Jauh dari PT EKA CIPTA MULTITAMA" />
+    <meta property="og:image" content="/img/lamaso.webp" />
+
+    <meta name='twitter:card' content='summary' />
+    <meta property='twitter:title' content='e-LAMASO Siswa' />
+    <meta property='twitter:url' content='https://sdnratujaya1-elamaso.net/user/siswa.html' />
+    <meta property='twitter:description'
+        content="Sebuah Web Aplikasi Pembelajaran Jarak Jauh dari PT EKA CIPTA MULTITAMA" />
+    <meta property="twitter:image" content="/img/lamaso.webp" />
+    <!-- end meta tag sosial media     -->
+
+
+    <link rel="stylesheet" href="/css/w3.css">
+
+    <link rel="stylesheet" href="/css/w3-theme-blue-grey.css">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> -->
+
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js' type='text/javascript'></script>
+
+    <link rel="stylesheet" href="/css/css_siswa.css">
+    <link rel="stylesheet" href="/css/csssiswa.css">
+    <script src="/script/idsekolah.js"></script>
+    <script>
+
+        let jlo = JSON.parse(localStorage.getItem("inst_id"))
+        let urlmateri = jlo.url_materi;
+        let ssmateri = jlo.ss_materi;
+        const identitassekolah = jlo.namainstansi;
+        const identitaskotasekolah = jlo.kota;
+        const linkmateri = urlmateri + "?idss=" + ssmateri;
+        const surel = jlo.surel;
+        // let ddurl = "url_nilaikelas" + m.jenjang;
+        let urlnilai = "";
+        /////////////////////////////////////
+        let namasiswa, url_absenkaldik;
+        let namakelas;
+        let jenjang;
+        let arrayStringTglLibur = [], arrayKetLibur = [];
+
+        let belajaraktif = true;
+        let sudahhadir;//= 0;
+        let absenheader = "";
+        let url_absensiswa = "";
+        let url_kaldikaja = "";
+
+
+        if (localStorage.hasOwnProperty("typeuser")) {
+            let m = JSON.parse(localStorage.getItem("typeuser"))
+            // console.log(m.akses);
+            if (m.akses == "Guru Kelas") {
+                //window.location.href="/user/guru.html";
+                window.location.replace("/user/guru.html");
+
+            } else if (m.akses == "Guru Mapel") {
+                window.location.replace("/user/gmp.html");
+
+            } else if (m.akses == "Kepala Sekolah") {
+
+                window.location.replace("/user/kepsek.html");
+            } else {
+
+                //let jlo = JSON.parse(localStorage.getItem("inst_id"))
+                let urlmateri = jlo.url_materi;
+                let ssmateri = jlo.ss_materi;
+                const linkmateri = urlmateri + "?idss=" + ssmateri;
+                let ddurl = "url_nilaikelas" + m.jenjang;
+                //console.log(ddurl);
+                //console.log(jlo[ddurl])
+                urlnilai = jlo[ddurl];
+                namasiswa = m.user
+                namakelas = m.room
+                jenjang = m.jenjang;
+                absenheader = "absen" + jenjang;
+
+                url_kaldikaja = jlo.url_dataabsen;
+                url_absenkaldik = jlo.url_dataabsen + "?action=datakaldik";
+                url_absensiswa = jlo[absenheader];//+ "?action=absensiswahariini";
+                if (m.hasOwnProperty("ote")) {
+                    window.location.replace("/user/orangtua.html");
+                }
+
+
+            }
+
+
+        } else {
+            window.location.replace("/index.html")
+        }
+
+
+    </script>
+
+    <link crossorigin='' href='//fonts.googleapis.com' rel='dns-prefetch' />
+    <link crossorigin='' href='//1.bp.blogspot.com' rel='dns-prefetch' />
+    <link crossorigin='' href='//2.bp.blogspot.com' rel='dns-prefetch' />
+    <link crossorigin='' href='//3.bp.blogspot.com' rel='dns-prefetch' />
+    <link crossorigin='' href='//4.bp.blogspot.com' rel='dns-prefetch' />
+    <link crossorigin='' href='//fontawesome.com' rel='dns-prefetch' />
+    <link crossorigin='' href='//www.w3schools.com' rel='dns-prefetch' />
+    <link crossorigin='' href='//cdnjs.cloudflare.com' rel='dns-prefetch' />
+    <link crossorigin='' href='//ajax.googleapis.com' rel='dns-prefetch' />
+
+
+    <link rel="manifest" href="/manifest.json">
+    <!-- ios support-->
+    <link rel="apple-touch-icon" href="/img/icons/pic96.png">
+    <meta name="apple-mobile-web-app-status-bar" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+</head>
+
+<body>
+    <!-- Top container -->
+    <div class=" w3-bar w3-top  w3-large w3-card-4" style="z-index:4;background-color: rgb(250, 234, 8)">
+        <button class="w3-bar-item w3-button w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i
+                class="fa fa-bars"></i>  Menu</button>
+        <span class="w3-bar-item w3-right">e-Lamaso Siswa</span>
+    </div>
+
+
+    <!-- Sidebar/menu -->
+    <nav class="w3-sidebar w3-collapse w3-animate-left tesbody" style="z-index:3;width:300px;" id="mySidebar">
+        <br>
+        <!-- A. SIDEBAR-->
+        <div class="w3-container w3-row">
+            <!-- 1. Logo Sekolah -->
+            <div class="w3-col s4">
+                <img src="/img/L_vT86_100px.png" id="logosekolahmenu" class="w3-circle w3-margin-right" style="
+                    width:90px;height:90px;border:1px solid blue" />
+            </div>
+            <!-- 2. Keterangan di bawah logo sekolah -->
+            <div class="w3-col s8 w3-bar">
+                <!-- Bar nama sekolah -->
+                <strong id="namasekolah">
+                    SEKOLAH e-LAMASO
+                </strong>
+                <br />
+                <!-- Bar 'namakota', diisi untuk mengisi identitas NAMA, JABATAN, dan Kelas yang diampu user (guru) yang login -->
+                <strong id="namakota">
+                    KOTA SEKOLAH
+                </strong>
+                <br />
+                <!-- Bar 'tapel' otomatis mengisi Kode TAhun Pelajaran -->
+                <strong id="tapel">
+                    (2020/2021)
+                </strong>
+            </div>
+        </div>
+        <!-- >>>>>> SELESAI A. SIDEBAR -->
+
+
+        <!-- B. MENU BAR -->
+
+        <hr>
+        <div class="w3-container">
+            <h5>Menu e-Lamaso</h5>
+        </div>
+        <!-- B.2 Bar Guru Kelas, Ketika User sebagai guru kelas -->
+        <div class="w3-bar-block" id="bargurukelas">
+            <a href="javascript:void(0);" class="w3-bar-item w3-button w3-padding" onclick="infoupdate()"><i
+                    class="fa fa-info-circle"></i>
+                Info Update</a>
+            <a href="javascript:void(0);" class="w3-bar-item w3-button w3-padding" onclick="w3_close()"><i
+                    class="fa fa-home"></i>
+                beranda</a>
+            <a href="javascript:void(0);" class="w3-bar-item w3-button w3-padding" onclick="profilsayasiswa()"><i
+                    class="fa fa-user-o"></i>
+                Profil Saya</a>
+            <a href="javascript:void(0);" class="w3-bar-item w3-button w3-padding" onclick="menudataabsen()"><i
+                    class="fa fa-id-card-o"></i>
+                Data Absen</a>
+            <a href="javascript:void(0);" class="w3-bar-item w3-button w3-padding" onclick="menudatapembelajaran()"><i
+                    class="fa fa-calendar-check-o"></i> Data
+                Pembelajaran</a>
+            <a href="javascript:void(0);" class="w3-bar-item w3-button w3-padding" onclick="menudatapembelajaran()"><i
+                    class=" fa fa-book"></i>
+                Data Nilai</a>
+            <a href="javascript:void(0);" class="w3-bar-item w3-button w3-padding" onclick="lihatraportpts()"><i
+                    class="fa fa-graduation-cap"></i>
+                Raport PTS </a>
+            <a href="javascript:void(0);" class="w3-bar-item w3-button w3-padding" onclick=" lihatraportsemester()"><i
+                    class="fa fa-graduation-cap"></i>
+                Raport Semester </a>
+            <a href="javascript:void(0);" class="w3-bar-item menukelulusan w3-button w3-padding"
+                onclick="pengumumankelulusan()"><i class="fa fa-podcast"></i>
+                Pengumuman Kelulusan </a>
+
+
+
+            <a href="javascript:void(0);" class="w3-bar-item w3-button w3-padding" onclick="logout()"><i
+                    class="fa fa-times"></i> 
+                Logout</a>
+            <a href="javascript:void(0);"
+                class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black"
+                onclick="w3_close()" title="close menu">
+                <i class="fa fa-remove fa-fw"></i>  Tutup Menu
+            </a>
+        </div>
+
+
+
+
+
+
+
+    </nav>
+    <!-- Overlay effect when opening sidebar on small screens -->
+    <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer"
+        title="close side menu" id="myOverlay">
+    </div>
+
+    <div class="w3-main " style="margin-left:300px;margin-top:43px;" id="lamansiswa">
+        <header id="idheaderguru" class="w3-container">
+            <h5>
+                <i class="fa fa-dashboard"></i>
+                <b id="dashboardnamasiswa">
+                    <i class="fa fa-spin fa-spinner"></i>
+
+                </b>
+            </h5>
+
+        </header>
+
+        <div class="w3-card-4 w3-container w3-light-grey" style="width:80%;margin:0 auto">
+            <div class="w3-container ">
+
+                <div class="w3-dark-grey w3-panel">
+
+                    <div class="w3-container w3-center">
+                        <h3>Kehadiran <br><span id="namaku">Saya</span></h3>
+                        <img class="avatarsiswa" src="/img/L_vT86_100px.png" alt="Avatar" style="width:80%">
+                        <div class="ketabsensiswa"><i class="fa fa-spin fa-spinner"></i> kehadiran saya ...</div>
+
+                        <div class="w3-section belumabsen">
+                            <button class="w3-button w3-green w3-round-xlarge" onclick="bantuabsen()">Absen</button>
+                            <!-- <button class="w3-button w3-red">Decline</button> -->
+                        </div>
+                        <div class="w3-section sudahabsen">
+                            <button class="w3-button w3-green w3-round-xlarge" onclick="panggilmateri()">Lihat
+                                Materi</button>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="w3-main klikmateri w3-padding" style="overflow-x: auto; margin:0 auto">
+        </div>
+        <div id="informasiumum" class="w3-padding w3-margin w3-card-4"></div>
+        <div class="w3-container w3-card-4" id="dataframekreatif">
+            <h3>Yuk .... Bikin Frame </h3>
+            <div id="kesiapanmeme">
+                Kreasikan Poto Ananda di sini:
+            </div>
+
+            <br />
+            <label for="pilihframe">Pilih Frame:</label>
+            <select id="pilihframe" class="w3-select  w3-deep-purple" onchange="selectframekreatif()">
+                <option value="0" selected>Silakan Pilih Frame</option>
+            </select>
+            <hr />
+
+
+            <!-- <div id="tampilinframe" style="overflow-x: auto;"> -->
+            <div id="tampilinframe" style="width:75%;margin:0 auto">
+                <input type="file" id="imageInput" accept="image/*" class="w3-hide">
+                <!-- <div id="bingkai" class="w3-display-container" style="width:600px"> -->
+                <div id="bingkai" class="w3-display-container w3-image">
+                    <img src="/img/192.png" id="potomeme"
+                        style="width:60%;height:70%;z-index: -10;position:absolute;top:21%;right:0;">
+                    <img id="scream" src="/img/L_vT86_100px.png" class="w3-image" />
+
+                </div>
+            </div>
+            <canvas id="myCanvas" onclick="downloadCanvas(this)" style="width:600px;display: none;">
+            </canvas>
+            <hr />
+            <hr />
+            <label for="imageInput" class="w3-button w3-theme-dark w3-show"><i class="fa fa-camera"></i> Ambil
+                Poto</label>
+            <label id="downloadmeme" onclick="downloadCanvas()" class="w3-button w3-blue w3-hide"><i
+                    class="fa fa-download"></i> Download</label>
+        </div>
+    </div>
+    <!-- <div class="w3-main w3-justify w3-aqua" style="margin-left:300px;margin-top:43px;height: 500px;">
+        <div class="w3-container">
+            Ini Untuk Siswa Absen
+        </div>
+    </div> -->
+    <div class="w3-main w3-light-grey w3-center" style="margin-left:300px;margin-top:43px;" id="lamanlibur">
+        <h4>Selamat Datang </h4>
+        Hari ini adalah <span id="tekslibur1">...</span>, Ananda tidak belajar bersama e-Lamaso. Tapi Ananda dapat
+        belajar mandiri dan tetap jaga kesehatan.
+        <div class="w3-card" style="width:90%" id="informasisekolah">
+        </div>
+        <hr>
+        <div class="w3-card" style="width:90%">
+            <img src="/img/jaga_diri_dari_covid.webp" style="width:90%" />
+            <!-- <img src="https://drive.google.com/uc?export=view&id=17xtsD_IIF50FAYAbDDs3mgwBVERmNM6F" style="width:90%" /> -->
+            <!-- <img src="https://bnpb.go.id//uploads/new/galleries/x5yOfkdYL0Dg.jpeg" width="50%"/> -->
+
+        </div>
+    </div>
+    <div class="w3-main w3-justify" style="margin-left:300px;margin-top:43px;" id="lamanmateri">
+        <span id="indekmaterionline" class="w3-hide">ini berapa?</span>
+        <div class="w3-container w3-card w3-white w3-margin-top kontenmateri">
+            <h3>Ini halaman Materi</h3>
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Numquam, ad quasi possimus at fuga harum sed
+            reprehenderit laudantium dolore aperiam! Voluptas, maiores cum hic facilis nihil accusamus temporibus
+            provident velit!
+            <br>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora, voluptatibus. Error enim corrupti eos
+            expedita est, at maxime laudantium blanditiis cupiditate eligendi! Ipsa assumenda ipsum numquam ad maxime,
+            nam laborum.
+            <br>
+            <br>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus dolor eum tenetur a inventore eos cumque
+            et quo iste harum quis velit, ipsum corrupti suscipit dignissimos accusantium hic consequuntur quasi.
+            <br>
+            <br>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ducimus nesciunt odio ipsam et laboriosam laborum,
+            asperiores, accusamus ullam officia ipsum assumenda suscipit corporis. Deserunt doloribus enim expedita
+            vero? Similique, voluptates!
+
+        </div>
+        <div id="hasilbelajarsekali">
+            <div id="tescekelement"></div>
+        </div>
+        <!-- <button onclick="cektugasdansoal()">cek jumlah opsi</button> -->
+
+        <!-- <button onclick="tambahtombolisijawaban()">Tambah Tombol</button>
+                <button onclick="ceknilai()">cek koleksi ceklis opsi PG</button>
+                <button onclick="hasilakhirelamaso()">hasilakhirelamaso()</button>
+                
+                <div id="cektagihan"></div> -->
+
+        <div id="hasilakhir" style="display: none;">
+            <div id="fromHTMLtestdiv">
+
+                <div id="borderidhasilakhirnama">
+                    <center>
+                        <img src="/img/L_vT86_100px.png" class="w3-circle" style="width:145px;border:2px dotted red" />
+                        <h3>Nilai Belajar</h3>
+
+                        <table class="versi-table" id="tabelku">
+                            <tr>
+                                <td>Sekolah </td>
+                                <td id="hasilakhirnamasekolah">: Nama Sekolah </td>
+                            </tr>
+                            <tr>
+                                <td>Nama </td>
+                                <td id="hasilakhirnamasiswa">: Nama Siswa</td>
+                            </tr>
+                            <tr>
+                                <td>Kelas </td>
+                                <td id="hasilakhirkelas">: Kelas </td>
+                            </tr>
+                            <tr>
+                                <td>Mapel/Tema </td>
+                                <td id="hasilakhirmapeltema">: Mapel/Tema</td>
+                            </tr>
+                            <tr>
+                                <td>Waktu Selesai </td>
+                                <td id="hasilakhirwaktu">: Waktu/</td>
+                            </tr>
+                        </table>
+                    </center>
+                    <div id="resumenilai" style="display:block">
+
+                    </div>
+                    <div id="resumenilaiskhir">
+
+                    </div>
+
+                </div>
+                <p id="bypassme" style="color:red;text-align:center">Simpan hasil nilai ini dalam bentuk pdf untuk
+                    bukti belajarmu
+                </p><br />
+            </div>
+            <center>
+                <button id="cmd" class="button">Simpan Pdf</button>
+                <!-- <button id="filenilai" onclick="htmlnilaisiswa()" class="button">Mau dibikin html</button> -->
+            </center>
+        </div>
+        <form id="kirimnilaielamaso" name="kirimnilaielamaso" style="display:none">
+            <input id="matericode" name="matericode" />
+            <div id="tempatinputidentitashasilbelajar">Tempat Input Pilihan Ganda</div>
+            <div id="tempatinputpilihanganda">Tempat Input Pilihan Ganda</div>
+            <div id="tempatinputjawabanessay">Tempat Input Essay</div>
+            <textarea id="tekshtmlnilai" name="tekshtmlnilai">
+borderhasilnama
+</textarea>
+            <button type="submit">Kirim Tes</button>
+        </form>
+
+    </div>
+
+    <div class="w3-modal w3-pale-red w3-animate-zoom" id="divbantuabsen">
+        <div class="w3-modal-container ">
+            <div class="w3-modal-content w3-card-4 w3-round-medium w3-center">
+                <div class="imgcontainer w3-center" style="margin:0 auto">
+                    <button class="w3-button w3-red w3-right "
+                        onclick="document.getElementById('divbantuabsen').style.display='none'; ">&times;</button>
+                    <img id="potosiswa" src="/img/eabsensi.webp" style="width:300px;"
+                        class="w3-round-xxlarge w3-margin-top" /><br /><br />
+                    <span id="bantusiapa">...</span>
+                </div>
+                <br>
+                <form name="bantuisi" id="bantuisi">
+
+
+                    <!-- <input id="time_stampbantu" name="time_stampbantu" type="date" /><br /><span
+                    id="dibaca"></span><br /><br /> -->
+                    <label for="pilih_kehadiran">Pilih Jenis Kehadiran:</label>
+                    <br>
+                    <select id="pilih_kehadiran" name="pilih_kehadiran" class="w3-round-xxlarge"
+                        onchange="gantikehadiranbantu()" style="height:30px;width:30%">
+                        <option value="Hadir" selected>Hadir</option>
+                        <option value="Ijin">Ijin
+                        </option>
+                        <option value="Sakit">Sakit
+                        </option>
+                    </select>
+                    <br />
+                    <br />
+                    Ambil Gambar:<br />
+                    <label for="lampirkanpotoabsen" class="w3-button w3-card w3-dark-grey w3-round-xxlarge"><i
+                            class="fa fa-camera"></i> Ambil Poto:</label><br />
+
+                    <input type="file" id="lampirkanpotoabsen" onchange="uploadfilebantu()" style="display:none"
+                        accept="image/*" capture="user">
+                    <sub class="w3-animate-opacity">Selfi Poto Terkini </sub>
+
+                </form>
+                <hr />
+
+                <form name="bantukirim" id="bantukirim">
+                    <div id="thankyou_messagekirim">
+                    </div>
+                    <div id="sembunyikan" style="display:none">
+                        <!-- time_stamp:
+                        <input name="Time_Stamp" id="Time_Stampbantukirim" /><br /> -->
+                        id:
+                        <input name="id" id="idbantukirim" /><br />
+                        name:
+                        <input name="name" id="namebantukirim" /><br />
+                        kehadiran(Select)diijinkan:
+                        <input name="kehadiran" id="kehadiranbantukirim" value="Hadir" /><br />
+                        fileContent diijinkan:
+                        <div id="kodefilepotosiswaabsen">Di sini akan muncul elemen input yang memiliki
+                            attribute name:
+                            data/fileContent, filename, mimeType</div>
+                        <!-- <input name="fileContent" id="fileContentbantukirim" /><br /> -->
+                        kelas:
+                        <input name="kelas" id="kelasbantukirim" />
+                    </div>
+                </form>
+                <div class="w3-section inginkirim">
+                    <button onclick="tombolbantukirim()" class="w3-button w3-round-xxlarge w3-blue" id="loginbantu"><i
+                            class="fa fa-paper-plane"></i>
+                        Kirim</button> <button onclick="document.getElementById('divbantuabsen').style.display='none'; "
+                        class="w3-button w3-red w3-round-xxlarge" id="loginclosebantu"> <i class="fa fa-times"></i>
+                        Batal</button>
+                </div>
+                <hr>
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <div id="loadingmodal" class="w3-modal w3-hite w3-opacity-min">
+        <span class="w3-btn w3-blue w3-right w3-badge" onclick="loadingmodal.style.display='none'">&times;</span>
+        <i class="fa fa-spin fa-spinner w3-jumbo w3-display-middle"></i>
+    </div>
+    <div id="loadingAPI" class="w3-modal w3-white w3-opacity-min">
+        <div class="w3-modal-container">
+            <span class="w3-btn w3-blue w3-right w3-badge" onclick="loadingAPI.style.display='none'">&times;</span>
+            <div id="infoloadingAPI" class="w3-modal-content w3-card-4 w3-round-medium w3-display-middle">
+                <i class="fa fa-spin fa-spinner w3-jumbo w3-display-middle"></i>
+            </div>
+        </div>
+    </div>
+    <div id="loadingljk" class="w3-modal w3-white">
+        <div class="w3-modal-container">
+            <div class="w3-modal-content w3-card-4 w3-padding-16" style="width: 98%;">
+                <span class="w3-btn w3-blue w3-right w3-badge" onclick="loadingljk.style.display='none'">&times;</span>
+                <div id="infoloadingljk" class="w3-margin">
+                    <i class=" fa fa-spin fa-spinner w3-jumbo w3-display-middle"></i>
+                </div>
+                <div style="height: 50px;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="w3-modal w3-pale-red w3-animate-zoom" id="modalmateri">
+        <div class="w3-modal-container">
+            <div class="w3-modal-content w3-card-4 w3-round-medium w3-padding" style="width: 98%;">
+                <span class="w3-btn w3-red w3-right w3-badge" onclick="modalmateri.style.display='none'">&times;</span>
+                <h2>
+                    Data Materi / Pelajaran Yang Dipublikasikan:
+                </h2>
+                <hr>
+                <label for="siswapilihmateri"><span id="spanlabelmateri"><i
+                            class="fa fa-spin fa-spinner w3-large"></i></span></label>
+
+                <select id="siswapilihmateri" class="w3-select" onchange="modalfnmateri()">
+
+                </select>
+                <hr>
+                <div id="divmodalmateri" style="overflow-x: auto;">
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="w3-modal w3-pale-red w3-animate-zoom" id="infoinfo">
+        <div class="w3-modal-container">
+            <div class="w3-modal-content w3-card-4 w3-round-medium w3-center w3-padding">
+                <span class="w3-btn w3-red w3-right w3-badge" onclick="infoinfo.style.display='none'">&times;</span>
+                <h2>
+                    Informasi Update:
+                </h2>
+                <br>
+                <div id="teksinfoupdate" style="text-align: justify;" class="w3-card-4 w3-padding w3-margin">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe doloribus provident dolore quo odit
+                    pariatur fugit consequuntur voluptas quos. Sed voluptate necessitatibus, reprehenderit esse quod
+                    placeat. Incidunt iure eos cum.
+
+
+                </div>
+                <br>
+                <!-- @Created By:<br> <a href="https://sdnratujaya1.net" target="_blank" rel="noopener">Ade Andriansyah_ SDN
+                    Ratujaya 1
+                    Kota
+                    Depok</a> -->
+                <br>
+                <br>
+                <br>
+                Telah dilisensikan untuk <br> <a href="https://lamaso.online" target="_blank" rel="noopener">Lamaso
+                    Mediatama</a>
+            </div>
+
+        </div>
+    </div>
+    <div class="w3-modal w3-pale-red w3-animate-zoom" id="maintenace">
+        <div class="w3-modal-container">
+            <div class="w3-modal-content w3-card-4 w3-round-medium w3-center">
+                <span class="w3-btn w3-red w3-right w3-badge" onclick="maintenace.style.display='none'">&times;</span>
+                <h2>
+                    Mohon bersabar ...., fitur dalam tahap pengembangan. Periksa Info Update terbarunya!
+                </h2>
+                <br>
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laudantium possimus in veniam accusantium
+                recusandae illum quas culpa nobis, repellendus praesentium deserunt a deleniti sed officia tempore
+                doloribus. Unde, soluta tempore!
+                <br>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non dignissimos assumenda fugiat dolores
+                exercitationem illum a, amet, ipsam eaque odio dolore pariatur, culpa soluta officia? Ea laudantium
+                ratione enim deleniti.
+                <br>
+                <br>
+                <br>
+                <!-- @Created By: <br><a href="https://sdnratujaya1.net" target="_blank" rel="noopener">Ade Andriansyah_ SDN
+                    Ratujaya 1
+                    Kota
+                    Depok</a> -->
+                Telah dilisensikan untuk <br> <a href="https://lamaso.online" target="_blank" rel="noopener">Lamaso
+                    Mediatama</a>
+            </div>
+
+        </div>
+    </div>
+    <div id="tttkeybase"></div>
+    <div class="w3-modal w3-white w3-animate-zoom" id="profilsiswaku">
+        <div class="w3-modal-container">
+            <div class="w3-modal-content w3-card-4 w3-padding-16" style="width:98%">
+                <span class="w3-btn w3-blue w3-right w3-badge"
+                    onclick="profilsiswaku.style.display='none';divprofilku.innerHTML=''">&times;</span>
+                <div id="divprofilku" class="w3-margin">
+                    <i class=" fa fa-spin fa-spinner w3-jumbo w3-display-middle"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="w3-modal w3-pale-red w3-animate-zoom" id="modalabsen">
+        <div class="w3-modal-container">
+            <div class="w3-modal-content w3-card-4 w3-round-medium w3-padding" style="width: 98%;">
+                <span class="w3-btn w3-red w3-right w3-badge" onclick="modalabsen.style.display='none'">&times;</span>
+                <h2>
+                    Data Absen Saya:
+                </h2>
+                <hr>
+                <label for="siswapilihbulan">Silakan Pilih Bulannya:</label>
+
+                <select id="siswapilihbulan" class="w3-select" onchange="modalfnkalender()">
+                    <option id="indek0" value="2021-01-01">Januari</option>
+                    <option id="indek1" value="2021-02-01">Februari</option>
+                    <option id="indek2" value="2021-03-01">Maret</option>
+                    <option id="indek3" value="2021-04-01">April</option>
+                    <option id="indek4" value="2021-05-01">Mei</option>
+                    <option id="indek5" value="2021-06-01">Juni</option>
+
+                </select>
+                <hr>
+                <div id="divmodalabsen">
+                    <table class="w3-table-all garis w3-tiny w3-centered">
+                        <tr>
+                            <th colspan="7">
+                                Bulan : <span id="modalnamabulan">Silakan Pilih Bulannya terlebih dulu</span>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="w3-red">Minggu</th>
+                            <th>Senin</th>
+                            <th>Selasa</th>
+                            <th>Rabu</th>
+                            <th>Kamis</th>
+                            <th>Jumat</th>
+                            <th class="w3-red">Sabtu</th>
+                        </tr>
+                        <tr>
+                            <td id="kolomtabel1_1" class="kosongindulu w3-red"></td>
+                            <td id="kolomtabel1_2" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i>
+                            </td>
+                            <td id="kolomtabel1_3" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                            <td id="kolomtabel1_4" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                            <td id="kolomtabel1_5" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                            <td id="kolomtabel1_6" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                            <td id="kolomtabel1_7" class="kosongindulu w3-red"><i class="fa fa-spin fa-refresh"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td id="kolomtabel2_1" class="kosongindulu w3-red"><i class="fa fa-spin fa-refresh"></i>
+                            </td>
+                            <td id="kolomtabel2_2" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                            <td id="kolomtabel2_3" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                            <td id="kolomtabel2_4" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                            <td id="kolomtabel2_5" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                            <td id="kolomtabel2_6" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                            <td id="kolomtabel2_7" class="kosongindulu w3-red"><i class="fa fa-spin fa-refresh"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td id="kolomtabel3_1" class="kosongindulu w3-red"><i class="fa fa-spin fa-refresh"></i>
+                            </td>
+                            <td id="kolomtabel3_2" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                            <td id="kolomtabel3_3" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                            <td id="kolomtabel3_4" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                            <td id="kolomtabel3_5" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                            <td id="kolomtabel3_6" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                            <td id="kolomtabel3_7" class="kosongindulu w3-red"><i class="fa fa-spin fa-refresh"></i>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td id="kolomtabel4_1" class="kosongindulu w3-red"><i class="fa fa-spin fa-refresh"></i>
+                            </td>
+                            <td id="kolomtabel4_2" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                            <td id="kolomtabel4_3" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                            <td id="kolomtabel4_4" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                            <td id="kolomtabel4_5" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                            <td id="kolomtabel4_6" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                            <td id="kolomtabel4_7" class="kosongindulu w3-red"><i class="fa fa-spin fa-refresh"></i>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td id="kolomtabel5_1" class="kosongindulu w3-red"><i class="fa fa-spin fa-refresh"></i>
+                            </td>
+                            <td id="kolomtabel5_2" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                            <td id="kolomtabel5_3" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                            <td id="kolomtabel5_4" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                            <td id="kolomtabel5_5" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                            <td id="kolomtabel5_6" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                            <td id="kolomtabel5_7" class="kosongindulu w3-red"><i class="fa fa-spin fa-refresh"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td id="kolomtabel6_1" class="kosongindulu w3-red"><i class="fa fa-spin fa-refresh"></i>
+                            </td>
+                            <td id="kolomtabel6_2" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                            <td id="kolomtabel6_3" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                            <td id="kolomtabel6_4" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                            <td id="kolomtabel6_5" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                            <td id="kolomtabel6_6" class="kosongindulu"><i class="fa fa-spin fa-refresh"></i></td>
+                            <td id="kolomtabel6_7" class="kosongindulu w3-red"><i class="fa fa-spin fa-refresh"></i>
+                            </td>
+                        </tr>
+                    </table>
+                    <div id="ketketlibur"></div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div id="previewpotoabsen" class="w3-modal" onclick="this.style.display='none'">
+        <div class="w3-modal-content w3-animate-zoom">
+            <span class="w3-button w3-hover-red w3-xlarge w3-display-topright">&times;</span>
+            <img id="img01" style="width:100%">
+        </div>
+    </div>
+    <div id="modalkelulusan" class="w3-modal">
+        <div class="w3-modal-container">
+            <div class="w3-modal-content w3-padding" style="width:98%">
+                <span class="w3-btn w3-red w3-right w3-badge"
+                    onclick="modalkelulusan.style.display='none'">&times;</span>
+                <div class="htmlfokus">
+
+                </div>
+                <div class="w3-clear"></div>
+                <div class="w3-hide tmblprintkelulusan w3-center">
+                    <button class="w3-button w3-blue-grey" onclick="printmodalkelulusan()">
+                        <i class="fa fa-print"></i>
+                        Print</button>
+                </div>
+                <hr />
+
+                <div class="htmlfokuslainnya">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <br><br><br><br><br><br><br><br><br><br><br><br>
+    <div class="w3-modal w3-animate-zoom" id="koleksivideo">
+        <div class="w3-modal-container">
+            <div class="w3-modal-content w3-card" style="width:99%">
+                <button id="silangmodal" onclick="tutupkamera();koleksivideo.style.display='none'"
+                    class="w3-button w3-red w3-right">&times;</button>
+                <div class="w3-card-4 w3-center w3-padding">
+                    Silakan pilih cara cara unggah ....<br />
+                    <button id="tmblvid"><i class="fa fa-video-camera"></i> Video</button>
+                    <button id="tmblpot"><i class="fa fa-camera"></i> Poto</button>
+                    <button id="tmblgal"><i class="fa fa-upload"></i> Galeri</button>
+
+                </div>
+                <hr />
+
+                <div id="divvideokamera" style="width:98%;margin:0 auto;display:none">
+
+                    <video poster="/img/192.png?v=2" id="vid1" controls style="width:100%;">
+                        <source src="">
+                    </video>
+                    <div class="w3-blue w3-opacity w3-display-topmiddle w3-hide" id="statusrekaman">SEDANG MEREKAM
+                    </div>
+                </div>
+                <div class='containerbaru w3-center w3-hide' id="divvideorekam">
+                    <video poster="/img/192.png" id="vid2" controls class='responsive-iframebaru'>
+                        <!-- <source src="/img/output.mp4"> -->
+                        <source src="">
+                    </video>
+
+                </div>
+                <div id="divfilegaleri" class="w3-hide">
+                    Div video galeri
+                </div>
+                <div id="tomboltombolwebcam" class="w3-center w3-hide">
+                    <button class="fa fa-refresh w3-round-large w3-text-light-green w3-small" id="btnBack">
+                        Belakang </button>
+                    <button class="fa fa-play w3-round-large w3-green  w3-small" id="btnStart"> Mulai Rekam</button>
+                    <button class="fa fa-stop w3-round-large w3-red w3-small" id="btnStop"> Stop Rekam</button><br />
+                    <span id="spanstatusrekaman"></span>
+
+
+                </div>
+
+                <div id="resultuploadvideomateri" style="margin:0 auto">
+
+                </div>
+                <div style="margin:5px auto">
+                    <hr class="w3-border w3-border-bottom w3-border-blue" />
+                    <button id="uploadvideodiljk" class="wa w3-small"
+                        onclick="alert('Belum ada media yang dapat diunggah')">Unggah Jawaban</button>
+
+                </div>
+                <input type="file" id="inputtmblpoto" accept="image/*" capture="environment" style="display:none">
+                <input type="file" id="inputtmblgaleri" style="display:none">
+                <div id="elemintmblpotogaleri" style="display: none;">
+                </div>
+
+
+
+
+
+
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="w3-main" style="margin-left:300px;text-align:center">Telah dilisensikan untuk <a
+            href="https://lamaso.online" target="_blank">PT EKA CIPTA MULTITAMA</a>
+
+
+    </footer>
+
+    <!-- <script src="/js/siswa.js?v=5.0"></script>
+    <script src="/js/siswajs.js?v=5.123"></script>
+    <script src="/js/materi.js?v=6.41"></script>
+    <script src="/js/uploadmedia.js?v=5.0212"></script>
+    <script src="/js/menuabsensiswa.js?v=5.0"></script>
+    <script src="/js/zframe.js?v=11.02"></script>
+
+    <script id="rendered-js" src="/js/renderpdf.js??v=5.0"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.61/jspdf.min.js">
+    </script>
+
+    <iframe id="iframeprint" name="iframeprint" style="display:none"></iframe>
+    <div style="height: 200px;"></div>
+    <script id="123">
+        const tokensiswa = JSON.parse(localStorage.getItem("typeuser")).idrow;
+        let kodebarismateriyangdikerjakan = "belumdisi";
+        let infoupdat = `Assalamualaikum, Salam Sejahtera buat semuanya .... 
+        <br><br>
+        Yuk, lihat perbaruannya:
+        <hr>
+        <ol>
+            <li>
+                Menu <b>Data Absen</b> Kini Ananda sudah dapat melihat rekapnya. Coba Cek di Menu ya.        
+                </li>
+                <li>
+                    Menu <b>Data Pembelajaran</b> Juga kini dapat Ananda lihat juga loh ....
+                    </li>
+                    </ol>`;
+
+        let teks = "";
+        let infotime = new Date(2021, 3, 1, 23, 59, 59);
+        let ending = infotime.getTime();
+        let start = new Date().getTime();
+        if (start < ending) {
+            teks = `<em>Informasi dan Himbuan dari Dinas Pendidikan:</em><br>
+            <img src="/img/himbauan disdik larangan untuk tidak merayakan valentin.webp" style="width:90%" alt="forbidden valentine"/>
+            <br><br>
+            Silakan kunjungi Web Sekolah kami <a href="https://sdnratujaya1.net" target="_blank" rel="noopener">https://sdnratujaya1.net</a>.
+            `;
+        } else {
+            teks = `Informasi Sekolah: <button onclick='alert("Belum ada informasi ya.... tunggu kabar selanjutnya dari sekolah")'>Lihat Info</button>`;
+            ;
+        }
+
+        informasisekolah.innerHTML = teks
+        teksinfoupdate.innerHTML = infoupdat;
+        informasiumum.innerHTML = teks;
+
+
+        if (jlo.id !== pelanggan_id) {
+            alert("Maaf, sedang terjadi pembaruan. Silakan login kembali ...." + jlo.id);
+            window.localStorage.clear();
+            window.location.replace("/index.html")
+
+        }
+
+        let div1 = document.getElementById("kesiapanmeme");
+        let div2 = document.getElementById("pilihframe");
+        // div1.innerHTML = "<i class='fa fa-refresh fa-spin'></i> Mohon tunggu sebentar. Sedang ngopi Liong dulu servernya ..."
+
+        document.getElementById("potomeme").src = "/img/polos.png";//"https://drive.google.com/uc?export=view&id=" + idlogo;
+        document.getElementById("downloadmeme").className = document.getElementById("downloadmeme").className.replace("w3-show", "w3-hide");
+        document.getElementById("downloadmeme").removeAttribute("onclick");
+        fetch(linkmateri + "&action=datatemplate&jenisuser=Siswa")
+            .then(m => m.json())
+            .then(k => {
+                // console.log(k);
+                let datafilter = k.records.filter(k => k.status == "aktif");
+                let tekshtml = `<option value="0" selected="">Silakan Pilih Frame</option>`;
+                // for (i = 0; i < datafilter.length; i++) {
+                for (let i = datafilter.length - 1; i >= 0; i--) {
+                    if (i == datafilter.length - 1) {
+
+                        tekshtml += `<option value="/memetemplate/${datafilter[i].htmlgambar}">${datafilter[i].keterangan} <b class="w3-text-red">[Baru]</b></option>`;
+                    } else {
+
+                        tekshtml += `<option value="/memetemplate/${datafilter[i].htmlgambar}">${datafilter[i].keterangan}</option>`
+                    }
+                }
+                div2.innerHTML = tekshtml;
+                div1.innerHTML = " Kreasikan Poto Ananda di sini:";
+
+            })
+            .catch(er => console.log(er));
+
+        if (jenjang == 6) {
+            document.querySelector(".menukelulusan").style.display = "block";
+        } else {
+            document.querySelector(".menukelulusan").style.display = "none";
+
+        }
+    </script>
+    <script src="/js/app.js"></script> -->
+</body>
+
+</html>
